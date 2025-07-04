@@ -1,12 +1,471 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+
+import React, { useState, useEffect } from 'react';
+import { ChevronDown, Mail, Phone, MapPin, Github, ExternalLink, Code, Palette, Database, Smartphone, Globe, Brain } from 'lucide-react';
+
+const AnimatedBackground = () => {
+  return (
+    <div className="fixed inset-0 overflow-hidden pointer-events-none">
+      {/* Matrix-like falling code */}
+      <div className="absolute inset-0">
+        {Array.from({ length: 50 }).map((_, i) => (
+          <div
+            key={i}
+            className="absolute text-purple-500/20 text-xs font-mono animate-matrix"
+            style={{
+              left: `${Math.random() * 100}%`,
+              animationDelay: `${Math.random() * 3}s`,
+              animationDuration: `${3 + Math.random() * 2}s`
+            }}
+          >
+            {Math.random() > 0.5 ? '0' : '1'}
+          </div>
+        ))}
+      </div>
+      
+      {/* Floating particles */}
+      <div className="absolute inset-0">
+        {Array.from({ length: 20 }).map((_, i) => (
+          <div
+            key={i}
+            className="absolute w-2 h-2 bg-cyan-400/30 rounded-full animate-float"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              animationDelay: `${Math.random() * 6}s`
+            }}
+          />
+        ))}
+      </div>
+    </div>
+  );
+};
+
+const Navigation = ({ activeSection, setActiveSection }) => {
+  const sections = [
+    { id: 'home', label: 'Home' },
+    { id: 'education', label: 'Education' },
+    { id: 'experience', label: 'Experience' },
+    { id: 'skills', label: 'Skills' },
+    { id: 'projects', label: 'Projects' },
+    { id: 'contact', label: 'Contact' }
+  ];
+
+  return (
+    <nav className="fixed top-0 left-0 right-0 z-50 glass">
+      <div className="container mx-auto px-6">
+        <div className="flex items-center justify-between h-16">
+          <div className="text-xl font-bold text-gradient">Prajal JK</div>
+          <div className="hidden md:flex space-x-8">
+            {sections.map((section) => (
+              <button
+                key={section.id}
+                onClick={() => setActiveSection(section.id)}
+                className={`px-4 py-2 rounded-lg transition-all duration-300 ${
+                  activeSection === section.id
+                    ? 'bg-purple-600/30 text-purple-300 border border-purple-500/50'
+                    : 'text-gray-300 hover:text-purple-300 hover:bg-purple-600/10'
+                }`}
+              >
+                {section.label}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+    </nav>
+  );
+};
+
+const HomeSection = () => {
+  return (
+    <section id="home" className="min-h-screen flex items-center justify-center relative pt-16">
+      <div className="container mx-auto px-6 text-center">
+        <div className="animate-fade-in-up">
+          <h1 className="text-6xl md:text-8xl font-bold mb-4 animate-glow text-gradient">
+            Prajal Jung Kunwar
+          </h1>
+          <h2 className="text-2xl md:text-3xl text-cyan-400 mb-6 font-light">
+            Prajal JK
+          </h2>
+          <div className="text-lg text-gray-300 mb-8 space-y-2">
+            <p className="flex items-center justify-center gap-2">
+              <span>22 years old</span>
+              <span className="text-purple-400">|</span>
+              <MapPin className="w-4 h-4 text-cyan-400" />
+              <span>Pokhara, Nepal</span>
+            </p>
+          </div>
+          <p className="text-xl md:text-2xl text-gray-300 max-w-4xl mx-auto leading-relaxed mb-12">
+            Passionate about technology, AI/ML, and creating innovative digital solutions. 
+            I specialize in mobile app development, web technologies, and cutting-edge design, 
+            constantly pushing the boundaries of what's possible in the digital realm.
+          </p>
+          <div className="flex flex-wrap justify-center gap-4">
+            <div className="glass px-6 py-3 rounded-lg border border-purple-500/30">
+              <Phone className="w-5 h-5 inline mr-2 text-cyan-400" />
+              <span>+977 9825102356</span>
+            </div>
+            <div className="glass px-6 py-3 rounded-lg border border-purple-500/30">
+              <Mail className="w-5 h-5 inline mr-2 text-cyan-400" />
+              <span>prajal@gmail.com</span>
+            </div>
+            <div className="glass px-6 py-3 rounded-lg border border-purple-500/30">
+              <Globe className="w-5 h-5 inline mr-2 text-cyan-400" />
+              <span>prajaljk.com.np</span>
+            </div>
+          </div>
+        </div>
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+          <ChevronDown className="w-8 h-8 text-purple-400" />
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const EducationSection = () => {
+  return (
+    <section id="education" className="min-h-screen flex items-center py-20">
+      <div className="container mx-auto px-6">
+        <h2 className="text-4xl md:text-5xl font-bold text-center mb-16 text-gradient">
+          Education
+        </h2>
+        <div className="max-w-4xl mx-auto">
+          <div className="glass p-8 rounded-2xl border-2 animate-pulse-border">
+            <div className="flex items-start gap-6">
+              <div className="w-16 h-16 bg-gradient-to-r from-purple-600 to-cyan-500 rounded-xl flex items-center justify-center">
+                <Brain className="w-8 h-8 text-white" />
+              </div>
+              <div className="flex-1">
+                <h3 className="text-2xl font-bold text-purple-300 mb-2">
+                  BSc (Hons) in Business Information Technology
+                </h3>
+                <p className="text-xl text-cyan-400 mb-2">London Metropolitan University</p>
+                <p className="text-gray-300 mb-4">Percentage: 54.22%</p>
+                <p className="text-gray-400">
+                  Comprehensive study of business processes, information systems, 
+                  and technology integration in modern enterprises.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const ExperienceSection = () => {
+  const experiences = [
+    {
+      title: "Product/Graphics Design and Video Editor",
+      company: "Jude Fashion Industry Nepal",
+      period: "March 2025 - Present",
+      description: "Creating engaging product designs and social media content including reels and promotional videos."
+    },
+    {
+      title: "UI/UX Web Development, SEO Expert, Graphics Design",
+      company: "Fast Track Repair Service",
+      period: "January 2025",
+      description: "Developed business website using Wix, implemented SEO strategies, and created social media designs."
+    },
+    {
+      title: "Product/Graphics Design",
+      company: "Aikyam Nepal",
+      period: "December 2024 - February 2025",
+      description: "Designed product graphics and visual content for various marketing campaigns."
+    },
+    {
+      title: "UI/UX Design Intern",
+      company: "Xdezo Academy",
+      period: "Internship",
+      description: "Developed an e-learning mobile app using Flutter/Dart with Node.js backend integration."
+    }
+  ];
+
+  return (
+    <section id="experience" className="min-h-screen flex items-center py-20">
+      <div className="container mx-auto px-6">
+        <h2 className="text-4xl md:text-5xl font-bold text-center mb-16 text-gradient">
+          Experience
+        </h2>
+        <div className="max-w-6xl mx-auto">
+          <div className="grid gap-8">
+            {experiences.map((exp, index) => (
+              <div key={index} className="glass p-6 rounded-xl border border-purple-500/30 animate-slide-in" style={{animationDelay: `${index * 0.2}s`}}>
+                <div className="flex flex-col md:flex-row md:items-center gap-4">
+                  <div className="flex-1">
+                    <h3 className="text-xl font-bold text-purple-300 mb-1">{exp.title}</h3>
+                    <p className="text-cyan-400 text-lg mb-2">{exp.company}</p>
+                    <p className="text-gray-300 mb-3">{exp.description}</p>
+                  </div>
+                  <div className="text-right">
+                    <span className="px-4 py-2 bg-purple-600/20 text-purple-300 rounded-lg text-sm">
+                      {exp.period}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const SkillsSection = () => {
+  const skillCategories = [
+    {
+      title: "Programming Languages",
+      icon: <Code className="w-6 h-6" />,
+      skills: ["Flutter/Dart", "PHP/Laravel", "Python", "HTML/CSS", "Node.js"]
+    },
+    {
+      title: "Design & Creative",
+      icon: <Palette className="w-6 h-6" />,
+      skills: ["UI/UX Design", "Graphics Design", "Video Editing", "Social Media Design"]
+    },
+    {
+      title: "Web & Mobile",
+      icon: <Smartphone className="w-6 h-6" />,
+      skills: ["Mobile App Development", "Web Development", "Wix", "Responsive Design"]
+    },
+    {
+      title: "AI & Data",
+      icon: <Brain className="w-6 h-6" />,
+      skills: ["Python ML/AI", "Image Detection", "Face Recognition", "Data Analysis"]
+    },
+    {
+      title: "Digital Marketing",
+      icon: <Globe className="w-6 h-6" />,
+      skills: ["SEO", "Social Media Marketing", "Content Strategy", "Brand Design"]
+    }
+  ];
+
+  return (
+    <section id="skills" className="min-h-screen flex items-center py-20">
+      <div className="container mx-auto px-6">
+        <h2 className="text-4xl md:text-5xl font-bold text-center mb-16 text-gradient">
+          Skills & Expertise
+        </h2>
+        <div className="max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {skillCategories.map((category, index) => (
+              <div key={index} className="glass p-6 rounded-xl border border-purple-500/30 hover:border-cyan-400/50 transition-all duration-300 animate-fade-in-up" style={{animationDelay: `${index * 0.1}s`}}>
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="text-cyan-400">{category.icon}</div>
+                  <h3 className="text-xl font-bold text-purple-300">{category.title}</h3>
+                </div>
+                <div className="space-y-2">
+                  {category.skills.map((skill, skillIndex) => (
+                    <div key={skillIndex} className="flex items-center gap-2">
+                      <div className="w-2 h-2 bg-cyan-400 rounded-full"></div>
+                      <span className="text-gray-300">{skill}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const ProjectsSection = () => {
+  const projects = [
+    {
+      title: "E-commerce Mobile App",
+      description: "College project developed using Flutter/Dart with modern UI/UX design and full shopping functionality.",
+      tech: ["Flutter", "Dart", "Mobile Development"],
+      type: "Mobile App"
+    },
+    {
+      title: "E-learning Mobile App",
+      description: "Internship project with comprehensive learning management system, built with Flutter frontend and Node.js backend.",
+      tech: ["Flutter", "Dart", "Node.js", "Backend API"],
+      type: "Full Stack"
+    },
+    {
+      title: "E-commerce Clothing App",
+      description: "Java-based clothing store application with inventory management and user authentication.",
+      tech: ["Java", "Object-Oriented Programming"],
+      type: "Desktop App"
+    },
+    {
+      title: "AI Image & Face Recognition",
+      description: "Python-based computer vision project implementing image detection and facial recognition algorithms.",
+      tech: ["Python", "OpenCV", "Machine Learning", "AI"],
+      type: "AI/ML"
+    },
+    {
+      title: "Fast Track Repair Service Website",
+      description: "Business website with SEO optimization, responsive design, and integrated booking system.",
+      tech: ["Wix", "SEO", "Web Design", "Digital Marketing"],
+      type: "Web Development"
+    }
+  ];
+
+  return (
+    <section id="projects" className="min-h-screen flex items-center py-20">
+      <div className="container mx-auto px-6">
+        <h2 className="text-4xl md:text-5xl font-bold text-center mb-16 text-gradient">
+          Featured Projects
+        </h2>
+        <div className="max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-8">
+            {projects.map((project, index) => (
+              <div key={index} className="glass p-6 rounded-xl border border-purple-500/30 hover:border-cyan-400/50 transition-all duration-300 group animate-fade-in-up" style={{animationDelay: `${index * 0.1}s`}}>
+                <div className="flex justify-between items-start mb-4">
+                  <h3 className="text-xl font-bold text-purple-300 group-hover:text-cyan-300 transition-colors">
+                    {project.title}
+                  </h3>
+                  <span className="px-3 py-1 bg-cyan-600/20 text-cyan-300 rounded-full text-sm">
+                    {project.type}
+                  </span>
+                </div>
+                <p className="text-gray-300 mb-4 leading-relaxed">{project.description}</p>
+                <div className="flex flex-wrap gap-2">
+                  {project.tech.map((tech, techIndex) => (
+                    <span key={techIndex} className="px-3 py-1 bg-purple-600/20 text-purple-300 rounded-full text-sm">
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="text-center mt-12">
+            <a 
+              href="https://github.com/JungPrajal" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-3 glass px-8 py-4 rounded-xl border border-purple-500/30 hover:border-cyan-400/50 transition-all duration-300 text-lg font-semibold text-purple-300 hover:text-cyan-300"
+            >
+              <Github className="w-6 h-6" />
+              View All Projects on GitHub
+              <ExternalLink className="w-5 h-5" />
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const ContactSection = () => {
+  return (
+    <section id="contact" className="min-h-screen flex items-center py-20">
+      <div className="container mx-auto px-6">
+        <h2 className="text-4xl md:text-5xl font-bold text-center mb-16 text-gradient">
+          Get In Touch
+        </h2>
+        <div className="max-w-4xl mx-auto text-center">
+          <p className="text-xl text-gray-300 mb-12 leading-relaxed">
+            Ready to collaborate on your next project? Whether you need mobile app development, 
+            web design, or AI/ML solutions, I'm here to bring your ideas to life with cutting-edge technology.
+          </p>
+          <div className="grid md:grid-cols-3 gap-8 mb-12">
+            <div className="glass p-6 rounded-xl border border-purple-500/30 hover:border-cyan-400/50 transition-all duration-300">
+              <Phone className="w-8 h-8 text-cyan-400 mx-auto mb-4" />
+              <h3 className="text-lg font-semibold text-purple-300 mb-2">Phone</h3>
+              <p className="text-gray-300">+977 9825102356</p>
+            </div>
+            <div className="glass p-6 rounded-xl border border-purple-500/30 hover:border-cyan-400/50 transition-all duration-300">
+              <Mail className="w-8 h-8 text-cyan-400 mx-auto mb-4" />
+              <h3 className="text-lg font-semibold text-purple-300 mb-2">Email</h3>
+              <p className="text-gray-300">prajal@gmail.com</p>
+            </div>
+            <div className="glass p-6 rounded-xl border border-purple-500/30 hover:border-cyan-400/50 transition-all duration-300">
+              <MapPin className="w-8 h-8 text-cyan-400 mx-auto mb-4" />
+              <h3 className="text-lg font-semibold text-purple-300 mb-2">Location</h3>
+              <p className="text-gray-300">Pokhara, Nepal</p>
+            </div>
+          </div>
+          <div className="flex justify-center gap-6">
+            <a 
+              href="https://github.com/JungPrajal" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="glass p-4 rounded-xl border border-purple-500/30 hover:border-cyan-400/50 transition-all duration-300 text-purple-300 hover:text-cyan-300"
+            >
+              <Github className="w-8 h-8" />
+            </a>
+            <a 
+              href="mailto:prajal@gmail.com"
+              className="glass p-4 rounded-xl border border-purple-500/30 hover:border-cyan-400/50 transition-all duration-300 text-purple-300 hover:text-cyan-300"
+            >
+              <Mail className="w-8 h-8" />
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
 
 const Index = () => {
+  const [activeSection, setActiveSection] = useState('home');
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = ['home', 'education', 'experience', 'skills', 'projects', 'contact'];
+      const scrollPosition = window.scrollY + 100;
+
+      for (const section of sections) {
+        const element = document.getElementById(section);
+        if (element) {
+          const offsetTop = element.offsetTop;
+          const height = element.offsetHeight;
+          
+          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + height) {
+            setActiveSection(section);
+            break;
+          }
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  useEffect(() => {
+    if (activeSection !== 'home') {
+      scrollToSection(activeSection);
+    }
+  }, [activeSection]);
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
+    <div className="relative min-h-screen">
+      <AnimatedBackground />
+      <Navigation activeSection={activeSection} setActiveSection={setActiveSection} />
+      
+      <main className="relative z-10">
+        <HomeSection />
+        <EducationSection />
+        <ExperienceSection />
+        <SkillsSection />
+        <ProjectsSection />
+        <ContactSection />
+      </main>
+      
+      <footer className="relative z-10 glass border-t border-purple-500/30 py-8">
+        <div className="container mx-auto px-6 text-center">
+          <p className="text-gray-400">
+            © 2025 Prajal Jung Kunwar. Crafted with passion and future tech.
+          </p>
+        </div>
+      </footer>
     </div>
   );
 };
