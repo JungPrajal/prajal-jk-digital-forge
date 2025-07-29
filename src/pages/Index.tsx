@@ -1,8 +1,11 @@
 
 import React, { useState, useEffect } from 'react';
-import { ChevronDown, Mail, Phone, MapPin, Github, ExternalLink, Code, Palette, Database, Smartphone, Globe, Brain } from 'lucide-react';
+import { Mail, Phone, MapPin, Github, ExternalLink, Code, Palette, Database, Smartphone, Globe, Brain, Server, Terminal } from 'lucide-react';
 import FlowingBackground from '../components/FlowingBackground';
 import DeskSetup3D from '../components/DeskSetup3D';
+import CodeEditor3D from '../components/CodeEditor3D';
+import FloatingCode from '../components/FloatingCode';
+import Terminal3D from '../components/Terminal3D';
 
 
 const Navigation = ({ activeSection, setActiveSection }) => {
@@ -85,9 +88,9 @@ const HomeSection = () => {
             </div>
           </div>
 
-          {/* Right side - 3D Desk Setup */}
+          {/* Right side - 3D Code Editor */}
           <div className="h-96 lg:h-[500px]">
-            <DeskSetup3D />
+            <CodeEditor3D />
           </div>
         </div>
       </div>
@@ -189,56 +192,89 @@ const ExperienceSection = () => {
 const SkillsSection = () => {
   const skillCategories = [
     {
-      title: "Programming Languages",
+      title: "Frontend Development",
       icon: <Code className="w-6 h-6" />,
-      skills: ["Flutter/Dart", "PHP/Laravel", "Python", "HTML/CSS", "Node.js"]
+      skills: ["React/Next.js", "TypeScript", "Tailwind CSS", "Flutter/Dart", "HTML5/CSS3"],
+      color: "from-blue-500 to-cyan-500"
+    },
+    {
+      title: "Backend Development", 
+      icon: <Server className="w-6 h-6" />,
+      skills: ["Node.js/Express", "PHP/Laravel", "Python/Django", "REST APIs", "GraphQL"],
+      color: "from-green-500 to-emerald-500"
+    },
+    {
+      title: "Database & Cloud",
+      icon: <Database className="w-6 h-6" />,
+      skills: ["MongoDB", "MySQL", "PostgreSQL", "AWS", "Firebase"],
+      color: "from-purple-500 to-pink-500"
+    },
+    {
+      title: "AI & Machine Learning",
+      icon: <Brain className="w-6 h-6" />,
+      skills: ["Python ML/AI", "TensorFlow", "Computer Vision", "NLP", "Data Science"],
+      color: "from-orange-500 to-red-500"
+    },
+    {
+      title: "DevOps & Tools",
+      icon: <Terminal className="w-6 h-6" />,
+      skills: ["Git/GitHub", "Docker", "CI/CD", "Linux", "VS Code"],
+      color: "from-teal-500 to-blue-500"
     },
     {
       title: "Design & Creative",
       icon: <Palette className="w-6 h-6" />,
-      skills: ["UI/UX Design", "Graphics Design", "Video Editing", "Social Media Design"]
-    },
-    {
-      title: "Web & Mobile",
-      icon: <Smartphone className="w-6 h-6" />,
-      skills: ["Mobile App Development", "Web Development", "Wix", "Responsive Design"]
-    },
-    {
-      title: "AI & Data",
-      icon: <Brain className="w-6 h-6" />,
-      skills: ["Python ML/AI", "Image Detection", "Face Recognition", "Data Analysis"]
-    },
-    {
-      title: "Digital Marketing",
-      icon: <Globe className="w-6 h-6" />,
-      skills: ["SEO", "Social Media Marketing", "Content Strategy", "Brand Design"]
+      skills: ["UI/UX Design", "Figma", "Adobe Creative Suite", "Responsive Design", "Prototyping"],
+      color: "from-pink-500 to-purple-500"
     }
   ];
 
   return (
-    <section id="skills" className="min-h-screen flex items-center py-20">
+    <section id="skills" className="min-h-screen flex items-center py-20 relative">
       <div className="container mx-auto px-6">
-        <h2 className="text-4xl md:text-5xl font-bold text-center mb-16 text-gradient">
-          Skills & Expertise
-        </h2>
-        <div className="max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {skillCategories.map((category, index) => (
-              <div key={index} className="glass p-6 rounded-xl border border-purple-500/30 hover:border-cyan-400/50 transition-all duration-300 animate-fade-in-up" style={{animationDelay: `${index * 0.1}s`}}>
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="text-cyan-400">{category.icon}</div>
-                  <h3 className="text-xl font-bold text-purple-300">{category.title}</h3>
-                </div>
-                <div className="space-y-2">
-                  {category.skills.map((skill, skillIndex) => (
-                    <div key={skillIndex} className="flex items-center gap-2">
-                      <div className="w-2 h-2 bg-cyan-400 rounded-full"></div>
-                      <span className="text-gray-300">{skill}</span>
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
+          {/* Left side - Terminal */}
+          <div className="relative">
+            <Terminal3D />
+          </div>
+          
+          {/* Right side - Skills */}
+          <div>
+            <h2 className="text-4xl md:text-5xl font-bold mb-8 text-gradient">
+              Tech Stack
+            </h2>
+            <p className="text-gray-300 mb-8">
+              Experienced in modern technologies and frameworks for building scalable applications.
+            </p>
+            
+            <div className="grid gap-4">
+              {skillCategories.map((category, index) => (
+                <div 
+                  key={index} 
+                  className="group glass p-4 rounded-lg border border-gray-700 hover:border-cyan-400/50 transition-all duration-300 animate-fade-in-up" 
+                  style={{animationDelay: `${index * 0.1}s`}}
+                >
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className={`p-2 rounded-lg bg-gradient-to-r ${category.color}`}>
+                      <div className="text-white">{category.icon}</div>
                     </div>
-                  ))}
+                    <h3 className="text-lg font-bold text-white group-hover:text-cyan-400 transition-colors">
+                      {category.title}
+                    </h3>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {category.skills.map((skill, skillIndex) => (
+                      <span 
+                        key={skillIndex} 
+                        className="px-3 py-1 bg-gray-800 text-gray-300 rounded-full text-sm border border-gray-600 hover:border-cyan-400/50 transition-colors"
+                      >
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </div>
@@ -420,6 +456,7 @@ const Index = () => {
   return (
     <div className="relative min-h-screen">
       <FlowingBackground />
+      <FloatingCode />
       <Navigation activeSection={activeSection} setActiveSection={setActiveSection} />
       
       <main className="relative z-10">
