@@ -1,69 +1,36 @@
 
 import React, { useState, useEffect } from 'react';
 import { ChevronDown, Mail, Phone, MapPin, Github, ExternalLink, Code, Palette, Database, Smartphone, Globe, Brain } from 'lucide-react';
+import FlowingBackground from '../components/FlowingBackground';
+import DeskSetup3D from '../components/DeskSetup3D';
 
-const AnimatedBackground = () => {
-  return (
-    <div className="fixed inset-0 overflow-hidden pointer-events-none">
-      {/* Matrix-like falling code */}
-      <div className="absolute inset-0">
-        {Array.from({ length: 50 }).map((_, i) => (
-          <div
-            key={i}
-            className="absolute text-purple-500/20 text-xs font-mono animate-matrix"
-            style={{
-              left: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 3}s`,
-              animationDuration: `${3 + Math.random() * 2}s`
-            }}
-          >
-            {Math.random() > 0.5 ? '0' : '1'}
-          </div>
-        ))}
-      </div>
-      
-      {/* Floating particles */}
-      <div className="absolute inset-0">
-        {Array.from({ length: 20 }).map((_, i) => (
-          <div
-            key={i}
-            className="absolute w-2 h-2 bg-cyan-400/30 rounded-full animate-float"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 6}s`
-            }}
-          />
-        ))}
-      </div>
-    </div>
-  );
-};
 
 const Navigation = ({ activeSection, setActiveSection }) => {
   const sections = [
-    { id: 'home', label: 'Home' },
-    { id: 'education', label: 'Education' },
-    { id: 'experience', label: 'Experience' },
-    { id: 'skills', label: 'Skills' },
-    { id: 'projects', label: 'Projects' },
+    { id: 'about', label: 'About' },
+    { id: 'work', label: 'Work' },
     { id: 'contact', label: 'Contact' }
   ];
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 glass">
+    <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-sm bg-background/20">
       <div className="container mx-auto px-6">
-        <div className="flex items-center justify-between h-16">
-          <div className="text-xl font-bold text-gradient">Prajal JK</div>
+        <div className="flex items-center justify-between h-20">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
+              <span className="text-background font-bold text-lg">P</span>
+            </div>
+            <span className="text-xl font-semibold text-foreground">Prajal | Full Stack Developer</span>
+          </div>
           <div className="hidden md:flex space-x-8">
             {sections.map((section) => (
               <button
                 key={section.id}
                 onClick={() => setActiveSection(section.id)}
-                className={`px-4 py-2 rounded-lg transition-all duration-300 ${
+                className={`px-4 py-2 text-lg font-medium transition-all duration-300 ${
                   activeSection === section.id
-                    ? 'bg-purple-600/30 text-purple-300 border border-purple-500/50'
-                    : 'text-gray-300 hover:text-purple-300 hover:bg-purple-600/10'
+                    ? 'text-primary'
+                    : 'text-muted-foreground hover:text-foreground'
                 }`}
               >
                 {section.label}
@@ -78,45 +45,50 @@ const Navigation = ({ activeSection, setActiveSection }) => {
 
 const HomeSection = () => {
   return (
-    <section id="home" className="min-h-screen flex items-center justify-center relative pt-16">
-      <div className="container mx-auto px-6 text-center">
-        <div className="animate-fade-in-up">
-          <h1 className="text-6xl md:text-8xl font-bold mb-4 animate-glow text-gradient">
-            Prajal Jung Kunwar
-          </h1>
-          <h2 className="text-2xl md:text-3xl text-cyan-400 mb-6 font-light">
-            Prajal JK
-          </h2>
-          <div className="text-lg text-gray-300 mb-8 space-y-2">
-            <p className="flex items-center justify-center gap-2">
+    <section id="home" className="min-h-screen flex items-center relative pt-20">
+      <div className="container mx-auto px-6">
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
+          {/* Left side - Text content */}
+          <div className="space-y-8">
+            <div className="space-y-4">
+              <h1 className="text-5xl md:text-7xl font-bold">
+                <span className="text-foreground">Hi, I'm </span>
+                <span className="text-primary">Prajal</span>
+              </h1>
+              <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl">
+                I Develop Attractive, user interfaces and web applications
+              </p>
+            </div>
+            
+            <div className="flex items-center gap-4 text-sm text-muted-foreground">
               <span>22 years old</span>
-              <span className="text-purple-400">|</span>
-              <MapPin className="w-4 h-4 text-cyan-400" />
-              <span>Pokhara, Nepal</span>
-            </p>
-          </div>
-          <p className="text-xl md:text-2xl text-gray-300 max-w-4xl mx-auto leading-relaxed mb-12">
-            Passionate about technology, AI/ML, and creating innovative digital solutions. 
-            I specialize in mobile app development, web technologies, and cutting-edge design, 
-            constantly pushing the boundaries of what's possible in the digital realm.
-          </p>
-          <div className="flex flex-wrap justify-center gap-4">
-            <div className="glass px-6 py-3 rounded-lg border border-purple-500/30">
-              <Phone className="w-5 h-5 inline mr-2 text-cyan-400" />
-              <span>+977 9825102356</span>
+              <div className="w-1 h-1 bg-primary rounded-full"></div>
+              <div className="flex items-center gap-1">
+                <MapPin className="w-4 h-4" />
+                <span>Pokhara, Nepal</span>
+              </div>
             </div>
-            <div className="glass px-6 py-3 rounded-lg border border-purple-500/30">
-              <Mail className="w-5 h-5 inline mr-2 text-cyan-400" />
-              <span>prajal@gmail.com</span>
-            </div>
-            <div className="glass px-6 py-3 rounded-lg border border-purple-500/30">
-              <Globe className="w-5 h-5 inline mr-2 text-cyan-400" />
-              <span>prajaljk.com.np</span>
+
+            <div className="flex flex-wrap gap-4">
+              <div className="flex items-center gap-2 px-4 py-2 bg-card border border-border rounded-lg">
+                <Phone className="w-4 h-4 text-accent" />
+                <span>+977 9825102356</span>
+              </div>
+              <div className="flex items-center gap-2 px-4 py-2 bg-card border border-border rounded-lg">
+                <Mail className="w-4 h-4 text-accent" />
+                <span>prajal@gmail.com</span>
+              </div>
+              <div className="flex items-center gap-2 px-4 py-2 bg-card border border-border rounded-lg">
+                <Globe className="w-4 h-4 text-accent" />
+                <span>prajaljk.com.np</span>
+              </div>
             </div>
           </div>
-        </div>
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-          <ChevronDown className="w-8 h-8 text-purple-400" />
+
+          {/* Right side - 3D Desk Setup */}
+          <div className="h-96 lg:h-[500px]">
+            <DeskSetup3D />
+          </div>
         </div>
       </div>
     </section>
@@ -447,7 +419,7 @@ const Index = () => {
 
   return (
     <div className="relative min-h-screen">
-      <AnimatedBackground />
+      <FlowingBackground />
       <Navigation activeSection={activeSection} setActiveSection={setActiveSection} />
       
       <main className="relative z-10">
