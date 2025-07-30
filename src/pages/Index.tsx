@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { Mail, Phone, MapPin, Github, ExternalLink, Code, Palette, Database, Smartphone, Globe, Brain, Server, Terminal } from 'lucide-react';
+import { Mail, Phone, MapPin, Github, ExternalLink, Code, Palette, Database, Smartphone, Globe, Brain, Server, Terminal, Menu, X } from 'lucide-react';
 import FlowingBackground from '../components/FlowingBackground';
 import DeskSetup3D from '../components/DeskSetup3D';
 import CodeEditor3D from '../components/CodeEditor3D';
@@ -9,38 +9,90 @@ import Terminal3D from '../components/Terminal3D';
 
 
 const Navigation = ({ activeSection, setActiveSection }) => {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  
   const sections = [
-    { id: 'about', label: 'About' },
-    { id: 'work', label: 'Work' },
+    { id: 'home', label: 'Home' },
+    { id: 'education', label: 'About' },
+    { id: 'experience', label: 'Experience' },
+    { id: 'skills', label: 'Skills' },
+    { id: 'projects', label: 'Work' },
     { id: 'contact', label: 'Contact' }
   ];
 
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+      setActiveSection(sectionId);
+      setIsMobileMenuOpen(false);
+    }
+  };
+
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-sm bg-background/20">
+    <nav className="fixed top-0 left-0 right-0 z-50 glass border-b border-purple-500/20">
       <div className="container mx-auto px-6">
         <div className="flex items-center justify-between h-20">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
-              <span className="text-background font-bold text-lg">P</span>
+          {/* Logo */}
+          <div 
+            className="flex items-center gap-3 cursor-pointer"
+            onClick={() => scrollToSection('home')}
+          >
+            <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-cyan-500 rounded-full flex items-center justify-center">
+              <span className="text-white font-bold text-lg">P</span>
             </div>
-            <span className="text-xl font-semibold text-foreground">Prajal | Full Stack Developer</span>
+            <span className="text-xl font-semibold text-white hidden sm:block">Prajal</span>
           </div>
+          
+          {/* Desktop Navigation */}
           <div className="hidden md:flex space-x-8">
             {sections.map((section) => (
               <button
                 key={section.id}
-                onClick={() => setActiveSection(section.id)}
-                className={`px-4 py-2 text-lg font-medium transition-all duration-300 ${
+                onClick={() => scrollToSection(section.id)}
+                className={`px-4 py-2 text-lg font-medium transition-all duration-300 relative group ${
                   activeSection === section.id
-                    ? 'text-primary'
-                    : 'text-muted-foreground hover:text-foreground'
+                    ? 'text-cyan-400'
+                    : 'text-gray-300 hover:text-white'
                 }`}
               >
                 {section.label}
+                <span className={`absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-purple-500 to-cyan-500 transition-transform duration-300 ${
+                  activeSection === section.id ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
+                }`}></span>
               </button>
             ))}
           </div>
+
+          {/* Mobile Menu Button */}
+          <button
+            className="md:hidden p-2 text-white hover:text-cyan-400 transition-colors"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          >
+            {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
         </div>
+
+        {/* Mobile Navigation */}
+        {isMobileMenuOpen && (
+          <div className="md:hidden absolute top-20 left-0 right-0 glass border-t border-purple-500/20 animate-fade-in">
+            <div className="px-6 py-4 space-y-2">
+              {sections.map((section) => (
+                <button
+                  key={section.id}
+                  onClick={() => scrollToSection(section.id)}
+                  className={`block w-full text-left px-4 py-3 text-lg font-medium transition-all duration-300 rounded-lg ${
+                    activeSection === section.id
+                      ? 'text-cyan-400 bg-purple-500/20'
+                      : 'text-gray-300 hover:text-white hover:bg-purple-500/10'
+                  }`}
+                >
+                  {section.label}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </nav>
   );
