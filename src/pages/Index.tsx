@@ -480,18 +480,6 @@ const Index = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
-  useEffect(() => {
-    if (activeSection !== 'home') {
-      scrollToSection(activeSection);
-    }
-  }, [activeSection]);
 
   return (
     <div className="relative min-h-screen">
