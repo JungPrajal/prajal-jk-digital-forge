@@ -1,6 +1,55 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 const DeskSetup3D = () => {
+  const [currentLine, setCurrentLine] = useState(0);
+  const [currentChar, setCurrentChar] = useState(0);
+  const [displayedCode, setDisplayedCode] = useState<string[]>([]);
+
+  const codeLines = [
+    "const portfolio = {",
+    "  developer: 'Prajal',",
+    "  skills: ['React', 'Node.js'],",
+    "  experience: 'Full Stack',",
+    "  passion: 'Innovation',",
+    "  status: 'Available'",
+    "};",
+    "",
+    "function buildAmazing() {",
+    "  return creativity + code;",
+    "}"
+  ];
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      if (currentLine < codeLines.length) {
+        const line = codeLines[currentLine];
+        if (currentChar < line.length) {
+          setDisplayedCode(prev => {
+            const newCode = [...prev];
+            if (!newCode[currentLine]) {
+              newCode[currentLine] = '';
+            }
+            newCode[currentLine] = line.substring(0, currentChar + 1);
+            return newCode;
+          });
+          setCurrentChar(prev => prev + 1);
+        } else {
+          setCurrentLine(prev => prev + 1);
+          setCurrentChar(0);
+        }
+      } else {
+        // Reset animation
+        setTimeout(() => {
+          setCurrentLine(0);
+          setCurrentChar(0);
+          setDisplayedCode([]);
+        }, 2000);
+      }
+    }, 100);
+
+    return () => clearInterval(timer);
+  }, [currentLine, currentChar]);
+
   return (
     <div className="w-full h-full flex items-center justify-center">
       {/* Simplified 3D-look desk setup using CSS */}
@@ -9,13 +58,33 @@ const DeskSetup3D = () => {
         <div className="relative mx-auto mb-8">
           <div className="w-64 h-40 bg-gradient-to-br from-card to-card/50 rounded-lg border border-border shadow-2xl transform perspective-1000 rotate-x-5">
             {/* Screen content */}
-            <div className="w-full h-full bg-background/90 rounded-lg p-4 relative overflow-hidden">
-              {/* Code lines */}
-              <div className="space-y-2">
-                <div className="h-2 bg-primary/60 rounded w-3/4 animate-pulse"></div>
-                <div className="h-2 bg-accent/60 rounded w-1/2 animate-pulse" style={{ animationDelay: '0.5s' }}></div>
-                <div className="h-2 bg-primary/40 rounded w-2/3 animate-pulse" style={{ animationDelay: '1s' }}></div>
-                <div className="h-2 bg-accent/40 rounded w-1/3 animate-pulse" style={{ animationDelay: '1.5s' }}></div>
+            <div className="w-full h-full bg-background/90 rounded-lg p-2 relative overflow-hidden font-mono text-xs">
+              {/* Terminal header */}
+              <div className="flex items-center gap-1 mb-2 pb-1 border-b border-border/30">
+                <div className="w-2 h-2 rounded-full bg-red-500"></div>
+                <div className="w-2 h-2 rounded-full bg-yellow-500"></div>
+                <div className="w-2 h-2 rounded-full bg-green-500"></div>
+                <span className="text-muted-foreground text-[8px] ml-1">code.js</span>
+              </div>
+              
+              {/* Animated code */}
+              <div className="space-y-1">
+                {displayedCode.map((line, index) => (
+                  <div key={index} className="flex">
+                    <span className="text-muted-foreground text-[8px] mr-2 w-4">{index + 1}</span>
+                    <span className={`text-[8px] ${
+                      line.includes('const') || line.includes('function') ? 'text-purple-400' :
+                      line.includes("'") ? 'text-green-400' :
+                      line.includes(':') ? 'text-blue-400' :
+                      'text-foreground'
+                    }`}>
+                      {line}
+                      {index === currentLine && (
+                        <span className="inline-block w-1 h-3 bg-primary animate-pulse ml-px"></span>
+                      )}
+                    </span>
+                  </div>
+                ))}
               </div>
               
               {/* Glowing effect */}
