@@ -192,22 +192,10 @@ const ExperienceSection = () => {
 const SkillsSection = () => {
   const skillCategories = [
     {
-      title: "Frontend Development",
-      icon: <Code className="w-6 h-6" />,
-      skills: ["React/Next.js", "TypeScript", "Tailwind CSS", "Flutter/Dart", "HTML5/CSS3"],
-      color: "from-blue-500 to-cyan-500"
-    },
-    {
       title: "Backend Development", 
       icon: <Server className="w-6 h-6" />,
-      skills: ["Node.js/Express", "PHP/Laravel", "Python/Django", "REST APIs", "GraphQL"],
+      skills: ["PHP/Laravel", "Python/Django"],
       color: "from-green-500 to-emerald-500"
-    },
-    {
-      title: "Database & Cloud",
-      icon: <Database className="w-6 h-6" />,
-      skills: ["MongoDB", "MySQL", "PostgreSQL", "AWS", "Firebase"],
-      color: "from-purple-500 to-pink-500"
     },
     {
       title: "AI & Machine Learning",
@@ -218,7 +206,7 @@ const SkillsSection = () => {
     {
       title: "DevOps & Tools",
       icon: <Terminal className="w-6 h-6" />,
-      skills: ["Git/GitHub", "Docker", "CI/CD", "Linux", "VS Code"],
+      skills: ["Git/GitHub", "VS Code"],
       color: "from-teal-500 to-blue-500"
     },
     {
