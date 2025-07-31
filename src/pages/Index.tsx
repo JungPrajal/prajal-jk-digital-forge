@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Mail, Phone, MapPin, Github, ExternalLink, Code, Palette, Database, Smartphone, Globe, Brain, Server, Terminal, Menu, X } from 'lucide-react';
 import FlowingBackground from '../components/FlowingBackground';
 import DeskSetup3D from '../components/DeskSetup3D';
-import CodeEditor3D from '../components/CodeEditor3D';
+import AnimatedCodeEditor from '../components/AnimatedCodeEditor';
 import FloatingCode from '../components/FloatingCode';
 import Terminal3D from '../components/Terminal3D';
 
@@ -142,7 +142,7 @@ const HomeSection = () => {
 
           {/* Right side - 3D Code Editor */}
           <div className="h-96 lg:h-[500px]">
-            <CodeEditor3D />
+            <AnimatedCodeEditor />
           </div>
         </div>
       </div>
