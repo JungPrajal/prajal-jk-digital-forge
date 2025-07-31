@@ -191,12 +191,21 @@ const EducationSection = () => {
         <div className="max-w-4xl mx-auto">
           <div 
             ref={cardRef}
-            className={`glass p-8 rounded-2xl border-2 transition-all duration-1000 transform ${
+            className={`glass p-8 rounded-2xl border-2 transition-all duration-1000 transform hover:scale-105 hover:shadow-2xl hover:shadow-cyan-400/30 hover:border-cyan-400/80 group cursor-pointer relative overflow-hidden ${
               isCardVisible 
                 ? 'opacity-100 scale-100 translate-y-0 border-cyan-400/50' 
                 : 'opacity-0 scale-95 translate-y-10 border-purple-500/30'
             }`}
           >
+            {/* Floating particles effect */}
+            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+              <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-cyan-400/60 rounded-full animate-bounce" style={{ animationDelay: '0s' }}></div>
+              <div className="absolute top-3/4 right-1/4 w-1 h-1 bg-purple-400/60 rounded-full animate-bounce" style={{ animationDelay: '0.3s' }}></div>
+              <div className="absolute top-1/2 left-3/4 w-1.5 h-1.5 bg-cyan-300/60 rounded-full animate-bounce" style={{ animationDelay: '0.6s' }}></div>
+            </div>
+            
+            {/* Gradient overlay */}
+            <div className="absolute inset-0 bg-gradient-to-br from-purple-600/5 to-cyan-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             <div className="flex items-start gap-6">
               <div className={`w-16 h-16 bg-gradient-to-r from-purple-600 to-cyan-500 rounded-xl flex items-center justify-center transition-all duration-700 transform ${
                 isCardVisible ? 'rotate-0 scale-100' : 'rotate-12 scale-90'
@@ -235,40 +244,65 @@ const EducationSection = () => {
 };
 
 const ExperienceCard = ({ exp, index, isVisible }) => {
+  const [isHovered, setIsHovered] = useState(false);
+  
   return (
     <div 
-      className={`glass p-6 rounded-xl border transition-all duration-1000 transform hover:scale-105 ${
+      className={`relative glass p-6 rounded-xl border transition-all duration-700 transform group cursor-pointer overflow-hidden ${
         isVisible 
           ? 'opacity-100 scale-100 translate-y-0 border-cyan-400/50 shadow-lg shadow-cyan-400/20' 
           : 'opacity-0 scale-90 translate-y-10 border-purple-500/30'
-      }`}
+      } ${isHovered ? 'translate-y-[-8px] shadow-2xl shadow-purple-500/30 border-purple-400/80' : ''}`}
       style={{ transitionDelay: `${index * 0.2}s` }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
-      <div className="flex flex-col md:flex-row md:items-center gap-4">
+      {/* Gradient overlay on hover */}
+      <div className={`absolute inset-0 bg-gradient-to-br from-purple-600/10 to-cyan-600/10 transition-opacity duration-500 ${
+        isHovered ? 'opacity-100' : 'opacity-0'
+      }`} />
+      
+      {/* Sliding bottom border */}
+      <div className={`absolute bottom-0 left-0 h-1 bg-gradient-to-r from-purple-500 to-cyan-500 transition-all duration-500 ${
+        isHovered ? 'w-full' : 'w-0'
+      }`} />
+      
+      <div className="flex flex-col md:flex-row md:items-center gap-4 relative z-10">
         <div className="flex-1">
-          <h3 className={`text-xl font-bold text-purple-300 mb-1 transition-all duration-700 transform ${
+          <h3 className={`text-xl font-bold mb-1 transition-all duration-700 transform ${
             isVisible ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'
-          }`} style={{ transitionDelay: `${index * 0.2 + 0.1}s` }}>
+          } ${isHovered ? 'text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400' : 'text-purple-300'}`} 
+          style={{ transitionDelay: `${index * 0.2 + 0.1}s` }}>
             {exp.title}
           </h3>
-          <p className={`text-cyan-400 text-lg mb-2 transition-all duration-700 transform ${
+          <p className={`text-lg mb-2 transition-all duration-700 transform ${
             isVisible ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'
-          }`} style={{ transitionDelay: `${index * 0.2 + 0.2}s` }}>
+          } ${isHovered ? 'text-cyan-300' : 'text-cyan-400'}`} 
+          style={{ transitionDelay: `${index * 0.2 + 0.2}s` }}>
             {exp.company}
           </p>
-          <p className={`text-gray-300 mb-3 transition-all duration-700 transform ${
+          <p className={`mb-3 transition-all duration-700 transform ${
             isVisible ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'
-          }`} style={{ transitionDelay: `${index * 0.2 + 0.3}s` }}>
+          } ${isHovered ? 'text-gray-200' : 'text-gray-300'}`} 
+          style={{ transitionDelay: `${index * 0.2 + 0.3}s` }}>
             {exp.description}
           </p>
         </div>
         <div className="text-right">
-          <span className={`px-4 py-2 bg-purple-600/20 text-purple-300 rounded-lg text-sm transition-all duration-700 transform ${
+          <span className={`px-4 py-2 bg-purple-600/20 rounded-lg text-sm transition-all duration-700 transform ${
             isVisible ? 'translate-x-0 opacity-100 scale-100' : 'translate-x-4 opacity-0 scale-90'
-          }`} style={{ transitionDelay: `${index * 0.2 + 0.4}s` }}>
+          } ${isHovered ? 'bg-purple-500/30 text-purple-200 scale-105' : 'text-purple-300'}`} 
+          style={{ transitionDelay: `${index * 0.2 + 0.4}s` }}>
             {exp.period}
           </span>
         </div>
+      </div>
+      
+      {/* Arrow reveal on hover */}
+      <div className={`absolute top-1/2 right-6 transform -translate-y-1/2 transition-all duration-300 ${
+        isHovered ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'
+      }`}>
+        <ExternalLink className="w-5 h-5 text-cyan-400" />
       </div>
     </div>
   );
@@ -377,22 +411,26 @@ const SkillsSection = () => {
               {skillCategories.map((category, index) => (
                 <div 
                   key={index} 
-                  className="group glass p-4 rounded-lg border border-gray-700 hover:border-cyan-400/50 transition-all duration-300 animate-fade-in-up" 
+                  className="group glass p-4 rounded-lg border border-gray-700 hover:border-cyan-400/50 transition-all duration-500 animate-fade-in-up hover:translate-y-[-4px] hover:shadow-xl hover:shadow-cyan-400/20 relative overflow-hidden" 
                   style={{animationDelay: `${index * 0.1}s`}}
                 >
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className={`p-2 rounded-lg bg-gradient-to-r ${category.color}`}>
+                  {/* Ripple effect background */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  
+                  <div className="flex items-center gap-3 mb-3 relative z-10">
+                    <div className={`p-2 rounded-lg bg-gradient-to-r ${category.color} transition-all duration-300 group-hover:rotate-3 group-hover:scale-110`}>
                       <div className="text-white">{category.icon}</div>
                     </div>
-                    <h3 className="text-lg font-bold text-white group-hover:text-cyan-400 transition-colors">
+                    <h3 className="text-lg font-bold text-white group-hover:text-cyan-400 transition-all duration-300 group-hover:translate-x-2">
                       {category.title}
                     </h3>
                   </div>
-                  <div className="flex flex-wrap gap-2">
+                  <div className="flex flex-wrap gap-2 relative z-10">
                     {category.skills.map((skill, skillIndex) => (
                       <span 
                         key={skillIndex} 
-                        className="px-3 py-1 bg-gray-800 text-gray-300 rounded-full text-sm border border-gray-600 hover:border-cyan-400/50 transition-colors"
+                        className="px-3 py-1 bg-gray-800 text-gray-300 rounded-full text-sm border border-gray-600 hover:border-cyan-400/50 hover:bg-cyan-900/20 hover:text-cyan-300 hover:scale-105 transition-all duration-300 cursor-pointer"
+                        style={{ transitionDelay: `${skillIndex * 50}ms` }}
                       >
                         {skill}
                       </span>
@@ -451,22 +489,43 @@ const ProjectsSection = () => {
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-2 gap-8">
             {projects.map((project, index) => (
-              <div key={index} className="glass p-6 rounded-xl border border-purple-500/30 hover:border-cyan-400/50 transition-all duration-300 group animate-fade-in-up" style={{animationDelay: `${index * 0.1}s`}}>
-                <div className="flex justify-between items-start mb-4">
-                  <h3 className="text-xl font-bold text-purple-300 group-hover:text-cyan-300 transition-colors">
-                    {project.title}
-                  </h3>
-                  <span className="px-3 py-1 bg-cyan-600/20 text-cyan-300 rounded-full text-sm">
-                    {project.type}
-                  </span>
-                </div>
-                <p className="text-gray-300 mb-4 leading-relaxed">{project.description}</p>
-                <div className="flex flex-wrap gap-2">
-                  {project.tech.map((tech, techIndex) => (
-                    <span key={techIndex} className="px-3 py-1 bg-purple-600/20 text-purple-300 rounded-full text-sm">
-                      {tech}
+              <div 
+                key={index} 
+                className="relative glass p-6 rounded-xl border border-purple-500/30 hover:border-cyan-400/50 transition-all duration-500 group animate-fade-in-up hover:translate-y-[-6px] hover:shadow-2xl hover:shadow-purple-500/20 cursor-pointer overflow-hidden" 
+                style={{animationDelay: `${index * 0.1}s`}}
+              >
+                {/* Click ripple effect */}
+                <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                
+                {/* Border glow effect */}
+                <div className="absolute inset-0 rounded-xl border border-transparent bg-gradient-to-r from-purple-500/50 to-cyan-500/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-sm" />
+                
+                <div className="relative z-10">
+                  <div className="flex justify-between items-start mb-4">
+                    <h3 className="text-xl font-bold text-purple-300 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-purple-400 group-hover:to-cyan-400 transition-all duration-300">
+                      {project.title}
+                    </h3>
+                    <span className="px-3 py-1 bg-cyan-600/20 text-cyan-300 rounded-full text-sm group-hover:bg-cyan-500/30 group-hover:scale-105 transition-all duration-300">
+                      {project.type}
                     </span>
-                  ))}
+                  </div>
+                  <p className="text-gray-300 mb-4 leading-relaxed group-hover:text-gray-200 transition-colors duration-300">{project.description}</p>
+                  <div className="flex flex-wrap gap-2">
+                    {project.tech.map((tech, techIndex) => (
+                      <span 
+                        key={techIndex} 
+                        className="px-3 py-1 bg-purple-600/20 text-purple-300 rounded-full text-sm hover:bg-purple-500/30 hover:text-purple-200 hover:scale-105 transition-all duration-300 cursor-pointer"
+                        style={{ transitionDelay: `${techIndex * 100}ms` }}
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                  
+                  {/* Arrow reveal on hover */}
+                  <div className="absolute top-6 right-6 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-2 group-hover:translate-x-0">
+                    <ExternalLink className="w-5 h-5 text-cyan-400" />
+                  </div>
                 </div>
               </div>
             ))}
