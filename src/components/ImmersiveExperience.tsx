@@ -88,8 +88,8 @@ const ImmersiveExperienceCard: React.FC<ImmersiveExperienceCardProps> = ({
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div className="max-w-4xl mx-auto px-6">
-        <div className={`relative bg-card p-8 rounded-2xl border transition-all duration-300 transform group cursor-pointer overflow-hidden ${
+      <div className="max-w-6xl mx-auto px-8">
+        <div className={`relative bg-card p-12 rounded-2xl border transition-all duration-300 transform group cursor-pointer overflow-hidden ${
           isActive 
             ? 'border-cyan-400/60 shadow-2xl shadow-cyan-400/40' 
             : 'border-purple-500/30 shadow-lg shadow-purple-500/20'
