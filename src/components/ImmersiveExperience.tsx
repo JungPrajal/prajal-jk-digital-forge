@@ -28,80 +28,65 @@ const ImmersiveExperienceCard: React.FC<ImmersiveExperienceCardProps> = ({
   const isActive = scrollProgress >= index * 0.25 && scrollProgress < (index + 1) * 0.25;
   const isPrevious = scrollProgress > (index + 1) * 0.25;
   
-  // Calculate transforms based on card state
-  let rotateX = 60;
-  let translateZ = -300;
-  let scale = 0.85;
+  // Calculate transforms for card shuffling effect
+  let translateY = 0;
+  let translateZ = 0;
+  let scale = 1;
   let opacity = 1;
-  let translateY = 50;
   
   if (isActive || cardProgress > 0) {
-    // Active card animation
-    rotateX = 60 - (cardProgress * 60);
-    translateZ = -300 + (cardProgress * 300);
-    scale = 0.85 + (cardProgress * 0.15);
+    // Active card - fully visible at front
+    translateY = 0;
+    translateZ = 0;
+    scale = 1;
     opacity = 1;
-    translateY = 50 - (cardProgress * 50);
-  }
-  
-  if (isPrevious) {
-    // Previous cards in background stack
-    const stackDepth = Math.min(3, scrollProgress * 4 - index - 1);
-    rotateX = 25 + (stackDepth * 10);
-    translateZ = -100 - (stackDepth * 50);
-    scale = 0.9 - (stackDepth * 0.05);
+  } else if (index > Math.floor(scrollProgress * 4)) {
+    // Future cards - stacked behind with increasing depth
+    const stackDepth = index - Math.floor(scrollProgress * 4);
+    translateY = stackDepth * 8; // Small vertical offset for depth
+    translateZ = -stackDepth * 20; // Push cards back
+    scale = 1 - (stackDepth * 0.02); // Slight scale reduction
     opacity = 1;
-    translateY = -20 - (stackDepth * 10);
+  } else {
+    // Previous cards - slide out behind
+    const behindDepth = Math.floor(scrollProgress * 4) - index;
+    translateY = -behindDepth * 8;
+    translateZ = -behindDepth * 30;
+    scale = 1 - (behindDepth * 0.03);
+    opacity = Math.max(0.3, 1 - (behindDepth * 0.2));
   }
   
   // Exit animation when scrolling past section
   if (isExiting) {
-    rotateX = -45;
-    translateZ = 200;
-    scale = 1.2;
-    opacity = 0;
     translateY = -100;
+    translateZ = 100;
+    scale = 0.8;
+    opacity = 0;
   }
   
   const cardStyle = {
-    transform: `
-      perspective(1200px) 
-      rotateX(${rotateX}deg) 
-      translateZ(${translateZ}px) 
-      translateY(${translateY}px) 
-      scale(${scale})
-    `,
+    transform: `translateY(${translateY}px) translateZ(${translateZ}px) scale(${scale})`,
     opacity,
-    transition: 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-    transformStyle: 'preserve-3d' as const,
-    backfaceVisibility: 'hidden' as const,
+    transition: 'all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
     willChange: 'transform, opacity',
   };
 
   return (
     <div 
-      className="absolute inset-x-0 top-1/2 transform -translate-y-1/2 z-10"
+      className="absolute inset-x-0 top-1/2 transform -translate-y-1/2"
       style={{ 
         ...cardStyle,
-        filter: `drop-shadow(0 ${Math.max(10, translateZ * -0.1)}px ${Math.max(20, translateZ * -0.2)}px rgba(139, 92, 246, 0.3))`
+        zIndex: index === Math.floor(scrollProgress * 4) ? 20 : 10 - index
       }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div className="max-w-6xl mx-auto px-8">
-        <div className={`relative bg-card p-12 rounded-2xl border transition-all duration-300 transform group cursor-pointer overflow-hidden ${
+      <div className="max-w-4xl mx-auto px-8">
+        <div className={`relative bg-card p-8 rounded-xl border transition-all duration-300 transform group cursor-pointer shadow-xl ${
           isActive 
-            ? 'border-cyan-400/60 shadow-2xl shadow-cyan-400/40' 
-            : 'border-purple-500/30 shadow-lg shadow-purple-500/20'
-        } ${isHovered ? 'border-purple-400/80 shadow-3xl shadow-purple-500/50' : ''}`}>
-          
-          {/* Enhanced gradient overlay */}
-          <div className={`absolute inset-0 bg-gradient-to-br from-purple-600/20 to-cyan-600/20 transition-opacity duration-500 ${
-            isHovered || isActive ? 'opacity-100' : 'opacity-0'
-          }`} />
-          
-          {/* 3D depth shadows */}
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/20 pointer-events-none" />
+            ? 'border-cyan-400/60 shadow-2xl shadow-cyan-400/20' 
+            : 'border-purple-500/30 shadow-lg shadow-purple-500/10'
+        } ${isHovered ? 'border-purple-400/80 shadow-2xl shadow-purple-500/30' : ''}`}>
           
           {/* Animated bottom border */}
           <div className={`absolute bottom-0 left-0 h-1 bg-gradient-to-r from-purple-500 via-cyan-500 to-purple-500 transition-all duration-800 ${
@@ -110,26 +95,26 @@ const ImmersiveExperienceCard: React.FC<ImmersiveExperienceCardProps> = ({
           
           <div className="flex flex-col md:flex-row md:items-center gap-6 relative z-10">
             <div className="flex-1">
-              <h3 className={`text-2xl md:text-3xl font-bold mb-2 transition-all duration-700 ${
+              <h3 className={`text-2xl md:text-3xl font-bold mb-2 transition-all duration-300 ${
                 isActive || isHovered 
                   ? 'text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400' 
-                  : 'text-purple-300'
+                  : 'text-white'
               }`}>
                 {exp.title}
               </h3>
-              <p className={`text-xl mb-3 transition-all duration-700 ${
+              <p className={`text-xl mb-3 transition-all duration-300 ${
                 isActive || isHovered ? 'text-cyan-300' : 'text-cyan-400'
               }`}>
                 {exp.company}
               </p>
-              <p className={`text-lg mb-4 leading-relaxed transition-all duration-700 ${
+              <p className={`text-lg mb-4 leading-relaxed transition-all duration-300 ${
                 isActive || isHovered ? 'text-gray-200' : 'text-gray-300'
               }`}>
                 {exp.description}
               </p>
             </div>
             <div className="text-right">
-              <span className={`px-6 py-3 bg-purple-600/20 rounded-xl text-base font-medium transition-all duration-700 ${
+              <span className={`px-6 py-3 bg-purple-600/20 rounded-xl text-base font-medium transition-all duration-300 ${
                 isActive || isHovered 
                   ? 'bg-purple-500/40 text-purple-200 scale-105 shadow-lg shadow-purple-500/30' 
                   : 'text-purple-300'
@@ -139,13 +124,11 @@ const ImmersiveExperienceCard: React.FC<ImmersiveExperienceCardProps> = ({
             </div>
           </div>
           
-          {/* Enhanced arrow reveal */}
-          <div className={`absolute top-1/2 right-8 transform -translate-y-1/2 transition-all duration-500 ${
-            isHovered || isActive ? 'translate-x-0 opacity-100 scale-110' : 'translate-x-6 opacity-0'
+          {/* Arrow indicator */}
+          <div className={`absolute top-1/2 right-8 transform -translate-y-1/2 transition-all duration-300 ${
+            isHovered || isActive ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'
           }`}>
-            <div className="p-2 rounded-full bg-cyan-500/20 backdrop-blur-sm">
-              <ExternalLink className="w-6 h-6 text-cyan-400" />
-            </div>
+            <ExternalLink className="w-6 h-6 text-cyan-400" />
           </div>
         </div>
       </div>
@@ -228,17 +211,13 @@ const ImmersiveExperience: React.FC = () => {
     <section 
       ref={sectionRef}
       id="experience" 
-      className="relative min-h-[400vh] py-20"
-      style={{ 
-        perspective: '1200px',
-        transformStyle: 'preserve-3d'
-      }}
+      className="relative min-h-[400vh]"
     >
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-background via-background/95 to-background" />
       
-      {/* Section title */}
-      <div className="sticky top-20 z-20 text-center mb-16">
+      {/* Section title - positioned at top with no gap to cards */}
+      <div className="sticky top-20 z-30 text-center py-8">
         <h2 className="text-4xl md:text-6xl font-bold text-gradient">
           Professional Journey
         </h2>
@@ -247,9 +226,9 @@ const ImmersiveExperience: React.FC = () => {
         </p>
       </div>
       
-      {/* 3D Card Stack Container */}
+      {/* Card Stack Container - positioned directly below title */}
       <div className="sticky top-0 h-screen flex items-center justify-center">
-        <div className="relative w-full h-full" style={{ perspective: '1200px' }}>
+        <div className="relative w-full h-full">
           {experiences.map((exp, index) => (
             <ImmersiveExperienceCard
               key={index}
