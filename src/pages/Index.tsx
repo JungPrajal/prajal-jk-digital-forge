@@ -39,8 +39,12 @@ const Navigation = ({ activeSection, setActiveSection }) => {
             className="flex items-center gap-3 cursor-pointer"
             onClick={() => scrollToSection('home')}
           >
-            <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-cyan-500 rounded-full flex items-center justify-center">
-              <span className="text-white font-bold text-lg">P</span>
+            <div className="w-10 h-10 flex items-center justify-center">
+              <img 
+                src="/lovable-uploads/9ff0586a-8ee7-454c-9fe3-00ce1b180ee8.png" 
+                alt="JK Logo" 
+                className="w-10 h-10 object-contain"
+              />
             </div>
             <span className="text-xl font-semibold text-white hidden sm:block">Prajal</span>
           </div>
