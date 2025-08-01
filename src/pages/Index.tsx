@@ -6,6 +6,7 @@ import DeskSetup3D from '../components/DeskSetup3D';
 import AnimatedCodeEditor from '../components/AnimatedCodeEditor';
 import FloatingCode from '../components/FloatingCode';
 import Terminal3D from '../components/Terminal3D';
+import ImmersiveExperience from '../components/ImmersiveExperience';
 
 
 const Navigation = ({ activeSection, setActiveSection }) => {
@@ -635,7 +636,7 @@ const Index = () => {
       <main className="relative z-10">
         <HomeSection />
         <EducationSection />
-        <ExperienceSection />
+        <ImmersiveExperience />
         <SkillsSection />
         <ProjectsSection />
         <ContactSection />
