@@ -32,7 +32,7 @@ const ImmersiveExperienceCard: React.FC<ImmersiveExperienceCardProps> = ({
   let rotateX = 60;
   let translateZ = -300;
   let scale = 0.85;
-  let opacity = 0.4;
+  let opacity = 1;
   let translateY = 50;
   
   if (isActive || cardProgress > 0) {
@@ -40,7 +40,7 @@ const ImmersiveExperienceCard: React.FC<ImmersiveExperienceCardProps> = ({
     rotateX = 60 - (cardProgress * 60);
     translateZ = -300 + (cardProgress * 300);
     scale = 0.85 + (cardProgress * 0.15);
-    opacity = 0.4 + (cardProgress * 0.6);
+    opacity = 1;
     translateY = 50 - (cardProgress * 50);
   }
   
@@ -50,7 +50,7 @@ const ImmersiveExperienceCard: React.FC<ImmersiveExperienceCardProps> = ({
     rotateX = 25 + (stackDepth * 10);
     translateZ = -100 - (stackDepth * 50);
     scale = 0.9 - (stackDepth * 0.05);
-    opacity = 0.6 - (stackDepth * 0.1);
+    opacity = 1;
     translateY = -20 - (stackDepth * 10);
   }
   
@@ -72,7 +72,7 @@ const ImmersiveExperienceCard: React.FC<ImmersiveExperienceCardProps> = ({
       scale(${scale})
     `,
     opacity,
-    transition: 'all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+    transition: 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
     transformStyle: 'preserve-3d' as const,
     backfaceVisibility: 'hidden' as const,
     willChange: 'transform, opacity',
@@ -89,7 +89,7 @@ const ImmersiveExperienceCard: React.FC<ImmersiveExperienceCardProps> = ({
       onMouseLeave={() => setIsHovered(false)}
     >
       <div className="max-w-4xl mx-auto px-6">
-        <div className={`relative glass p-8 rounded-2xl border transition-all duration-700 transform group cursor-pointer overflow-hidden ${
+        <div className={`relative bg-card p-8 rounded-2xl border transition-all duration-300 transform group cursor-pointer overflow-hidden ${
           isActive 
             ? 'border-cyan-400/60 shadow-2xl shadow-cyan-400/40' 
             : 'border-purple-500/30 shadow-lg shadow-purple-500/20'
