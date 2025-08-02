@@ -2,10 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Mail, Phone, MapPin, Github, ExternalLink, Code, Palette, Database, Smartphone, Globe, Brain, Server, Terminal, Menu, X } from 'lucide-react';
 import FlowingBackground from '../components/FlowingBackground';
-import DeskSetup3D from '../components/DeskSetup3D';
-import AnimatedCodeEditor from '../components/AnimatedCodeEditor';
-import FloatingCode from '../components/FloatingCode';
-import Terminal3D from '../components/Terminal3D';
+import Gaming3DSetup from '../components/Gaming3DSetup';
 import ImmersiveExperience from '../components/ImmersiveExperience';
 
 
@@ -114,52 +111,8 @@ const Navigation = ({ activeSection, setActiveSection }) => {
 
 const HomeSection = () => {
   return (
-    <section id="home" className="min-h-screen flex items-center relative pt-20">
-      <div className="container mx-auto px-6">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Left side - Text content */}
-          <div className="space-y-8">
-            <div className="space-y-4">
-              <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold leading-tight">
-                <span className="text-foreground">Hi, I'm </span>
-                <span className="text-primary">Prajal</span>
-              </h1>
-              <p className="text-lg sm:text-xl md:text-2xl text-muted-foreground max-w-2xl">
-                I Develop Attractive, user interfaces and web applications
-              </p>
-            </div>
-            
-            <div className="flex items-center gap-4 text-sm text-muted-foreground">
-              <span>22 years old</span>
-              <div className="w-1 h-1 bg-primary rounded-full"></div>
-              <div className="flex items-center gap-1">
-                <MapPin className="w-4 h-4" />
-                <span>Pokhara, Nepal</span>
-              </div>
-            </div>
-
-            <div className="flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-4">
-              <div className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-card border border-border rounded-lg text-sm sm:text-base">
-                <Phone className="w-4 h-4 text-accent flex-shrink-0" />
-                <span className="truncate">+977 9825102356</span>
-              </div>
-              <div className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-card border border-border rounded-lg text-sm sm:text-base">
-                <Mail className="w-4 h-4 text-accent flex-shrink-0" />
-                <span className="truncate">prajal@gmail.com</span>
-              </div>
-              <div className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-card border border-border rounded-lg text-sm sm:text-base">
-                <Globe className="w-4 h-4 text-accent flex-shrink-0" />
-                <span className="truncate">prajaljk.com.np</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Right side - 3D Code Editor */}
-          <div className="h-96 lg:h-[500px]">
-            <AnimatedCodeEditor />
-          </div>
-        </div>
-      </div>
+    <section id="home" className="relative">
+      <Gaming3DSetup />
     </section>
   );
 };
@@ -407,9 +360,16 @@ const SkillsSection = () => {
     <section id="skills" className="min-h-screen flex items-center py-20 relative">
       <div className="container mx-auto px-6">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Left side - Terminal */}
+          {/* Left side - Skills Overview */}
           <div className="relative">
-            <Terminal3D />
+            <div className="glass p-8 rounded-2xl border border-cyan-400/30">
+              <h3 className="text-2xl font-bold text-gradient mb-6">Development Philosophy</h3>
+              <p className="text-gray-300 leading-relaxed">
+                I believe in creating solutions that not only function flawlessly but also provide 
+                exceptional user experiences. My approach combines cutting-edge technology with 
+                practical problem-solving to deliver applications that make a real difference.
+              </p>
+            </div>
           </div>
           
           {/* Right side - Skills */}
@@ -643,7 +603,6 @@ const Index = () => {
   return (
     <div className="relative min-h-screen">
       <FlowingBackground />
-      <FloatingCode />
       <Navigation activeSection={activeSection} setActiveSection={setActiveSection} />
       
       <main className="relative z-10">
