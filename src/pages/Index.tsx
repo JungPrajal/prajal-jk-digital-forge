@@ -24,7 +24,16 @@ const Navigation = ({ activeSection, setActiveSection }) => {
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      // Better mobile scroll handling
+      const headerOffset = 80;
+      const elementPosition = element.offsetTop;
+      const offsetPosition = elementPosition - headerOffset;
+      
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+      
       setActiveSection(sectionId);
       setIsMobileMenuOpen(false);
     }
@@ -71,7 +80,7 @@ const Navigation = ({ activeSection, setActiveSection }) => {
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden p-2 text-white hover:text-cyan-400 transition-colors"
+            className="md:hidden p-3 text-white hover:text-cyan-400 transition-colors bg-gray-800/80 rounded-lg border border-purple-500/30"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
             {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -80,7 +89,7 @@ const Navigation = ({ activeSection, setActiveSection }) => {
 
         {/* Mobile Navigation */}
         {isMobileMenuOpen && (
-          <div className="md:hidden absolute top-20 left-0 right-0 glass border-t border-purple-500/20 animate-fade-in">
+          <div className="md:hidden absolute top-20 left-0 right-0 bg-gray-900/95 backdrop-blur-md border-t border-purple-500/30 animate-fade-in shadow-xl">
             <div className="px-6 py-4 space-y-2">
               {sections.map((section) => (
                 <button
@@ -88,8 +97,8 @@ const Navigation = ({ activeSection, setActiveSection }) => {
                   onClick={() => scrollToSection(section.id)}
                   className={`block w-full text-left px-4 py-3 text-lg font-medium transition-all duration-300 rounded-lg ${
                     activeSection === section.id
-                      ? 'text-cyan-400 bg-purple-500/20'
-                      : 'text-gray-300 hover:text-white hover:bg-purple-500/10'
+                      ? 'text-cyan-400 bg-purple-500/30'
+                      : 'text-gray-200 hover:text-white hover:bg-purple-500/20'
                   }`}
                 >
                   {section.label}
@@ -111,11 +120,11 @@ const HomeSection = () => {
           {/* Left side - Text content */}
           <div className="space-y-8">
             <div className="space-y-4">
-              <h1 className="text-5xl md:text-7xl font-bold">
+              <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold leading-tight">
                 <span className="text-foreground">Hi, I'm </span>
                 <span className="text-primary">Prajal</span>
               </h1>
-              <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl">
+              <p className="text-lg sm:text-xl md:text-2xl text-muted-foreground max-w-2xl">
                 I Develop Attractive, user interfaces and web applications
               </p>
             </div>
@@ -129,18 +138,18 @@ const HomeSection = () => {
               </div>
             </div>
 
-            <div className="flex flex-wrap gap-4">
-              <div className="flex items-center gap-2 px-4 py-2 bg-card border border-border rounded-lg">
-                <Phone className="w-4 h-4 text-accent" />
-                <span>+977 9825102356</span>
+            <div className="flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-4">
+              <div className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-card border border-border rounded-lg text-sm sm:text-base">
+                <Phone className="w-4 h-4 text-accent flex-shrink-0" />
+                <span className="truncate">+977 9825102356</span>
               </div>
-              <div className="flex items-center gap-2 px-4 py-2 bg-card border border-border rounded-lg">
-                <Mail className="w-4 h-4 text-accent" />
-                <span>prajal@gmail.com</span>
+              <div className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-card border border-border rounded-lg text-sm sm:text-base">
+                <Mail className="w-4 h-4 text-accent flex-shrink-0" />
+                <span className="truncate">prajal@gmail.com</span>
               </div>
-              <div className="flex items-center gap-2 px-4 py-2 bg-card border border-border rounded-lg">
-                <Globe className="w-4 h-4 text-accent" />
-                <span>prajaljk.com.np</span>
+              <div className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-card border border-border rounded-lg text-sm sm:text-base">
+                <Globe className="w-4 h-4 text-accent flex-shrink-0" />
+                <span className="truncate">prajaljk.com.np</span>
               </div>
             </div>
           </div>
