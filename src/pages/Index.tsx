@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Mail, Phone, MapPin, Github, ExternalLink, Code, Palette, Database, Smartphone, Globe, Brain, Server, Terminal, Menu, X } from 'lucide-react';
 import FlowingBackground from '../components/FlowingBackground';
-import ImmersiveExperience from '../components/ImmersiveExperience';
+import HeroSection from '../components/HeroSection';
 
 
 const Navigation = ({ activeSection, setActiveSection }) => {
@@ -111,7 +111,7 @@ const Navigation = ({ activeSection, setActiveSection }) => {
 const HomeSection = () => {
   return (
     <section id="home" className="relative">
-      <ImmersiveExperience />
+      <HeroSection />
     </section>
   );
 };
