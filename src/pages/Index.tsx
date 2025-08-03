@@ -2,7 +2,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Mail, Phone, MapPin, Github, ExternalLink, Code, Palette, Database, Smartphone, Globe, Brain, Server, Terminal, Menu, X } from 'lucide-react';
 import FlowingBackground from '../components/FlowingBackground';
-import Gaming3DSetup from '../components/Gaming3DSetup';
 import ImmersiveExperience from '../components/ImmersiveExperience';
 
 
@@ -112,7 +111,7 @@ const Navigation = ({ activeSection, setActiveSection }) => {
 const HomeSection = () => {
   return (
     <section id="home" className="relative">
-      <Gaming3DSetup />
+      <ImmersiveExperience />
     </section>
   );
 };
@@ -608,7 +607,7 @@ const Index = () => {
       <main className="relative z-10">
         <HomeSection />
         <EducationSection />
-        <ImmersiveExperience />
+        <ExperienceSection />
         <SkillsSection />
         <ProjectsSection />
         <ContactSection />
