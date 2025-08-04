@@ -109,8 +109,21 @@
   body {
     @apply bg-background text-foreground font-mono;
     background: linear-gradient(135deg, #0a0a0a 0%, #1a0a1a 50%, #0a0a1a 100%);
+    background-attachment: fixed;
     min-height: 100vh;
     overflow-x: hidden;
+  }
+  
+  /* Ensure html also has dark background */
+  html {
+    background: #0a0a0a;
+    min-height: 100vh;
+  }
+  
+  /* Fix mobile background issues */
+  #root {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a0a1a 50%, #0a0a1a 100%);
   }
   
   /* Mobile optimizations */
