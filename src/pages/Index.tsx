@@ -301,6 +301,12 @@ const ExperienceSection = () => {
       company: "Xdezo Academy",
       period: "Internship",
       description: "Developed an e-learning mobile app using Flutter/Dart with Node.js backend integration."
+    },
+    {
+      title: "Website Development",
+      company: "Lakecity Coffee",
+      period: "Project",
+      description: "Designed and developed the official Lakecity Coffee website with responsive UI, performance, and SEO optimizations."
     }
   ];
 
