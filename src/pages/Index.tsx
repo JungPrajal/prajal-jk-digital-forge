@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { Mail, Phone, MapPin, Github, ExternalLink, Code, Palette, Database, Smartphone, Globe, Brain, Server, Terminal, Menu, X } from 'lucide-react';
-import FlowingBackground from '../components/FlowingBackground';
+import ParticleField3D from '../components/ParticleField3D';
 import HeroSection from '../components/HeroSection';
 
 
@@ -607,7 +607,7 @@ const Index = () => {
 
   return (
     <div className="relative min-h-screen">
-      <FlowingBackground />
+      <ParticleField3D />
       <Navigation activeSection={activeSection} setActiveSection={setActiveSection} />
       
       <main className="relative z-10">
