@@ -426,104 +426,251 @@ const SkillsSection = () => {
 };
 
 const ProjectsSection = () => {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const [hoveredColor, setHoveredColor] = useState<string | null>(null);
+
   const projects = [
     {
       title: "E-commerce Mobile App",
       description: "College project developed using Flutter/Dart with modern UI/UX design and full shopping functionality.",
       tech: ["Flutter", "Dart", "Mobile Development"],
-      type: "Mobile App"
+      type: "Mobile App",
+      color: "#06b6d4",
     },
     {
       title: "E-learning Mobile App",
       description: "Internship project with comprehensive learning management system, built with Flutter frontend and Node.js backend.",
       tech: ["Flutter", "Dart", "Node.js", "Backend API"],
-      type: "Full Stack"
+      type: "Full Stack",
+      color: "#8b5cf6",
     },
     {
       title: "E-commerce Clothing App",
       description: "Java-based clothing store application with inventory management and user authentication.",
       tech: ["Java", "Object-Oriented Programming"],
-      type: "Desktop App"
+      type: "Desktop App",
+      color: "#f59e0b",
     },
     {
       title: "AI Image & Face Recognition",
       description: "Python-based computer vision project implementing image detection and facial recognition algorithms.",
       tech: ["Python", "OpenCV", "Machine Learning", "AI"],
-      type: "AI/ML"
+      type: "AI/ML",
+      color: "#10b981",
     },
     {
       title: "Fast Track Repair Service Website",
       description: "Business website with SEO optimization, responsive design, and integrated booking system.",
       tech: ["Wix", "SEO", "Web Design", "Digital Marketing"],
-      type: "Web Development"
-    }
+      type: "Web Development",
+      color: "#ec4899",
+    },
   ];
 
+  // Horizontal scroll on vertical scroll (pin section)
+  useEffect(() => {
+    const section = sectionRef.current;
+    const track = trackRef.current;
+    if (!section || !track) return;
+
+    const handleScroll = () => {
+      const rect = section.getBoundingClientRect();
+      const sectionTop = section.offsetTop;
+      const scrollY = window.scrollY;
+      const sectionHeight = section.offsetHeight;
+      const viewportH = window.innerHeight;
+      const scrollableDistance = sectionHeight - viewportH;
+
+      if (scrollableDistance <= 0) return;
+
+      const progress = Math.max(0, Math.min(1, (scrollY - sectionTop) / scrollableDistance));
+      const maxTranslate = track.scrollWidth - window.innerWidth;
+      track.style.transform = `translateX(${-progress * maxTranslate}px)`;
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
-    <section id="projects" className="min-h-screen flex items-center py-20">
-      <div className="container mx-auto px-6">
-        <h2 className="text-4xl md:text-5xl font-bold text-center mb-16 text-gradient">
-          Featured Projects
-        </h2>
-        <div className="max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-8">
+    <>
+      {/* Global color overlay */}
+      <div
+        className="fixed inset-0 z-[5] pointer-events-none transition-all duration-700"
+        style={{
+          background: hoveredColor
+            ? `radial-gradient(ellipse at center, ${hoveredColor}15 0%, transparent 70%)`
+            : 'transparent',
+        }}
+      />
+
+      <section
+        id="projects"
+        ref={sectionRef}
+        className="relative"
+        style={{ height: `${projects.length * 100}vh` }}
+      >
+        <div className="sticky top-0 h-screen overflow-hidden flex flex-col justify-center">
+          <h2 className="text-4xl md:text-5xl font-bold text-center mb-8 text-gradient relative z-10 px-6">
+            Featured Projects
+          </h2>
+
+          <div
+            ref={trackRef}
+            className="flex gap-8 px-[10vw] items-center will-change-transform"
+            style={{ width: 'max-content' }}
+          >
             {projects.map((project, index) => (
-              <div 
-                key={index} 
-                className="relative glass p-6 rounded-xl border border-purple-500/30 hover:border-cyan-400/50 transition-all duration-500 group animate-fade-in-up hover:translate-y-[-6px] hover:shadow-2xl hover:shadow-purple-500/20 cursor-pointer overflow-hidden" 
-                style={{animationDelay: `${index * 0.1}s`}}
-              >
-                {/* Click ripple effect */}
-                <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                
-                {/* Border glow effect */}
-                <div className="absolute inset-0 rounded-xl border border-transparent bg-gradient-to-r from-purple-500/50 to-cyan-500/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-sm" />
-                
-                <div className="relative z-10">
-                  <div className="flex justify-between items-start mb-4">
-                    <h3 className="text-xl font-bold text-purple-300 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-purple-400 group-hover:to-cyan-400 transition-all duration-300">
-                      {project.title}
-                    </h3>
-                    <span className="px-3 py-1 bg-cyan-600/20 text-cyan-300 rounded-full text-sm group-hover:bg-cyan-500/30 group-hover:scale-105 transition-all duration-300">
-                      {project.type}
-                    </span>
-                  </div>
-                  <p className="text-gray-300 mb-4 leading-relaxed group-hover:text-gray-200 transition-colors duration-300">{project.description}</p>
-                  <div className="flex flex-wrap gap-2">
-                    {project.tech.map((tech, techIndex) => (
-                      <span 
-                        key={techIndex} 
-                        className="px-3 py-1 bg-purple-600/20 text-purple-300 rounded-full text-sm hover:bg-purple-500/30 hover:text-purple-200 hover:scale-105 transition-all duration-300 cursor-pointer"
-                        style={{ transitionDelay: `${techIndex * 100}ms` }}
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-                  
-                  {/* Arrow reveal on hover */}
-                  <div className="absolute top-6 right-6 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-2 group-hover:translate-x-0">
-                    <ExternalLink className="w-5 h-5 text-cyan-400" />
-                  </div>
-                </div>
-              </div>
+              <FloatingProjectCard
+                key={index}
+                project={project}
+                index={index}
+                onHover={(color) => setHoveredColor(color)}
+                onLeave={() => setHoveredColor(null)}
+              />
             ))}
-          </div>
-          <div className="text-center mt-12">
-            <a 
-              href="https://github.com/JungPrajal" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-3 glass px-8 py-4 rounded-xl border border-purple-500/30 hover:border-cyan-400/50 transition-all duration-300 text-lg font-semibold text-purple-300 hover:text-cyan-300"
-            >
-              <Github className="w-6 h-6" />
-              View All Projects on GitHub
-              <ExternalLink className="w-5 h-5" />
-            </a>
+
+            {/* GitHub CTA at end */}
+            <div className="flex-shrink-0 w-[300px] flex items-center justify-center">
+              <a
+                href="https://github.com/JungPrajal"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-3 glass px-8 py-4 rounded-xl border border-border hover:border-accent transition-all duration-300 text-lg font-semibold text-muted-foreground hover:text-accent"
+              >
+                <Github className="w-6 h-6" />
+                View All
+                <ExternalLink className="w-5 h-5" />
+              </a>
+            </div>
           </div>
         </div>
+      </section>
+    </>
+  );
+};
+
+const FloatingProjectCard = ({
+  project,
+  index,
+  onHover,
+  onLeave,
+}: {
+  project: { title: string; description: string; tech: string[]; type: string; color: string };
+  index: number;
+  onHover: (color: string) => void;
+  onLeave: () => void;
+}) => {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const [tilt, setTilt] = useState({ x: 0, y: 0 });
+  const [isHovered, setIsHovered] = useState(false);
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    const card = cardRef.current;
+    if (!card) return;
+    const rect = card.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    setTilt({ x: y * -25, y: x * 25 });
+  };
+
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+    onHover(project.color);
+  };
+
+  const handleMouseLeave = () => {
+    setTilt({ x: 0, y: 0 });
+    setIsHovered(false);
+    onLeave();
+  };
+
+  return (
+    <div
+      ref={cardRef}
+      className="flex-shrink-0 w-[420px] h-[480px] cursor-pointer"
+      style={{ perspective: '1000px' }}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
+      <div
+        className="relative w-full h-full rounded-2xl p-6 flex flex-col justify-between transition-shadow duration-500 overflow-hidden border"
+        style={{
+          transform: `rotateX(${tilt.x}deg) rotateY(${tilt.y}deg) translateZ(${isHovered ? 40 : 0}px)`,
+          transition: 'transform 0.15s ease-out, box-shadow 0.5s ease',
+          transformStyle: 'preserve-3d',
+          background: `linear-gradient(135deg, rgba(16,16,16,0.8) 0%, rgba(16,16,16,0.4) 100%)`,
+          backdropFilter: 'blur(12px)',
+          borderColor: isHovered ? project.color + '80' : 'rgba(168,85,247,0.2)',
+          boxShadow: isHovered
+            ? `0 30px 60px -15px ${project.color}40, 0 0 40px ${project.color}15`
+            : '0 10px 30px -10px rgba(0,0,0,0.5)',
+        }}
+      >
+        {/* Glow accent top bar */}
+        <div
+          className="absolute top-0 left-0 right-0 h-1 rounded-t-2xl transition-opacity duration-500"
+          style={{
+            background: `linear-gradient(90deg, transparent, ${project.color}, transparent)`,
+            opacity: isHovered ? 1 : 0.3,
+          }}
+        />
+
+        <div className="relative z-10" style={{ transform: 'translateZ(30px)', transformStyle: 'preserve-3d' }}>
+          <div className="flex justify-between items-start mb-4">
+            <span
+              className="px-3 py-1 rounded-full text-xs font-bold tracking-wider uppercase"
+              style={{
+                background: project.color + '20',
+                color: project.color,
+                border: `1px solid ${project.color}40`,
+              }}
+            >
+              {project.type}
+            </span>
+            <span className="text-xs text-muted-foreground">0{index + 1}</span>
+          </div>
+
+          <h3
+            className="text-2xl font-bold mb-3 transition-colors duration-300"
+            style={{ color: isHovered ? project.color : 'hsl(var(--foreground))' }}
+          >
+            {project.title}
+          </h3>
+
+          <p className="text-muted-foreground text-sm leading-relaxed">{project.description}</p>
+        </div>
+
+        <div className="relative z-10 flex flex-wrap gap-2" style={{ transform: 'translateZ(20px)' }}>
+          {project.tech.map((tech, i) => (
+            <span
+              key={i}
+              className="px-3 py-1 rounded-full text-xs border transition-all duration-300"
+              style={{
+                borderColor: isHovered ? project.color + '50' : 'rgba(100,100,100,0.3)',
+                color: isHovered ? project.color : 'hsl(var(--muted-foreground))',
+                background: isHovered ? project.color + '10' : 'rgba(30,30,30,0.5)',
+              }}
+            >
+              {tech}
+            </span>
+          ))}
+        </div>
+
+        {/* Hover arrow */}
+        <div
+          className="absolute bottom-6 right-6 transition-all duration-300"
+          style={{
+            opacity: isHovered ? 1 : 0,
+            transform: `translateX(${isHovered ? 0 : 10}px) translateZ(40px)`,
+          }}
+        >
+          <ExternalLink className="w-5 h-5" style={{ color: project.color }} />
+        </div>
       </div>
-    </section>
+    </div>
   );
 };
 
