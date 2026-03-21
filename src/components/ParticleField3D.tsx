@@ -59,12 +59,7 @@ function Particles() {
     return { positions, basePositions, velocities, colors, sizes };
   }, []);
 
-  const onPointerMove = useCallback((e: THREE.Event) => {
-    // Convert screen coords to 3D world space
-    const x = (e.clientX / window.innerWidth) * 2 - 1;
-    const y = -(e.clientY / window.innerHeight) * 2 + 1;
-    mouseRef.current.set(x * viewport.width / 2, y * viewport.height / 2, 0);
-  }, [viewport]);
+  // Mouse tracking handled via global listener below
 
   // Attach global listener
   React.useEffect(() => {
