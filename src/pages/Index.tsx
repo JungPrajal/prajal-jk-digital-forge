@@ -4,6 +4,9 @@ import { Mail, Phone, MapPin, Github, ExternalLink, Code, Palette, Database, Sma
 import ParticleField3D from '../components/ParticleField3D';
 import HeroSection from '../components/HeroSection';
 import TechStackDashboard from '../components/TechStackDashboard';
+import LiquidCursor from '../components/LiquidCursor';
+import MagneticButton from '../components/MagneticButton';
+import GrainOverlay from '../components/GrainOverlay';
 
 
 const Navigation = ({ activeSection, setActiveSection }) => {
