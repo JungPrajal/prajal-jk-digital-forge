@@ -670,6 +670,8 @@ const Index = () => {
 
   return (
     <div className="relative min-h-screen">
+      <LiquidCursor />
+      <GrainOverlay />
       <ParticleField3D />
       <Navigation activeSection={activeSection} setActiveSection={setActiveSection} />
       
