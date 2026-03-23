@@ -449,7 +449,7 @@ const ProjectsSection = () => {
 
             {/* GitHub CTA at end */}
             <div className="flex-shrink-0 w-[300px] flex items-center justify-center">
-              <a
+              <MagneticButton
                 href="https://github.com/JungPrajal"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -458,7 +458,7 @@ const ProjectsSection = () => {
                 <Github className="w-6 h-6" />
                 View All
                 <ExternalLink className="w-5 h-5" />
-              </a>
+              </MagneticButton>
             </div>
           </div>
         </div>
