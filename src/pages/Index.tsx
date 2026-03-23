@@ -620,20 +620,20 @@ const ContactSection = () => {
             </div>
           </div>
           <div className="flex justify-center gap-6">
-            <a 
+            <MagneticButton
               href="https://github.com/JungPrajal" 
               target="_blank" 
               rel="noopener noreferrer"
               className="glass p-4 rounded-xl border border-purple-500/30 hover:border-cyan-400/50 transition-all duration-300 text-purple-300 hover:text-cyan-300"
             >
               <Github className="w-8 h-8" />
-            </a>
-            <a 
+            </MagneticButton>
+            <MagneticButton
               href="mailto:prajal@gmail.com"
               className="glass p-4 rounded-xl border border-purple-500/30 hover:border-cyan-400/50 transition-all duration-300 text-purple-300 hover:text-cyan-300"
             >
               <Mail className="w-8 h-8" />
-            </a>
+            </MagneticButton>
           </div>
         </div>
       </div>
