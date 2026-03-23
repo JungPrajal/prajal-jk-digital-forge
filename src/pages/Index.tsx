@@ -4,6 +4,9 @@ import { Mail, Phone, MapPin, Github, ExternalLink, Code, Palette, Database, Sma
 import ParticleField3D from '../components/ParticleField3D';
 import HeroSection from '../components/HeroSection';
 import TechStackDashboard from '../components/TechStackDashboard';
+import LiquidCursor from '../components/LiquidCursor';
+import MagneticButton from '../components/MagneticButton';
+import GrainOverlay from '../components/GrainOverlay';
 
 
 const Navigation = ({ activeSection, setActiveSection }) => {
@@ -446,7 +449,7 @@ const ProjectsSection = () => {
 
             {/* GitHub CTA at end */}
             <div className="flex-shrink-0 w-[300px] flex items-center justify-center">
-              <a
+              <MagneticButton
                 href="https://github.com/JungPrajal"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -455,7 +458,7 @@ const ProjectsSection = () => {
                 <Github className="w-6 h-6" />
                 View All
                 <ExternalLink className="w-5 h-5" />
-              </a>
+              </MagneticButton>
             </div>
           </div>
         </div>
@@ -617,20 +620,20 @@ const ContactSection = () => {
             </div>
           </div>
           <div className="flex justify-center gap-6">
-            <a 
+            <MagneticButton
               href="https://github.com/JungPrajal" 
               target="_blank" 
               rel="noopener noreferrer"
               className="glass p-4 rounded-xl border border-purple-500/30 hover:border-cyan-400/50 transition-all duration-300 text-purple-300 hover:text-cyan-300"
             >
               <Github className="w-8 h-8" />
-            </a>
-            <a 
+            </MagneticButton>
+            <MagneticButton
               href="mailto:prajal@gmail.com"
               className="glass p-4 rounded-xl border border-purple-500/30 hover:border-cyan-400/50 transition-all duration-300 text-purple-300 hover:text-cyan-300"
             >
               <Mail className="w-8 h-8" />
-            </a>
+            </MagneticButton>
           </div>
         </div>
       </div>
@@ -667,6 +670,8 @@ const Index = () => {
 
   return (
     <div className="relative min-h-screen">
+      <LiquidCursor />
+      <GrainOverlay />
       <ParticleField3D />
       <Navigation activeSection={activeSection} setActiveSection={setActiveSection} />
       
