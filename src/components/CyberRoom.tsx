@@ -422,7 +422,7 @@ const CyberRoom = () => {
               {/* Desk edge RGB */}
               <RGBStrip className="bottom-0 left-2 right-2 h-0.5" color="cyan" />
 
-              {/* Mouse pad */}
+              {/* Mouse pad with RGB border */}
               <div
                 className="absolute"
                 style={{
@@ -434,6 +434,7 @@ const CyberRoom = () => {
                   background: 'rgba(0,229,255,0.03)',
                   border: '1px solid rgba(0,229,255,0.08)',
                   borderRadius: '4px',
+                  boxShadow: '0 0 6px rgba(0,229,255,0.06)',
                 }}
               >
                 {/* Mouse */}
@@ -443,35 +444,310 @@ const CyberRoom = () => {
                 />
               </div>
 
-              {/* Keyboard */}
+              {/* Mechanical Keyboard with RGB keys */}
               <div
                 className="absolute"
                 style={{
-                  width: '90px',
-                  height: '35px',
-                  left: '25px',
+                  width: '95px',
+                  height: '38px',
+                  left: '22px',
                   top: '50%',
-                  marginTop: '-5px',
-                  background: '#111622',
+                  marginTop: '-6px',
+                  background: '#0e1319',
                   borderRadius: '3px',
-                  border: '1px solid rgba(255,255,255,0.06)',
+                  border: '1px solid rgba(255,255,255,0.08)',
                   overflow: 'hidden',
+                  boxShadow: '0 2px 10px rgba(0,0,0,0.3)',
                 }}
               >
                 {/* Key rows */}
-                <div className="p-1 grid grid-cols-10 gap-[1px]">
+                <div className="p-1 grid grid-cols-10 gap-[1.5px]">
                   {Array.from({ length: 30 }).map((_, i) => (
                     <div
                       key={i}
-                      className="h-[3px] rounded-[1px] bg-slate-700/40"
+                      className="h-[3.5px] rounded-[1px]"
                       style={{
-                        animation: i % 7 === 0 ? 'keyPress 3s ease-in-out infinite' : undefined,
-                        animationDelay: `${i * 0.15}s`,
+                        background: i % 5 === 0 
+                          ? 'rgba(168,85,247,0.3)' 
+                          : i % 7 === 0 
+                            ? 'rgba(0,229,255,0.3)' 
+                            : 'rgba(51,65,85,0.4)',
+                        animation: 'keyPress 2s ease-in-out infinite',
+                        animationDelay: `${i * 0.12}s`,
+                        boxShadow: i % 5 === 0 
+                          ? '0 0 3px rgba(168,85,247,0.2)' 
+                          : i % 7 === 0 
+                            ? '0 0 3px rgba(0,229,255,0.2)' 
+                            : 'none',
                       }}
                     />
                   ))}
                 </div>
                 <RGBStrip className="bottom-0 left-0 w-full h-[2px]" color="purple" />
+              </div>
+            </div>
+
+            {/* ── CHARACTER - Programmer sitting at desk ── */}
+            <div
+              className="absolute"
+              style={{
+                left: '50%',
+                top: '50%',
+                marginLeft: '-15px',
+                marginTop: '-45px',
+                transformStyle: 'preserve-3d',
+                transform: 'translateZ(55px)',
+                zIndex: 10,
+              }}
+            >
+              {/* Character body group - back slightly to camera */}
+              <div className="relative" style={{ transform: 'rotateZ(5deg)' }}>
+                {/* Head with bun hairstyle */}
+                <div className="relative" style={{ marginBottom: '-2px' }}>
+                  {/* Hair bun on top */}
+                  <div
+                    className="absolute -top-3 left-1/2 -translate-x-1/2"
+                    style={{
+                      width: '10px',
+                      height: '8px',
+                      borderRadius: '50%',
+                      background: 'linear-gradient(135deg, #1a1a2e 0%, #0f0f1e 100%)',
+                      border: '1px solid rgba(255,255,255,0.05)',
+                    }}
+                  />
+                  {/* Head */}
+                  <div
+                    style={{
+                      width: '16px',
+                      height: '16px',
+                      borderRadius: '50% 50% 45% 45%',
+                      background: 'linear-gradient(180deg, #c4956a 0%, #b08456 100%)',
+                      margin: '0 auto',
+                      position: 'relative',
+                    }}
+                  >
+                    {/* Hair (back view - dark hair visible around head) */}
+                    <div
+                      className="absolute inset-0 rounded-full"
+                      style={{
+                        background: 'linear-gradient(180deg, #1a1a2e 0%, #1a1a2e 55%, transparent 55%)',
+                        borderRadius: '50% 50% 45% 45%',
+                      }}
+                    />
+                    {/* Ear hints */}
+                    <div className="absolute top-1/2 -left-[2px] w-[3px] h-[4px] rounded-full bg-[#b08456]" />
+                    <div className="absolute top-1/2 -right-[2px] w-[3px] h-[4px] rounded-full bg-[#b08456]" />
+                    {/* Screen glow on face */}
+                    <div
+                      className="absolute inset-0 rounded-full animate-pulse"
+                      style={{
+                        background: 'radial-gradient(ellipse at center top, rgba(0,229,255,0.15) 0%, transparent 70%)',
+                      }}
+                    />
+                  </div>
+                </div>
+
+                {/* Neck */}
+                <div className="w-[6px] h-[4px] bg-[#b08456] mx-auto" />
+
+                {/* Hoodie / Torso (slightly oversized, dark hoodie) */}
+                <div
+                  className="relative"
+                  style={{
+                    width: '32px',
+                    height: '28px',
+                    margin: '0 auto',
+                    background: 'linear-gradient(180deg, #1a1a2e 0%, #12122a 100%)',
+                    borderRadius: '6px 6px 3px 3px',
+                    border: '1px solid rgba(255,255,255,0.04)',
+                    boxShadow: '0 3px 10px rgba(0,0,0,0.3)',
+                  }}
+                >
+                  {/* Hood line */}
+                  <div
+                    className="absolute top-0 left-1/2 -translate-x-1/2"
+                    style={{
+                      width: '14px',
+                      height: '6px',
+                      borderRadius: '0 0 8px 8px',
+                      background: 'rgba(255,255,255,0.03)',
+                      borderBottom: '1px solid rgba(255,255,255,0.05)',
+                    }}
+                  />
+                  {/* JK Logo patch on left sleeve */}
+                  <div
+                    className="absolute top-2 -left-1"
+                    style={{
+                      width: '8px',
+                      height: '6px',
+                      background: 'rgba(0,229,255,0.12)',
+                      borderRadius: '1px',
+                      border: '0.5px solid rgba(0,229,255,0.25)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <span style={{ fontSize: '3px', color: 'rgba(0,229,255,0.7)', fontWeight: 'bold' }}>JK</span>
+                  </div>
+                  {/* Hoodie pocket/kangaroo pouch line */}
+                  <div
+                    className="absolute bottom-2 left-1/2 -translate-x-1/2"
+                    style={{
+                      width: '16px',
+                      height: '1px',
+                      background: 'rgba(255,255,255,0.04)',
+                      borderRadius: '1px',
+                    }}
+                  />
+                  {/* Arms extended to keyboard */}
+                  {/* Left arm */}
+                  <div
+                    className="absolute top-3 -left-2"
+                    style={{
+                      width: '14px',
+                      height: '6px',
+                      background: 'linear-gradient(90deg, #1a1a2e 0%, #16162a 100%)',
+                      borderRadius: '3px',
+                      transform: 'rotate(-30deg)',
+                      transformOrigin: 'right center',
+                      animation: 'typingArmL 1.5s ease-in-out infinite',
+                    }}
+                  >
+                    {/* Hand */}
+                    <div className="absolute left-0 top-0 w-[5px] h-[5px] rounded-full bg-[#c4956a]" />
+                  </div>
+                  {/* Right arm */}
+                  <div
+                    className="absolute top-3 -right-2"
+                    style={{
+                      width: '14px',
+                      height: '6px',
+                      background: 'linear-gradient(270deg, #1a1a2e 0%, #16162a 100%)',
+                      borderRadius: '3px',
+                      transform: 'rotate(30deg)',
+                      transformOrigin: 'left center',
+                      animation: 'typingArmR 1.5s ease-in-out 0.3s infinite',
+                    }}
+                  >
+                    {/* Hand */}
+                    <div className="absolute right-0 top-0 w-[5px] h-[5px] rounded-full bg-[#c4956a]" />
+                  </div>
+                  {/* Screen reflection glow on hoodie */}
+                  <div
+                    className="absolute inset-0 rounded-md animate-pulse"
+                    style={{
+                      background: 'linear-gradient(0deg, transparent 50%, rgba(0,229,255,0.06) 100%)',
+                    }}
+                  />
+                </div>
+
+                {/* Cargo pants / legs on chair */}
+                <div className="flex justify-center gap-[2px]" style={{ marginTop: '-1px' }}>
+                  <div
+                    style={{
+                      width: '12px',
+                      height: '14px',
+                      background: 'linear-gradient(180deg, #2a2a3e 0%, #222236 100%)',
+                      borderRadius: '2px 0 3px 3px',
+                      border: '1px solid rgba(255,255,255,0.03)',
+                    }}
+                  >
+                    {/* Cargo pocket */}
+                    <div className="mt-2 mx-auto w-[6px] h-[3px] border border-white/5 rounded-[1px]" />
+                  </div>
+                  <div
+                    style={{
+                      width: '12px',
+                      height: '14px',
+                      background: 'linear-gradient(180deg, #2a2a3e 0%, #222236 100%)',
+                      borderRadius: '0 2px 3px 3px',
+                      border: '1px solid rgba(255,255,255,0.03)',
+                    }}
+                  >
+                    <div className="mt-2 mx-auto w-[6px] h-[3px] border border-white/5 rounded-[1px]" />
+                  </div>
+                </div>
+
+                {/* Chair */}
+                <div
+                  className="absolute -bottom-3 left-1/2 -translate-x-1/2"
+                  style={{
+                    width: '30px',
+                    height: '8px',
+                    background: 'linear-gradient(180deg, #1a1a28 0%, #111120 100%)',
+                    borderRadius: '3px',
+                    border: '1px solid rgba(255,255,255,0.04)',
+                    boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
+                  }}
+                />
+                {/* Chair back */}
+                <div
+                  className="absolute -top-1 left-1/2 -translate-x-1/2 -z-10"
+                  style={{
+                    width: '28px',
+                    height: '35px',
+                    background: 'linear-gradient(180deg, #1e1e30 0%, #161626 100%)',
+                    borderRadius: '6px 6px 0 0',
+                    border: '1px solid rgba(255,255,255,0.03)',
+                  }}
+                />
+              </div>
+
+              {/* Character shadow on desk */}
+              <div
+                className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-20 h-3 rounded-full"
+                style={{
+                  background: 'radial-gradient(ellipse, rgba(0,0,0,0.25) 0%, transparent 70%)',
+                }}
+              />
+            </div>
+
+            {/* ── Shelf on back wall with JK accessory ── */}
+            <div
+              className="absolute"
+              style={{
+                width: '100px',
+                height: '8px',
+                left: '50%',
+                top: '50%',
+                marginLeft: '-120px',
+                marginTop: '-340px',
+                transformStyle: 'preserve-3d',
+                transformOrigin: 'bottom center',
+                transform: 'rotateX(90deg) translateZ(0px)',
+                background: 'linear-gradient(90deg, #1a1f2e 0%, #151a26 100%)',
+                border: '1px solid rgba(255,255,255,0.06)',
+                boxShadow: '0 3px 12px rgba(0,0,0,0.3)',
+              }}
+            >
+              {/* JK accessory/figurine on shelf */}
+              <div
+                className="absolute -top-10 left-3"
+                style={{
+                  width: '14px',
+                  height: '10px',
+                  background: 'linear-gradient(135deg, rgba(0,229,255,0.15) 0%, rgba(168,85,247,0.15) 100%)',
+                  border: '1px solid rgba(0,229,255,0.2)',
+                  borderRadius: '2px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  boxShadow: '0 0 10px rgba(0,229,255,0.1)',
+                }}
+              >
+                <span style={{ fontSize: '4px', color: 'rgba(0,229,255,0.8)', fontWeight: 'bold', fontFamily: 'monospace' }}>JK</span>
+              </div>
+              {/* Small plant */}
+              <div className="absolute -top-8 left-[45px]">
+                <div className="w-[6px] h-[8px] bg-emerald-700/40 rounded-t-full" />
+                <div className="w-[8px] h-[4px] bg-slate-700/60 rounded-sm mx-auto" style={{ marginTop: '-1px' }} />
+              </div>
+              {/* Books stack */}
+              <div className="absolute -top-7 right-3 flex flex-col gap-[1px]">
+                <div className="w-[12px] h-[2px] bg-purple-800/40 rounded-sm" />
+                <div className="w-[12px] h-[2px] bg-cyan-800/40 rounded-sm" />
+                <div className="w-[12px] h-[2px] bg-pink-800/40 rounded-sm" />
               </div>
             </div>
 
