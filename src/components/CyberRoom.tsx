@@ -909,6 +909,14 @@ const CyberRoom = () => {
         @keyframes spin {
           to { transform: rotate(360deg); }
         }
+        @keyframes typingArmL {
+          0%, 100% { transform: rotate(-30deg); }
+          50% { transform: rotate(-25deg); }
+        }
+        @keyframes typingArmR {
+          0%, 100% { transform: rotate(30deg); }
+          50% { transform: rotate(25deg); }
+        }
       `}</style>
     </section>
   );
