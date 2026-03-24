@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Mail, Phone, MapPin, Github, ExternalLink, Code, Palette, Database, Smartphone, Globe, Brain, Server, Terminal, Menu, X } from 'lucide-react';
 import ParticleField3D from '../components/ParticleField3D';
-import HeroSection from '../components/HeroSection';
+import CyberRoom from '../components/CyberRoom';
 import TechStackDashboard from '../components/TechStackDashboard';
 import LiquidCursor from '../components/LiquidCursor';
 import MagneticButton from '../components/MagneticButton';
