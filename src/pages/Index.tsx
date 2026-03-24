@@ -113,11 +113,7 @@ const Navigation = ({ activeSection, setActiveSection }) => {
 };
 
 const HomeSection = () => {
-  return (
-    <section id="home" className="relative">
-      <HeroSection />
-    </section>
-  );
+  return <CyberRoom />;
 };
 
 const useScrollAnimation = (): [React.RefObject<HTMLDivElement>, boolean] => {
