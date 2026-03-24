@@ -751,45 +751,51 @@ const CyberRoom = () => {
               </div>
             </div>
 
-            {/* ── Monitor ── */}
+            {/* ── Ultrawide Curved Monitor ── */}
             <div
               className="absolute"
               style={{
-                width: '160px',
-                height: '100px',
+                width: '190px',
+                height: '90px',
                 left: '50%',
                 top: '50%',
-                marginLeft: '-30px',
-                marginTop: '-210px',
+                marginLeft: '-45px',
+                marginTop: '-205px',
                 transformStyle: 'preserve-3d',
                 transform: 'translateZ(55px) rotateX(-90deg)',
                 transformOrigin: 'bottom center',
               }}
             >
-              {/* Monitor frame */}
+              {/* Monitor frame - ultrawide curved look */}
               <div
-                className="relative w-full h-full rounded-md overflow-hidden"
+                className="relative w-full h-full overflow-hidden"
                 style={{
+                  borderRadius: '6px',
                   border: '2px solid rgba(255,255,255,0.08)',
                   boxShadow: `
-                    0 0 40px rgba(0,229,255,0.15),
-                    0 0 80px rgba(0,229,255,0.05),
-                    inset 0 0 20px rgba(0,229,255,0.05)
+                    0 0 50px rgba(0,229,255,0.18),
+                    0 0 100px rgba(0,229,255,0.06),
+                    inset 0 0 25px rgba(0,229,255,0.05)
                   `,
+                  /* Slight curve effect via border-radius */
+                  borderTopLeftRadius: '8px',
+                  borderTopRightRadius: '8px',
                 }}
               >
+                {/* Curved edge highlight */}
+                <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-cyan-400/20 to-transparent" />
                 <MonitorScreen />
               </div>
-              {/* Monitor stand */}
+              {/* Monitor stand - slim modern */}
               <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-full">
-                <div className="w-3 h-6 bg-slate-800 mx-auto border-x border-white/5" />
-                <div className="w-12 h-1.5 bg-slate-800 rounded-sm border border-white/5 mx-auto" />
+                <div className="w-2 h-8 bg-slate-800 mx-auto border-x border-white/5" />
+                <div className="w-16 h-1 bg-slate-800 rounded-full border border-white/5 mx-auto" />
               </div>
-              {/* Screen glow on desk */}
+              {/* Screen glow on desk + character face */}
               <div
-                className="absolute -bottom-8 left-1/2 -translate-x-1/2 w-48 h-8 rounded-full"
+                className="absolute -bottom-10 left-1/2 -translate-x-1/2 w-56 h-10 rounded-full"
                 style={{
-                  background: 'radial-gradient(ellipse, rgba(0,229,255,0.12) 0%, transparent 70%)',
+                  background: 'radial-gradient(ellipse, rgba(0,229,255,0.15) 0%, transparent 70%)',
                 }}
               />
             </div>
