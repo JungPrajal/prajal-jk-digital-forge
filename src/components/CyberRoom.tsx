@@ -807,12 +807,12 @@ const CyberRoom = () => {
               />
             </div>
 
-            {/* ── Shelf on back wall with JK accessory ── */}
+            {/* ── Floating Glass Shelf with rotating 3D JK emblem ── */}
             <div
               className="absolute"
               style={{
-                width: '100px',
-                height: '8px',
+                width: '110px',
+                height: '10px',
                 left: '50%',
                 top: '50%',
                 marginLeft: '-120px',
@@ -820,86 +820,172 @@ const CyberRoom = () => {
                 transformStyle: 'preserve-3d',
                 transformOrigin: 'bottom center',
                 transform: 'rotateX(90deg) translateZ(0px)',
-                background: 'linear-gradient(90deg, #1a1f2e 0%, #151a26 100%)',
-                border: '1px solid rgba(255,255,255,0.06)',
-                boxShadow: '0 3px 12px rgba(0,0,0,0.3)',
+                background: 'linear-gradient(90deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.03) 100%)',
+                backdropFilter: 'blur(8px)',
+                border: '1px solid rgba(255,255,255,0.1)',
+                borderRadius: '3px',
+                boxShadow: '0 4px 20px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.08)',
               }}
             >
-              {/* JK accessory/figurine on shelf */}
+              {/* Glass shelf edge highlight */}
+              <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/15 to-transparent" />
+              
+              {/* 3D Rotating JK metallic emblem */}
               <div
-                className="absolute -top-10 left-3"
+                className="absolute -top-16 left-4"
                 style={{
-                  width: '14px',
-                  height: '10px',
-                  background: 'linear-gradient(135deg, rgba(0,229,255,0.15) 0%, rgba(168,85,247,0.15) 100%)',
-                  border: '1px solid rgba(0,229,255,0.2)',
-                  borderRadius: '2px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  boxShadow: '0 0 10px rgba(0,229,255,0.1)',
+                  width: '22px',
+                  height: '22px',
+                  animation: 'rotateEmblem 8s linear infinite',
+                  transformStyle: 'preserve-3d',
                 }}
               >
-                <span style={{ fontSize: '4px', color: 'rgba(0,229,255,0.8)', fontWeight: 'bold', fontFamily: 'monospace' }}>JK</span>
+                <div
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    borderRadius: '4px',
+                    background: 'linear-gradient(135deg, #c0c0c0 0%, #e8e8e8 25%, #a0a0a0 50%, #d0d0d0 75%, #b0b0b0 100%)',
+                    border: '1px solid rgba(255,255,255,0.3)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    boxShadow: '0 0 20px rgba(0,229,255,0.2), 0 0 40px rgba(168,85,247,0.1), inset 0 1px 2px rgba(255,255,255,0.4)',
+                  }}
+                >
+                  <span style={{
+                    fontSize: '7px',
+                    fontWeight: 'bold',
+                    fontFamily: 'monospace',
+                    background: 'linear-gradient(135deg, #00e5ff, #a855f7)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    filter: 'drop-shadow(0 0 3px rgba(0,229,255,0.5))',
+                    letterSpacing: '1px',
+                  }}>JK</span>
+                </div>
+                {/* Emblem glow */}
+                <div className="absolute inset-0 rounded" style={{
+                  boxShadow: '0 0 12px rgba(0,229,255,0.15), 0 0 24px rgba(168,85,247,0.08)',
+                  animation: 'emblemGlow 3s ease-in-out infinite',
+                }} />
               </div>
+
               {/* Small plant */}
-              <div className="absolute -top-8 left-[45px]">
-                <div className="w-[6px] h-[8px] bg-emerald-700/40 rounded-t-full" />
-                <div className="w-[8px] h-[4px] bg-slate-700/60 rounded-sm mx-auto" style={{ marginTop: '-1px' }} />
+              <div className="absolute -top-10 left-[50px]">
+                <div className="w-[7px] h-[10px] bg-emerald-600/50 rounded-t-full" style={{ boxShadow: '0 0 4px rgba(16,185,129,0.15)' }} />
+                <div className="w-[9px] h-[5px] bg-slate-600/60 rounded-sm mx-auto" style={{ marginTop: '-1px' }} />
               </div>
               {/* Books stack */}
-              <div className="absolute -top-7 right-3 flex flex-col gap-[1px]">
-                <div className="w-[12px] h-[2px] bg-purple-800/40 rounded-sm" />
-                <div className="w-[12px] h-[2px] bg-cyan-800/40 rounded-sm" />
-                <div className="w-[12px] h-[2px] bg-pink-800/40 rounded-sm" />
+              <div className="absolute -top-9 right-4 flex flex-col gap-[1px]">
+                <div className="w-[14px] h-[2.5px] bg-purple-700/40 rounded-sm" />
+                <div className="w-[14px] h-[2.5px] bg-cyan-700/40 rounded-sm" />
+                <div className="w-[14px] h-[2.5px] bg-pink-700/40 rounded-sm" />
               </div>
             </div>
 
-            {/* ── Ultrawide Curved Monitor ── */}
+            {/* ── Large Curved Ultrawide Monitor on Silver Arm ── */}
             <div
               className="absolute"
               style={{
-                width: '190px',
-                height: '90px',
+                width: '210px',
+                height: '100px',
                 left: '50%',
                 top: '50%',
-                marginLeft: '-45px',
-                marginTop: '-205px',
+                marginLeft: '-55px',
+                marginTop: '-215px',
                 transformStyle: 'preserve-3d',
                 transform: 'translateZ(55px) rotateX(-90deg)',
                 transformOrigin: 'bottom center',
               }}
             >
-              {/* Monitor frame - ultrawide curved look */}
+              {/* Monitor frame - large ultrawide curved */}
               <div
                 className="relative w-full h-full overflow-hidden"
                 style={{
-                  borderRadius: '6px',
-                  border: '2px solid rgba(255,255,255,0.08)',
+                  borderRadius: '8px',
+                  border: '2.5px solid rgba(255,255,255,0.1)',
                   boxShadow: `
-                    0 0 50px rgba(0,229,255,0.18),
-                    0 0 100px rgba(0,229,255,0.06),
-                    inset 0 0 25px rgba(0,229,255,0.05)
+                    0 0 60px rgba(0,229,255,0.22),
+                    0 0 120px rgba(236,72,153,0.08),
+                    0 0 40px rgba(168,85,247,0.06),
+                    inset 0 0 30px rgba(0,229,255,0.06)
                   `,
-                  /* Slight curve effect via border-radius */
-                  borderTopLeftRadius: '8px',
-                  borderTopRightRadius: '8px',
+                  borderTopLeftRadius: '10px',
+                  borderTopRightRadius: '10px',
                 }}
               >
-                {/* Curved edge highlight */}
-                <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-cyan-400/20 to-transparent" />
+                {/* Curved top edge highlight */}
+                <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/25 to-transparent" />
+                {/* Bottom bezel brand mark */}
+                <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-[#0a0e14] flex items-center justify-center">
+                  <div className="w-[6px] h-[1px] bg-cyan-500/30 rounded-full" />
+                </div>
                 <MonitorScreen />
               </div>
-              {/* Monitor stand - slim modern */}
+
+              {/* Silver Monitor Arm (clamp-style) */}
               <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-full">
-                <div className="w-2 h-8 bg-slate-800 mx-auto border-x border-white/5" />
-                <div className="w-16 h-1 bg-slate-800 rounded-full border border-white/5 mx-auto" />
+                {/* Arm joint at monitor */}
+                <div style={{
+                  width: '8px',
+                  height: '6px',
+                  background: 'linear-gradient(180deg, #c8c8c8 0%, #a0a0a0 100%)',
+                  borderRadius: '2px',
+                  margin: '0 auto',
+                  border: '1px solid rgba(255,255,255,0.15)',
+                }} />
+                {/* Vertical arm segment */}
+                <div style={{
+                  width: '4px',
+                  height: '14px',
+                  background: 'linear-gradient(90deg, #b0b0b0 0%, #d8d8d8 50%, #b0b0b0 100%)',
+                  margin: '0 auto',
+                  borderRadius: '1px',
+                  boxShadow: '1px 0 2px rgba(0,0,0,0.2)',
+                }} />
+                {/* Arm elbow joint */}
+                <div style={{
+                  width: '10px',
+                  height: '6px',
+                  background: 'linear-gradient(180deg, #c0c0c0 0%, #909090 100%)',
+                  borderRadius: '3px',
+                  margin: '0 auto',
+                  border: '1px solid rgba(255,255,255,0.1)',
+                }} />
+                {/* Horizontal arm to desk clamp */}
+                <div style={{
+                  width: '4px',
+                  height: '10px',
+                  background: 'linear-gradient(90deg, #a8a8a8 0%, #d0d0d0 50%, #a8a8a8 100%)',
+                  margin: '0 auto',
+                  borderRadius: '1px',
+                }} />
+                {/* Desk clamp */}
+                <div style={{
+                  width: '14px',
+                  height: '4px',
+                  background: 'linear-gradient(180deg, #b0b0b0 0%, #808080 100%)',
+                  borderRadius: '1px',
+                  margin: '0 auto',
+                  border: '1px solid rgba(255,255,255,0.08)',
+                }} />
               </div>
-              {/* Screen glow on desk + character face */}
+
+              {/* Realistic screen glow - cyan + magenta projection */}
               <div
-                className="absolute -bottom-10 left-1/2 -translate-x-1/2 w-56 h-10 rounded-full"
+                className="absolute -bottom-14 left-1/2 -translate-x-1/2 w-64 h-14 rounded-full"
                 style={{
-                  background: 'radial-gradient(ellipse, rgba(0,229,255,0.15) 0%, transparent 70%)',
+                  background: 'radial-gradient(ellipse, rgba(0,229,255,0.2) 0%, rgba(236,72,153,0.08) 50%, transparent 80%)',
+                  animation: 'screenGlow 4s ease-in-out infinite',
+                }}
+              />
+              {/* Secondary magenta glow layer */}
+              <div
+                className="absolute -bottom-10 left-1/2 -translate-x-1/2 w-48 h-10 rounded-full"
+                style={{
+                  background: 'radial-gradient(ellipse, rgba(236,72,153,0.1) 0%, rgba(168,85,247,0.05) 60%, transparent 90%)',
+                  animation: 'screenGlow 4s ease-in-out 2s infinite',
                 }}
               />
             </div>
@@ -918,7 +1004,6 @@ const CyberRoom = () => {
                 transform: 'translateZ(0px)',
               }}
             >
-              {/* Case body */}
               <div
                 className="relative w-full h-full rounded-sm"
                 style={{
@@ -927,7 +1012,6 @@ const CyberRoom = () => {
                   boxShadow: '0 5px 20px rgba(0,0,0,0.4)',
                 }}
               >
-                {/* RGB fan */}
                 <div className="absolute top-3 left-1/2 -translate-x-1/2 w-8 h-8 rounded-full border border-cyan-500/20 flex items-center justify-center">
                   <div
                     className="w-6 h-6 rounded-full border-2 border-transparent"
@@ -937,33 +1021,81 @@ const CyberRoom = () => {
                     }}
                   />
                 </div>
-                {/* Power LED */}
                 <div className="absolute bottom-3 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" style={{ boxShadow: '0 0 8px rgba(0,229,255,0.6)' }} />
-                {/* Side RGB strip */}
                 <RGBStrip className="right-0 top-2 bottom-2 w-[2px]" color="cyan" />
               </div>
             </div>
 
-            {/* ── Coffee mug ── */}
+            {/* ── Coffee Mug with steam particles ── */}
             <div
               className="absolute"
               style={{
-                width: '14px',
-                height: '14px',
+                width: '18px',
+                height: '18px',
                 left: '50%',
                 top: '50%',
-                marginLeft: '120px',
+                marginLeft: '115px',
                 marginTop: '-110px',
                 transform: 'translateZ(60px)',
               }}
             >
-              <div className="w-full h-full rounded-full bg-slate-700 border border-white/10 relative">
-                <div className="absolute -right-1 top-1/2 -translate-y-1/2 w-2 h-3 border border-white/10 rounded-r-full" />
-                {/* Steam */}
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-1 h-3 opacity-30" style={{ animation: 'steam 2s ease-in-out infinite' }}>
-                  <div className="w-full h-full bg-gradient-to-t from-white/20 to-transparent rounded-full" />
+              {/* Mug body */}
+              <div style={{
+                width: '100%',
+                height: '100%',
+                borderRadius: '3px 3px 5px 5px',
+                background: 'linear-gradient(180deg, #2a2a3e 0%, #1e1e30 100%)',
+                border: '1px solid rgba(255,255,255,0.08)',
+                position: 'relative',
+                boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
+              }}>
+                {/* Coffee inside */}
+                <div className="absolute top-[2px] left-[2px] right-[2px] h-[4px] rounded-sm" style={{
+                  background: 'linear-gradient(180deg, #3d2b1a 0%, #2a1e12 100%)',
+                }} />
+                {/* Handle */}
+                <div className="absolute -right-[4px] top-[3px] w-[5px] h-[8px] border-2 border-white/10 rounded-r-full" style={{ borderLeft: 'none' }} />
+                {/* Mug label - tiny JK */}
+                <div className="absolute bottom-[3px] left-1/2 -translate-x-1/2">
+                  <span style={{ fontSize: '3px', color: 'rgba(0,229,255,0.4)', fontFamily: 'monospace', fontWeight: 'bold' }}>JK</span>
                 </div>
               </div>
+
+              {/* Steam particle system */}
+              {[0, 1, 2, 3, 4].map((i) => (
+                <div
+                  key={i}
+                  className="absolute"
+                  style={{
+                    left: `${4 + i * 3}px`,
+                    top: '-4px',
+                    width: '2px',
+                    height: '2px',
+                    borderRadius: '50%',
+                    background: 'rgba(255,255,255,0.15)',
+                    animation: `steamParticle ${2 + i * 0.4}s ease-out infinite`,
+                    animationDelay: `${i * 0.5}s`,
+                  }}
+                />
+              ))}
+              {/* Larger wispy steam */}
+              {[0, 1, 2].map((i) => (
+                <div
+                  key={`wisp-${i}`}
+                  className="absolute"
+                  style={{
+                    left: `${5 + i * 4}px`,
+                    top: '-2px',
+                    width: '3px',
+                    height: '8px',
+                    borderRadius: '50%',
+                    background: 'linear-gradient(to top, rgba(255,255,255,0.08), transparent)',
+                    animation: `steamWisp ${3 + i * 0.6}s ease-in-out infinite`,
+                    animationDelay: `${i * 0.8}s`,
+                    filter: 'blur(1px)',
+                  }}
+                />
+              ))}
             </div>
 
             {/* ── Headphones on desk ── */}
