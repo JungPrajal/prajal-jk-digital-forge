@@ -754,12 +754,19 @@ const CyberRoom = () => {
                     </div>
                   </div>
 
-                  {/* Screen reflection glow on hoodie front */}
+                  {/* Cyan + Magenta screen light projection on hoodie */}
                   <div
                     className="absolute inset-0 rounded-lg"
                     style={{
-                      background: 'linear-gradient(0deg, transparent 40%, rgba(0,229,255,0.08) 100%)',
+                      background: 'linear-gradient(0deg, transparent 30%, rgba(0,229,255,0.1) 70%, rgba(236,72,153,0.06) 100%)',
                       animation: 'screenFlicker 3s ease-in-out infinite',
+                    }}
+                  />
+                  <div
+                    className="absolute inset-0 rounded-lg"
+                    style={{
+                      background: 'linear-gradient(135deg, rgba(236,72,153,0.05) 0%, transparent 50%, rgba(0,229,255,0.05) 100%)',
+                      animation: 'screenFlicker 3s ease-in-out 1.5s infinite',
                     }}
                   />
                 </div>
