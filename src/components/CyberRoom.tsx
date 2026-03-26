@@ -444,261 +444,365 @@ const CyberRoom = () => {
                 />
               </div>
 
-              {/* Mechanical Keyboard with RGB keys */}
+              {/* Mechanical Keyboard with flickering RGB backlighting */}
               <div
                 className="absolute"
                 style={{
-                  width: '95px',
-                  height: '38px',
-                  left: '22px',
+                  width: '100px',
+                  height: '42px',
+                  left: '20px',
                   top: '50%',
-                  marginTop: '-6px',
-                  background: '#0e1319',
-                  borderRadius: '3px',
-                  border: '1px solid rgba(255,255,255,0.08)',
+                  marginTop: '-8px',
+                  background: 'linear-gradient(180deg, #0e1319 0%, #0a0e14 100%)',
+                  borderRadius: '4px',
+                  border: '1px solid rgba(255,255,255,0.1)',
                   overflow: 'hidden',
-                  boxShadow: '0 2px 10px rgba(0,0,0,0.3)',
+                  boxShadow: '0 3px 14px rgba(0,0,0,0.4), 0 0 20px rgba(0,229,255,0.05)',
                 }}
               >
-                {/* Key rows */}
-                <div className="p-1 grid grid-cols-10 gap-[1.5px]">
-                  {Array.from({ length: 30 }).map((_, i) => (
-                    <div
-                      key={i}
-                      className="h-[3.5px] rounded-[1px]"
-                      style={{
-                        background: i % 5 === 0 
-                          ? 'rgba(168,85,247,0.3)' 
-                          : i % 7 === 0 
-                            ? 'rgba(0,229,255,0.3)' 
-                            : 'rgba(51,65,85,0.4)',
-                        animation: 'keyPress 2s ease-in-out infinite',
-                        animationDelay: `${i * 0.12}s`,
-                        boxShadow: i % 5 === 0 
-                          ? '0 0 3px rgba(168,85,247,0.2)' 
-                          : i % 7 === 0 
-                            ? '0 0 3px rgba(0,229,255,0.2)' 
-                            : 'none',
-                      }}
-                    />
-                  ))}
+                {/* Key rows with individual RGB flicker */}
+                <div className="p-1.5 grid grid-cols-12 gap-[1.5px]">
+                  {Array.from({ length: 48 }).map((_, i) => {
+                    const rgbColors = [
+                      'rgba(0,229,255,0.5)', 'rgba(168,85,247,0.5)', 'rgba(236,72,153,0.45)',
+                      'rgba(34,197,94,0.4)', 'rgba(251,191,36,0.4)', 'rgba(99,102,241,0.45)',
+                    ];
+                    const isActive = i % 3 === 0 || i % 7 === 0;
+                    const color = isActive ? rgbColors[i % rgbColors.length] : 'rgba(51,65,85,0.35)';
+                    return (
+                      <div
+                        key={i}
+                        className="h-[3.5px] rounded-[1px]"
+                        style={{
+                          background: color,
+                          animation: isActive ? 'rgbFlicker 1.5s ease-in-out infinite' : 'keyPress 2s ease-in-out infinite',
+                          animationDelay: `${i * 0.08}s`,
+                          boxShadow: isActive ? `0 0 4px ${color}` : 'none',
+                        }}
+                      />
+                    );
+                  })}
                 </div>
-                <RGBStrip className="bottom-0 left-0 w-full h-[2px]" color="purple" />
+                {/* Bottom RGB light bar */}
+                <div className="absolute bottom-0 left-0 right-0 h-[2px]" style={{
+                  background: 'linear-gradient(90deg, rgba(0,229,255,0.5), rgba(168,85,247,0.5), rgba(236,72,153,0.4), rgba(0,229,255,0.5))',
+                  backgroundSize: '200% 100%',
+                  animation: 'rgbSlide 3s linear infinite',
+                  filter: 'blur(0.5px)',
+                }} />
               </div>
             </div>
 
-            {/* ── CHARACTER - Programmer sitting at desk ── */}
+            {/* ── CHARACTER - High-fidelity 3D Programmer ── */}
             <div
               className="absolute"
               style={{
                 left: '50%',
                 top: '50%',
-                marginLeft: '-15px',
-                marginTop: '-45px',
+                marginLeft: '-20px',
+                marginTop: '-50px',
                 transformStyle: 'preserve-3d',
                 transform: 'translateZ(55px)',
                 zIndex: 10,
               }}
             >
-              {/* Character body group - back slightly to camera */}
-              <div className="relative" style={{ transform: 'rotateZ(5deg)' }}>
-                {/* Head with bun hairstyle */}
-                <div className="relative" style={{ marginBottom: '-2px' }}>
-                  {/* Hair bun on top */}
+              {/* Character body group - back slightly to camera, leaning forward */}
+              <div className="relative" style={{ transform: 'rotateZ(3deg) rotateX(-6deg)' }}>
+
+                {/* ── ERGONOMIC CHAIR ── */}
+                {/* Chair back - tall mesh ergonomic */}
+                <div
+                  className="absolute -z-10"
+                  style={{
+                    width: '38px',
+                    height: '50px',
+                    left: '50%',
+                    marginLeft: '-19px',
+                    top: '-4px',
+                    background: 'linear-gradient(180deg, #1c1c30 0%, #141428 40%, #101024 100%)',
+                    borderRadius: '10px 10px 4px 4px',
+                    border: '1px solid rgba(255,255,255,0.05)',
+                    boxShadow: '0 4px 16px rgba(0,0,0,0.4)',
+                  }}
+                >
+                  {/* Mesh pattern on chair back */}
+                  <div className="absolute inset-2 rounded-lg" style={{
+                    backgroundImage: `
+                      linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px)
+                    `,
+                    backgroundSize: '4px 4px',
+                  }} />
+                  {/* Lumbar support bump */}
+                  <div className="absolute bottom-4 left-1/2 -translate-x-1/2 w-[28px] h-[8px] rounded-full bg-[#1e1e34] border border-white/[0.03]" />
+                  {/* Headrest */}
                   <div
-                    className="absolute -top-3 left-1/2 -translate-x-1/2"
+                    className="absolute -top-5 left-1/2 -translate-x-1/2"
                     style={{
-                      width: '10px',
-                      height: '8px',
-                      borderRadius: '50%',
-                      background: 'linear-gradient(135deg, #1a1a2e 0%, #0f0f1e 100%)',
-                      border: '1px solid rgba(255,255,255,0.05)',
+                      width: '22px',
+                      height: '10px',
+                      background: 'linear-gradient(180deg, #1e1e34 0%, #181830 100%)',
+                      borderRadius: '6px 6px 3px 3px',
+                      border: '1px solid rgba(255,255,255,0.04)',
                     }}
                   />
-                  {/* Head */}
+                </div>
+                {/* Chair armrests */}
+                <div className="absolute -z-5" style={{ top: '28px', left: '-12px', width: '10px', height: '4px', background: '#1a1a2e', borderRadius: '2px', border: '1px solid rgba(255,255,255,0.04)' }} />
+                <div className="absolute -z-5" style={{ top: '28px', right: '-12px', width: '10px', height: '4px', background: '#1a1a2e', borderRadius: '2px', border: '1px solid rgba(255,255,255,0.04)' }} />
+                {/* Chair seat */}
+                <div
+                  className="absolute"
+                  style={{
+                    width: '36px',
+                    height: '10px',
+                    left: '50%',
+                    marginLeft: '-18px',
+                    bottom: '-8px',
+                    background: 'linear-gradient(180deg, #1c1c30 0%, #161628 100%)',
+                    borderRadius: '4px',
+                    border: '1px solid rgba(255,255,255,0.04)',
+                    boxShadow: '0 3px 12px rgba(0,0,0,0.3)',
+                  }}
+                />
+                {/* Chair base / gas lift */}
+                <div className="absolute" style={{ bottom: '-16px', left: '50%', marginLeft: '-2px', width: '4px', height: '8px', background: '#16162a', borderRadius: '1px' }} />
+                {/* Chair star base */}
+                <div className="absolute" style={{ bottom: '-20px', left: '50%', marginLeft: '-14px', width: '28px', height: '3px', background: 'radial-gradient(ellipse, #1a1a2e 40%, transparent 70%)', borderRadius: '50%' }} />
+                {/* Chair wheels */}
+                {[-12, -4, 4, 12].map((offset, i) => (
+                  <div key={i} className="absolute" style={{ bottom: '-22px', left: '50%', marginLeft: `${offset - 2}px`, width: '4px', height: '3px', background: '#111', borderRadius: '50%', border: '0.5px solid rgba(255,255,255,0.05)' }} />
+                ))}
+
+                {/* ── HEAD with man-bun ── */}
+                <div className="relative" style={{ marginBottom: '-2px' }}>
+                  {/* Man-bun - larger, more visible */}
+                  <div
+                    className="absolute -top-4 left-1/2"
+                    style={{
+                      width: '12px',
+                      height: '10px',
+                      marginLeft: '-4px',
+                      borderRadius: '50% 50% 40% 40%',
+                      background: 'radial-gradient(ellipse at 40% 30%, #2a2a3e 0%, #1a1a2e 60%, #0f0f1e 100%)',
+                      border: '1px solid rgba(255,255,255,0.05)',
+                      boxShadow: '0 1px 4px rgba(0,0,0,0.3)',
+                    }}
+                  />
+                  {/* Hair tie */}
+                  <div className="absolute -top-[6px] left-1/2 -translate-x-1/2 w-[6px] h-[3px] rounded-full bg-cyan-600/30 border border-cyan-500/20" />
+                  
+                  {/* Head - slightly tilted forward (focused posture) */}
                   <div
                     style={{
-                      width: '16px',
-                      height: '16px',
+                      width: '18px',
+                      height: '18px',
                       borderRadius: '50% 50% 45% 45%',
-                      background: 'linear-gradient(180deg, #c4956a 0%, #b08456 100%)',
+                      background: 'linear-gradient(180deg, #c4956a 0%, #b8895e 50%, #a87d52 100%)',
                       margin: '0 auto',
                       position: 'relative',
+                      transform: 'rotateX(8deg)',
                     }}
                   >
-                    {/* Hair (back view - dark hair visible around head) */}
+                    {/* Hair (back view - covering top/back of head) */}
                     <div
-                      className="absolute inset-0 rounded-full"
+                      className="absolute inset-0"
                       style={{
-                        background: 'linear-gradient(180deg, #1a1a2e 0%, #1a1a2e 55%, transparent 55%)',
+                        background: 'linear-gradient(180deg, #1a1a2e 0%, #1a1a2e 50%, transparent 65%)',
                         borderRadius: '50% 50% 45% 45%',
                       }}
                     />
-                    {/* Ear hints */}
-                    <div className="absolute top-1/2 -left-[2px] w-[3px] h-[4px] rounded-full bg-[#b08456]" />
-                    <div className="absolute top-1/2 -right-[2px] w-[3px] h-[4px] rounded-full bg-[#b08456]" />
-                    {/* Screen glow on face */}
+                    {/* Side hair strands */}
+                    <div className="absolute top-[3px] -left-[1px] w-[3px] h-[8px] rounded-l-full" style={{ background: 'linear-gradient(180deg, #1a1a2e, #15152a)' }} />
+                    <div className="absolute top-[3px] -right-[1px] w-[3px] h-[8px] rounded-r-full" style={{ background: 'linear-gradient(180deg, #1a1a2e, #15152a)' }} />
+                    {/* Ears */}
+                    <div className="absolute top-[45%] -left-[3px] w-[4px] h-[5px] rounded-full bg-[#b8895e]" style={{ boxShadow: 'inset 1px 0 2px rgba(0,0,0,0.15)' }} />
+                    <div className="absolute top-[45%] -right-[3px] w-[4px] h-[5px] rounded-full bg-[#b8895e]" style={{ boxShadow: 'inset -1px 0 2px rgba(0,0,0,0.15)' }} />
+                    {/* Screen glow reflection on face/neck area */}
                     <div
-                      className="absolute inset-0 rounded-full animate-pulse"
+                      className="absolute inset-0 rounded-full"
                       style={{
-                        background: 'radial-gradient(ellipse at center top, rgba(0,229,255,0.15) 0%, transparent 70%)',
+                        background: 'radial-gradient(ellipse at center bottom, rgba(0,229,255,0.2) 0%, transparent 60%)',
+                        animation: 'screenFlicker 3s ease-in-out infinite',
                       }}
                     />
                   </div>
                 </div>
 
-                {/* Neck */}
-                <div className="w-[6px] h-[4px] bg-[#b08456] mx-auto" />
+                {/* Neck - slightly forward */}
+                <div className="w-[7px] h-[5px] mx-auto" style={{ background: 'linear-gradient(180deg, #b8895e, #a87d52)', transform: 'translateX(1px)' }} />
 
-                {/* Hoodie / Torso (slightly oversized, dark hoodie) */}
+                {/* ── HOODIE / TORSO - oversized dark hoodie ── */}
                 <div
                   className="relative"
                   style={{
-                    width: '32px',
-                    height: '28px',
+                    width: '38px',
+                    height: '32px',
                     margin: '0 auto',
-                    background: 'linear-gradient(180deg, #1a1a2e 0%, #12122a 100%)',
-                    borderRadius: '6px 6px 3px 3px',
+                    background: 'linear-gradient(180deg, #1a1a2e 0%, #141428 50%, #101024 100%)',
+                    borderRadius: '8px 8px 4px 4px',
                     border: '1px solid rgba(255,255,255,0.04)',
-                    boxShadow: '0 3px 10px rgba(0,0,0,0.3)',
+                    boxShadow: '0 4px 14px rgba(0,0,0,0.35)',
+                    transform: 'rotateX(4deg)',
                   }}
                 >
-                  {/* Hood line */}
+                  {/* Hood - visible behind head, oversized */}
                   <div
-                    className="absolute top-0 left-1/2 -translate-x-1/2"
+                    className="absolute -top-1 left-1/2 -translate-x-1/2"
                     style={{
-                      width: '14px',
-                      height: '6px',
-                      borderRadius: '0 0 8px 8px',
-                      background: 'rgba(255,255,255,0.03)',
-                      borderBottom: '1px solid rgba(255,255,255,0.05)',
+                      width: '22px',
+                      height: '10px',
+                      borderRadius: '0 0 12px 12px',
+                      background: 'rgba(255,255,255,0.02)',
+                      borderBottom: '1px solid rgba(255,255,255,0.04)',
+                      borderLeft: '1px solid rgba(255,255,255,0.02)',
+                      borderRight: '1px solid rgba(255,255,255,0.02)',
                     }}
                   />
-                  {/* JK Logo patch on left sleeve */}
+                  {/* Hoodie wrinkle/seam lines */}
+                  <div className="absolute top-3 left-[6px] w-[1px] h-[18px] bg-white/[0.03] rounded-full" />
+                  <div className="absolute top-3 right-[6px] w-[1px] h-[18px] bg-white/[0.03] rounded-full" />
+                  {/* Center zipper line */}
+                  <div className="absolute top-1 left-1/2 -translate-x-1/2 w-[1px] h-[24px] bg-white/[0.04]" />
+
+                  {/* JK Logo patch on LEFT shoulder - prominent */}
                   <div
-                    className="absolute top-2 -left-1"
+                    className="absolute top-[6px] -left-[2px]"
                     style={{
-                      width: '8px',
-                      height: '6px',
-                      background: 'rgba(0,229,255,0.12)',
-                      borderRadius: '1px',
-                      border: '0.5px solid rgba(0,229,255,0.25)',
+                      width: '12px',
+                      height: '8px',
+                      background: 'linear-gradient(135deg, rgba(0,229,255,0.15) 0%, rgba(168,85,247,0.1) 100%)',
+                      borderRadius: '2px',
+                      border: '0.5px solid rgba(0,229,255,0.3)',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
+                      boxShadow: '0 0 6px rgba(0,229,255,0.15)',
                     }}
                   >
-                    <span style={{ fontSize: '3px', color: 'rgba(0,229,255,0.7)', fontWeight: 'bold' }}>JK</span>
+                    <span style={{ fontSize: '4px', color: 'rgba(0,229,255,0.85)', fontWeight: 'bold', fontFamily: 'monospace', letterSpacing: '0.5px' }}>JK</span>
                   </div>
-                  {/* Hoodie pocket/kangaroo pouch line */}
+
+                  {/* Kangaroo pocket */}
                   <div
-                    className="absolute bottom-2 left-1/2 -translate-x-1/2"
+                    className="absolute bottom-[5px] left-1/2 -translate-x-1/2"
                     style={{
-                      width: '16px',
-                      height: '1px',
-                      background: 'rgba(255,255,255,0.04)',
-                      borderRadius: '1px',
+                      width: '20px',
+                      height: '6px',
+                      borderTop: '1px solid rgba(255,255,255,0.04)',
+                      borderRadius: '0 0 4px 4px',
+                      background: 'rgba(0,0,0,0.08)',
                     }}
                   />
-                  {/* Arms extended to keyboard */}
-                  {/* Left arm */}
+
+                  {/* ── ARMS - actively typing, animated ── */}
+                  {/* Left arm + forearm */}
                   <div
-                    className="absolute top-3 -left-2"
+                    className="absolute top-[8px] -left-[6px]"
                     style={{
-                      width: '14px',
-                      height: '6px',
-                      background: 'linear-gradient(90deg, #1a1a2e 0%, #16162a 100%)',
-                      borderRadius: '3px',
-                      transform: 'rotate(-30deg)',
+                      width: '20px',
+                      height: '7px',
+                      background: 'linear-gradient(90deg, #16162a 0%, #1a1a2e 100%)',
+                      borderRadius: '4px',
+                      transform: 'rotate(-35deg)',
                       transformOrigin: 'right center',
-                      animation: 'typingArmL 1.5s ease-in-out infinite',
+                      animation: 'typingArmL 0.8s ease-in-out infinite',
+                      boxShadow: '0 2px 4px rgba(0,0,0,0.2)',
                     }}
                   >
-                    {/* Hand */}
-                    <div className="absolute left-0 top-0 w-[5px] h-[5px] rounded-full bg-[#c4956a]" />
-                  </div>
-                  {/* Right arm */}
-                  <div
-                    className="absolute top-3 -right-2"
-                    style={{
-                      width: '14px',
+                    {/* Sleeve detail */}
+                    <div className="absolute left-0 top-0 bottom-0 w-[4px] rounded-l-full bg-[#141428]" />
+                    {/* Hand/fingers */}
+                    <div className="absolute left-[-2px] top-[1px]" style={{
+                      width: '7px',
                       height: '6px',
-                      background: 'linear-gradient(270deg, #1a1a2e 0%, #16162a 100%)',
-                      borderRadius: '3px',
-                      transform: 'rotate(30deg)',
+                      background: 'linear-gradient(180deg, #c4956a 0%, #b08456 100%)',
+                      borderRadius: '2px 1px 2px 3px',
+                    }}>
+                      {/* Finger details */}
+                      <div className="absolute bottom-0 left-[1px] w-[1px] h-[2px] bg-[#a87d52] rounded-b-full" />
+                      <div className="absolute bottom-0 left-[3px] w-[1px] h-[2px] bg-[#a87d52] rounded-b-full" />
+                      <div className="absolute bottom-0 left-[5px] w-[1px] h-[2px] bg-[#a87d52] rounded-b-full" />
+                    </div>
+                  </div>
+
+                  {/* Right arm + forearm */}
+                  <div
+                    className="absolute top-[8px] -right-[6px]"
+                    style={{
+                      width: '20px',
+                      height: '7px',
+                      background: 'linear-gradient(270deg, #16162a 0%, #1a1a2e 100%)',
+                      borderRadius: '4px',
+                      transform: 'rotate(35deg)',
                       transformOrigin: 'left center',
-                      animation: 'typingArmR 1.5s ease-in-out 0.3s infinite',
+                      animation: 'typingArmR 0.8s ease-in-out 0.15s infinite',
+                      boxShadow: '0 2px 4px rgba(0,0,0,0.2)',
                     }}
                   >
-                    {/* Hand */}
-                    <div className="absolute right-0 top-0 w-[5px] h-[5px] rounded-full bg-[#c4956a]" />
+                    <div className="absolute right-0 top-0 bottom-0 w-[4px] rounded-r-full bg-[#141428]" />
+                    {/* Hand/fingers */}
+                    <div className="absolute right-[-2px] top-[1px]" style={{
+                      width: '7px',
+                      height: '6px',
+                      background: 'linear-gradient(180deg, #c4956a 0%, #b08456 100%)',
+                      borderRadius: '1px 2px 3px 2px',
+                    }}>
+                      <div className="absolute bottom-0 right-[1px] w-[1px] h-[2px] bg-[#a87d52] rounded-b-full" />
+                      <div className="absolute bottom-0 right-[3px] w-[1px] h-[2px] bg-[#a87d52] rounded-b-full" />
+                      <div className="absolute bottom-0 right-[5px] w-[1px] h-[2px] bg-[#a87d52] rounded-b-full" />
+                    </div>
                   </div>
-                  {/* Screen reflection glow on hoodie */}
+
+                  {/* Screen reflection glow on hoodie front */}
                   <div
-                    className="absolute inset-0 rounded-md animate-pulse"
+                    className="absolute inset-0 rounded-lg"
                     style={{
-                      background: 'linear-gradient(0deg, transparent 50%, rgba(0,229,255,0.06) 100%)',
+                      background: 'linear-gradient(0deg, transparent 40%, rgba(0,229,255,0.08) 100%)',
+                      animation: 'screenFlicker 3s ease-in-out infinite',
                     }}
                   />
                 </div>
 
-                {/* Cargo pants / legs on chair */}
+                {/* ── CARGO PANTS / Legs on chair ── */}
                 <div className="flex justify-center gap-[2px]" style={{ marginTop: '-1px' }}>
                   <div
                     style={{
-                      width: '12px',
-                      height: '14px',
+                      width: '14px',
+                      height: '16px',
                       background: 'linear-gradient(180deg, #2a2a3e 0%, #222236 100%)',
-                      borderRadius: '2px 0 3px 3px',
+                      borderRadius: '2px 0 4px 4px',
                       border: '1px solid rgba(255,255,255,0.03)',
                     }}
                   >
-                    {/* Cargo pocket */}
-                    <div className="mt-2 mx-auto w-[6px] h-[3px] border border-white/5 rounded-[1px]" />
+                    {/* Cargo pocket detail */}
+                    <div className="mt-3 mx-auto w-[7px] h-[4px] border border-white/[0.06] rounded-[1px]" />
                   </div>
                   <div
                     style={{
-                      width: '12px',
-                      height: '14px',
+                      width: '14px',
+                      height: '16px',
                       background: 'linear-gradient(180deg, #2a2a3e 0%, #222236 100%)',
-                      borderRadius: '0 2px 3px 3px',
+                      borderRadius: '0 2px 4px 4px',
                       border: '1px solid rgba(255,255,255,0.03)',
                     }}
                   >
-                    <div className="mt-2 mx-auto w-[6px] h-[3px] border border-white/5 rounded-[1px]" />
+                    <div className="mt-3 mx-auto w-[7px] h-[4px] border border-white/[0.06] rounded-[1px]" />
                   </div>
                 </div>
 
-                {/* Chair */}
-                <div
-                  className="absolute -bottom-3 left-1/2 -translate-x-1/2"
-                  style={{
-                    width: '30px',
-                    height: '8px',
-                    background: 'linear-gradient(180deg, #1a1a28 0%, #111120 100%)',
-                    borderRadius: '3px',
-                    border: '1px solid rgba(255,255,255,0.04)',
-                    boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
-                  }}
-                />
-                {/* Chair back */}
-                <div
-                  className="absolute -top-1 left-1/2 -translate-x-1/2 -z-10"
-                  style={{
-                    width: '28px',
-                    height: '35px',
-                    background: 'linear-gradient(180deg, #1e1e30 0%, #161626 100%)',
-                    borderRadius: '6px 6px 0 0',
-                    border: '1px solid rgba(255,255,255,0.03)',
-                  }}
-                />
+                {/* Shoes */}
+                <div className="flex justify-center gap-[4px]" style={{ marginTop: '-1px' }}>
+                  <div style={{ width: '8px', height: '4px', background: '#111', borderRadius: '2px 1px 3px 3px' }} />
+                  <div style={{ width: '8px', height: '4px', background: '#111', borderRadius: '1px 2px 3px 3px' }} />
+                </div>
               </div>
 
-              {/* Character shadow on desk */}
+              {/* Character shadow on floor */}
               <div
-                className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-20 h-3 rounded-full"
+                className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-24 h-4 rounded-full"
                 style={{
-                  background: 'radial-gradient(ellipse, rgba(0,0,0,0.25) 0%, transparent 70%)',
+                  background: 'radial-gradient(ellipse, rgba(0,0,0,0.3) 0%, transparent 70%)',
                 }}
               />
             </div>
@@ -910,12 +1014,31 @@ const CyberRoom = () => {
           to { transform: rotate(360deg); }
         }
         @keyframes typingArmL {
-          0%, 100% { transform: rotate(-30deg); }
-          50% { transform: rotate(-25deg); }
+          0%, 100% { transform: rotate(-35deg); }
+          25% { transform: rotate(-28deg); }
+          50% { transform: rotate(-33deg); }
+          75% { transform: rotate(-26deg); }
         }
         @keyframes typingArmR {
-          0%, 100% { transform: rotate(30deg); }
-          50% { transform: rotate(25deg); }
+          0%, 100% { transform: rotate(35deg); }
+          25% { transform: rotate(27deg); }
+          50% { transform: rotate(33deg); }
+          75% { transform: rotate(28deg); }
+        }
+        @keyframes screenFlicker {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0.7; }
+          75% { opacity: 0.95; }
+        }
+        @keyframes rgbFlicker {
+          0%, 100% { opacity: 0.4; }
+          30% { opacity: 1; }
+          60% { opacity: 0.6; }
+          80% { opacity: 0.9; }
+        }
+        @keyframes rgbSlide {
+          0% { background-position: 0% 0%; }
+          100% { background-position: 200% 0%; }
         }
       `}</style>
     </section>
