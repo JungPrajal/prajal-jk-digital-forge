@@ -1332,6 +1332,44 @@ const CyberRoom = () => {
         </div>
       </div>
 
+      {/* ── Code Explode Overlay ── */}
+      {codeExploding && (
+        <div className="absolute inset-0 pointer-events-none z-50 overflow-hidden">
+          {/* Flash */}
+          <div className="absolute inset-0" style={{
+            background: 'radial-gradient(ellipse at 55% 40%, rgba(0,229,255,0.15) 0%, transparent 60%)',
+            animation: 'explodeFlash 0.3s ease-out forwards',
+          }} />
+          {/* Flying code snippets */}
+          {explodeParticles.map((p) => {
+            const endX = p.x + Math.cos(p.angle) * p.speed;
+            const endY = p.y + Math.sin(p.angle) * p.speed * 0.6;
+            return (
+              <div
+                key={p.id}
+                className="absolute font-mono whitespace-nowrap"
+                style={{
+                  left: `${p.x}%`,
+                  top: `${p.y}%`,
+                  fontSize: `${10 + p.scale * 6}px`,
+                  color: p.color,
+                  textShadow: `0 0 8px ${p.color}, 0 0 20px ${p.color}40`,
+                  animation: `codeExplode 1.6s cubic-bezier(0.2, 0.8, 0.3, 1) forwards`,
+                  ['--end-x' as string]: `${(endX - p.x)}vw`,
+                  ['--end-y' as string]: `${(endY - p.y)}vh`,
+                  ['--rot' as string]: `${p.rotation}deg`,
+                  ['--scale' as string]: p.scale,
+                  animationDelay: `${p.id * 0.04}s`,
+                  zIndex: 60,
+                }}
+              >
+                {p.text}
+              </div>
+            );
+          })}
+        </div>
+      )}
+
       {/* Scroll indicator */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 hidden sm:block">
         <div className="w-5 h-8 border border-cyan-500/30 rounded-full flex justify-center">
