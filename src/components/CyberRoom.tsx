@@ -198,10 +198,35 @@ const RGBStrip = ({ className = '', color = 'cyan' }: { className?: string; colo
   );
 };
 
+/* ── Code Explode snippets ── */
+const EXPLODE_SNIPPETS = [
+  { text: 'import torch', color: '#ec4899' },
+  { text: 'nn.Module', color: '#06b6d4' },
+  { text: 'useState()', color: '#a855f7' },
+  { text: 'def forward(self, x):', color: '#10b981' },
+  { text: '<Canvas />', color: '#f59e0b' },
+  { text: 'self.attn(x, x, x)', color: '#06b6d4' },
+  { text: 'useEffect(() => {})', color: '#a855f7' },
+  { text: 'class Transformer:', color: '#ec4899' },
+  { text: 'return Response(data)', color: '#10b981' },
+  { text: 'motion.div', color: '#f59e0b' },
+  { text: 'nn.Linear(512, 2048)', color: '#06b6d4' },
+  { text: 'const [active, set]', color: '#a855f7' },
+  { text: 'torch.nn as nn', color: '#ec4899' },
+  { text: 'ambientLight', color: '#f59e0b' },
+  { text: 'nn.GELU()', color: '#10b981' },
+  { text: 'flutter/material', color: '#06b6d4' },
+];
+
 /* ── Main CyberRoom component ── */
 const CyberRoom = () => {
   const [mouseX, setMouseX] = useState(0);
   const [mouseY, setMouseY] = useState(0);
+  const [codeExploding, setCodeExploding] = useState(false);
+  const [explodeParticles, setExplodeParticles] = useState<Array<{
+    id: number; text: string; color: string;
+    x: number; y: number; angle: number; speed: number; rotation: number; scale: number;
+  }>>([]);
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -215,8 +240,32 @@ const CyberRoom = () => {
     return () => window.removeEventListener('mousemove', handleMouse);
   }, []);
 
-  const roomRotateX = 55 + mouseY * 3;
-  const roomRotateZ = -45 + mouseX * 3;
+  const handleMonitorClick = useCallback(() => {
+    if (codeExploding) return;
+    setCodeExploding(true);
+    const particles = EXPLODE_SNIPPETS.map((s, i) => ({
+      id: i,
+      text: s.text,
+      color: s.color,
+      x: 50 + (Math.random() - 0.5) * 10,
+      y: 35 + (Math.random() - 0.5) * 10,
+      angle: (Math.PI * 2 * i) / EXPLODE_SNIPPETS.length + (Math.random() - 0.5) * 0.5,
+      speed: 120 + Math.random() * 200,
+      rotation: (Math.random() - 0.5) * 720,
+      scale: 0.7 + Math.random() * 0.6,
+    }));
+    setExplodeParticles(particles);
+    setTimeout(() => {
+      setCodeExploding(false);
+      setExplodeParticles([]);
+    }, 1800);
+  }, [codeExploding]);
+
+  // Enhanced parallax: wider orbit range + perspective origin shift
+  const roomRotateX = 55 + mouseY * 8;
+  const roomRotateZ = -45 + mouseX * 8;
+  const perspX = 50 + mouseX * 12;
+  const perspY = 30 + mouseY * 8;
 
   return (
     <section id="home" className="relative min-h-screen overflow-hidden flex items-center justify-center">
