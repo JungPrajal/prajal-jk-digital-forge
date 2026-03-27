@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react';
+import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 
 /* ── Typewriter code snippets for the monitor ── */
 const CODE_SNIPPETS = [
