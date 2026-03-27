@@ -239,6 +239,61 @@ const CyberRoom = () => {
         ))}
       </div>
 
+      {/* ── Volumetric Light Beam (God Rays) from unseen left window ── */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div
+          className="absolute"
+          style={{
+            left: '-5%',
+            top: '8%',
+            width: '65%',
+            height: '80%',
+            background: 'linear-gradient(125deg, rgba(255,248,220,0.07) 0%, rgba(255,248,220,0.03) 25%, transparent 55%)',
+            clipPath: 'polygon(0% 10%, 100% 35%, 85% 95%, 0% 60%)',
+            filter: 'blur(8px)',
+            animation: 'godRayPulse 6s ease-in-out infinite',
+          }}
+        />
+        {/* Secondary ray band */}
+        <div
+          className="absolute"
+          style={{
+            left: '-3%',
+            top: '15%',
+            width: '55%',
+            height: '65%',
+            background: 'linear-gradient(125deg, rgba(255,240,200,0.04) 0%, rgba(200,220,255,0.02) 30%, transparent 50%)',
+            clipPath: 'polygon(0% 20%, 100% 42%, 80% 85%, 0% 55%)',
+            filter: 'blur(12px)',
+            animation: 'godRayPulse 6s ease-in-out 1.5s infinite',
+          }}
+        />
+        {/* Dust particles caught in the god rays */}
+        {Array.from({ length: 30 }).map((_, i) => {
+          const x = 5 + Math.random() * 45;
+          const y = 15 + Math.random() * 55;
+          const size = 1 + Math.random() * 2;
+          const dur = 8 + Math.random() * 12;
+          const delay = Math.random() * 10;
+          const brightness = 0.15 + Math.random() * 0.35;
+          return (
+            <div
+              key={`dust-${i}`}
+              className="absolute rounded-full"
+              style={{
+                left: `${x}%`,
+                top: `${y}%`,
+                width: `${size}px`,
+                height: `${size}px`,
+                background: `rgba(255,248,220,${brightness})`,
+                boxShadow: `0 0 ${size * 2}px rgba(255,248,220,${brightness * 0.5})`,
+                animation: `dustFloat ${dur}s ease-in-out ${delay}s infinite`,
+              }}
+            />
+          );
+        })}
+      </div>
+
       <div ref={containerRef} className="relative w-full max-w-5xl mx-auto px-4">
         {/* ── Floating text elements integrated in 3D space ── */}
         <FloatingText
@@ -328,7 +383,7 @@ const CyberRoom = () => {
               transform: `rotateX(${roomRotateX}deg) rotateZ(${roomRotateZ}deg)`,
             }}
           >
-            {/* ── Floor ── */}
+            {/* ── Floor - Polished Concrete with reflections ── */}
             <div
               className="absolute"
               style={{
@@ -340,18 +395,79 @@ const CyberRoom = () => {
                 marginTop: '-175px',
                 transformStyle: 'preserve-3d',
                 transform: 'translateZ(0px)',
-                background: 'linear-gradient(135deg, #0a0e17 0%, #111827 50%, #0a0e17 100%)',
+                background: `
+                  radial-gradient(ellipse at 55% 40%, rgba(0,229,255,0.08) 0%, transparent 40%),
+                  radial-gradient(ellipse at 55% 40%, rgba(236,72,153,0.04) 0%, transparent 35%),
+                  linear-gradient(135deg, #0c1018 0%, #141c28 30%, #0e141e 60%, #0a0f18 100%)
+                `,
                 border: '1px solid rgba(0,229,255,0.08)',
                 boxShadow: '0 0 80px rgba(0,229,255,0.05)',
               }}
             >
-              {/* Floor grid lines */}
+              {/* Polished concrete subtle texture */}
               <div className="absolute inset-0" style={{
                 backgroundImage: `
-                  linear-gradient(rgba(0,229,255,0.04) 1px, transparent 1px),
-                  linear-gradient(90deg, rgba(0,229,255,0.04) 1px, transparent 1px)
+                  radial-gradient(ellipse at 30% 20%, rgba(255,255,255,0.015) 0%, transparent 50%),
+                  radial-gradient(ellipse at 70% 60%, rgba(255,255,255,0.01) 0%, transparent 40%),
+                  radial-gradient(ellipse at 50% 80%, rgba(255,255,255,0.008) 0%, transparent 35%),
+                  linear-gradient(rgba(0,229,255,0.03) 1px, transparent 1px),
+                  linear-gradient(90deg, rgba(0,229,255,0.03) 1px, transparent 1px)
                 `,
-                backgroundSize: '35px 35px',
+                backgroundSize: '100% 100%, 100% 100%, 100% 100%, 35px 35px, 35px 35px',
+              }} />
+              {/* Monitor screen reflection on floor */}
+              <div className="absolute" style={{
+                width: '180px',
+                height: '120px',
+                left: '50%',
+                top: '25%',
+                marginLeft: '-40px',
+                background: 'radial-gradient(ellipse, rgba(0,229,255,0.06) 0%, rgba(236,72,153,0.03) 40%, transparent 70%)',
+                filter: 'blur(15px)',
+                animation: 'screenGlow 4s ease-in-out infinite',
+              }} />
+              {/* RGB keyboard reflection on floor */}
+              <div className="absolute" style={{
+                width: '80px',
+                height: '40px',
+                left: '50%',
+                top: '50%',
+                marginLeft: '-25px',
+                marginTop: '-10px',
+                background: 'radial-gradient(ellipse, rgba(168,85,247,0.04) 0%, rgba(0,229,255,0.02) 50%, transparent 80%)',
+                filter: 'blur(8px)',
+                animation: 'rgbFlicker 1.5s ease-in-out infinite',
+              }} />
+
+              {/* ── Ambient Occlusion - deep shadows in room corners ── */}
+              {/* Back-left corner AO */}
+              <div className="absolute top-0 left-0 w-[100px] h-[100px]" style={{
+                background: 'radial-gradient(ellipse at 0% 0%, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.3) 40%, transparent 70%)',
+              }} />
+              {/* Back-right corner AO */}
+              <div className="absolute top-0 right-0 w-[100px] h-[100px]" style={{
+                background: 'radial-gradient(ellipse at 100% 0%, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.2) 40%, transparent 70%)',
+              }} />
+              {/* Front-left corner AO */}
+              <div className="absolute bottom-0 left-0 w-[80px] h-[80px]" style={{
+                background: 'radial-gradient(ellipse at 0% 100%, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.15) 50%, transparent 75%)',
+              }} />
+              {/* Wall-floor junction AO (back walls) */}
+              <div className="absolute top-0 left-0 right-0 h-[40px]" style={{
+                background: 'linear-gradient(180deg, rgba(0,0,0,0.45) 0%, transparent 100%)',
+              }} />
+              <div className="absolute top-0 right-0 w-[40px] h-full" style={{
+                background: 'linear-gradient(270deg, rgba(0,0,0,0.35) 0%, transparent 100%)',
+              }} />
+              {/* Desk shadow / AO under desk area */}
+              <div className="absolute" style={{
+                width: '240px',
+                height: '140px',
+                left: '50%',
+                top: '35%',
+                marginLeft: '-70px',
+                background: 'radial-gradient(ellipse, rgba(0,0,0,0.25) 0%, transparent 65%)',
+                filter: 'blur(5px)',
               }} />
             </div>
 
@@ -379,6 +495,27 @@ const CyberRoom = () => {
               <div className="absolute top-4 right-10 w-12 h-12 border border-cyan-500/10 bg-cyan-500/5 rounded-sm flex items-center justify-center">
                 <span className="text-[5px] text-cyan-400/30 font-mono">{'{ }'}</span>
               </div>
+              {/* AO - wall-floor junction shadow */}
+              <div className="absolute bottom-0 left-0 right-0 h-[50px]" style={{
+                background: 'linear-gradient(0deg, rgba(0,0,0,0.5) 0%, transparent 100%)',
+              }} />
+              {/* AO - wall corner shadows */}
+              <div className="absolute bottom-0 left-0 w-[60px] h-[80px]" style={{
+                background: 'radial-gradient(ellipse at 0% 100%, rgba(0,0,0,0.4) 0%, transparent 70%)',
+              }} />
+              <div className="absolute bottom-0 right-0 w-[60px] h-[80px]" style={{
+                background: 'radial-gradient(ellipse at 100% 100%, rgba(0,0,0,0.35) 0%, transparent 70%)',
+              }} />
+              {/* Monitor point light projection on back wall */}
+              <div className="absolute" style={{
+                bottom: '10px',
+                left: '40%',
+                width: '120px',
+                height: '80px',
+                background: 'radial-gradient(ellipse, rgba(0,229,255,0.08) 0%, rgba(236,72,153,0.04) 40%, transparent 70%)',
+                filter: 'blur(10px)',
+                animation: 'screenFlicker 3s ease-in-out infinite',
+              }} />
             </div>
 
             {/* ── Side wall (right) ── */}
@@ -399,6 +536,24 @@ const CyberRoom = () => {
               }}
             >
               <RGBStrip className="bottom-0 left-0 w-full h-1" color="purple" />
+              {/* AO - wall-floor junction */}
+              <div className="absolute bottom-0 left-0 right-0 h-[50px]" style={{
+                background: 'linear-gradient(0deg, rgba(0,0,0,0.45) 0%, transparent 100%)',
+              }} />
+              {/* AO - wall corner where walls meet */}
+              <div className="absolute bottom-0 left-0 w-[50px] h-[80px]" style={{
+                background: 'radial-gradient(ellipse at 0% 100%, rgba(0,0,0,0.4) 0%, transparent 70%)',
+              }} />
+              {/* Monitor side-spill light on wall */}
+              <div className="absolute" style={{
+                bottom: '40%',
+                left: '0',
+                width: '60px',
+                height: '100px',
+                background: 'radial-gradient(ellipse at 0% 50%, rgba(0,229,255,0.05) 0%, transparent 60%)',
+                filter: 'blur(8px)',
+                animation: 'screenGlow 4s ease-in-out 1s infinite',
+              }} />
             </div>
 
             {/* ── Desk ── */}
@@ -1200,6 +1355,17 @@ const CyberRoom = () => {
           0% { transform: translateY(0) scaleX(1); opacity: 0.1; }
           40% { transform: translateY(-8px) scaleX(1.3); opacity: 0.08; }
           100% { transform: translateY(-18px) scaleX(0.6); opacity: 0; }
+        }
+        @keyframes godRayPulse {
+          0%, 100% { opacity: 0.7; transform: scaleX(1); }
+          50% { opacity: 1; transform: scaleX(1.02); }
+        }
+        @keyframes dustFloat {
+          0% { transform: translate(0, 0) scale(1); opacity: 0.1; }
+          25% { transform: translate(8px, -6px) scale(1.2); opacity: 0.3; }
+          50% { transform: translate(15px, -3px) scale(0.8); opacity: 0.2; }
+          75% { transform: translate(5px, -10px) scale(1.1); opacity: 0.35; }
+          100% { transform: translate(0, 0) scale(1); opacity: 0.1; }
         }
       `}</style>
     </section>
