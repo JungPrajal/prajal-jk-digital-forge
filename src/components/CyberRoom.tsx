@@ -1099,7 +1099,8 @@ const CyberRoom = () => {
 
             {/* ── Large Curved Ultrawide Monitor on Silver Arm ── */}
             <div
-              className="absolute"
+              className="absolute cursor-pointer"
+              onClick={handleMonitorClick}
               style={{
                 width: '210px',
                 height: '100px',
@@ -1110,6 +1111,7 @@ const CyberRoom = () => {
                 transformStyle: 'preserve-3d',
                 transform: 'translateZ(55px) rotateX(-90deg)',
                 transformOrigin: 'bottom center',
+                zIndex: 20,
               }}
             >
               {/* Monitor frame - large ultrawide curved */}
