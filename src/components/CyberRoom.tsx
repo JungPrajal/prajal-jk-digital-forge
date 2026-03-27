@@ -422,14 +422,16 @@ const CyberRoom = () => {
           className="relative mx-auto w-[320px] h-[320px] sm:w-[480px] sm:h-[480px] md:w-[580px] md:h-[520px] lg:w-[700px] lg:h-[560px]"
           style={{
             perspective: '1200px',
-            perspectiveOrigin: '50% 30%',
+            perspectiveOrigin: `${perspX}% ${perspY}%`,
+            transition: 'perspective-origin 0.3s ease-out',
           }}
         >
           <div
-            className="relative w-full h-full transition-transform duration-300 ease-out"
+            className="relative w-full h-full"
             style={{
               transformStyle: 'preserve-3d',
               transform: `rotateX(${roomRotateX}deg) rotateZ(${roomRotateZ}deg)`,
+              transition: 'transform 0.15s ease-out',
             }}
           >
             {/* ── Floor - Polished Concrete with reflections ── */}
