@@ -1356,6 +1356,17 @@ const CyberRoom = () => {
           40% { transform: translateY(-8px) scaleX(1.3); opacity: 0.08; }
           100% { transform: translateY(-18px) scaleX(0.6); opacity: 0; }
         }
+        @keyframes godRayPulse {
+          0%, 100% { opacity: 0.7; transform: scaleX(1); }
+          50% { opacity: 1; transform: scaleX(1.02); }
+        }
+        @keyframes dustFloat {
+          0% { transform: translate(0, 0) scale(1); opacity: 0.1; }
+          25% { transform: translate(8px, -6px) scale(1.2); opacity: 0.3; }
+          50% { transform: translate(15px, -3px) scale(0.8); opacity: 0.2; }
+          75% { transform: translate(5px, -10px) scale(1.1); opacity: 0.35; }
+          100% { transform: translate(0, 0) scale(1); opacity: 0.1; }
+        }
       `}</style>
     </section>
   );
