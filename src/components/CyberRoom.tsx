@@ -1458,6 +1458,27 @@ const CyberRoom = () => {
           75% { transform: translate(5px, -10px) scale(1.1); opacity: 0.35; }
           100% { transform: translate(0, 0) scale(1); opacity: 0.1; }
         }
+        @keyframes codeExplode {
+          0% {
+            transform: translate(0, 0) rotate(0deg) scale(0.3);
+            opacity: 0;
+          }
+          15% {
+            transform: translate(calc(var(--end-x) * 0.1), calc(var(--end-y) * 0.1)) rotate(calc(var(--rot) * 0.1)) scale(var(--scale));
+            opacity: 1;
+          }
+          70% {
+            opacity: 0.8;
+          }
+          100% {
+            transform: translate(var(--end-x), var(--end-y)) rotate(var(--rot)) scale(0.1);
+            opacity: 0;
+          }
+        }
+        @keyframes explodeFlash {
+          0% { opacity: 1; }
+          100% { opacity: 0; }
+        }
       `}</style>
     </section>
   );
