@@ -239,6 +239,61 @@ const CyberRoom = () => {
         ))}
       </div>
 
+      {/* ── Volumetric Light Beam (God Rays) from unseen left window ── */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div
+          className="absolute"
+          style={{
+            left: '-5%',
+            top: '8%',
+            width: '65%',
+            height: '80%',
+            background: 'linear-gradient(125deg, rgba(255,248,220,0.07) 0%, rgba(255,248,220,0.03) 25%, transparent 55%)',
+            clipPath: 'polygon(0% 10%, 100% 35%, 85% 95%, 0% 60%)',
+            filter: 'blur(8px)',
+            animation: 'godRayPulse 6s ease-in-out infinite',
+          }}
+        />
+        {/* Secondary ray band */}
+        <div
+          className="absolute"
+          style={{
+            left: '-3%',
+            top: '15%',
+            width: '55%',
+            height: '65%',
+            background: 'linear-gradient(125deg, rgba(255,240,200,0.04) 0%, rgba(200,220,255,0.02) 30%, transparent 50%)',
+            clipPath: 'polygon(0% 20%, 100% 42%, 80% 85%, 0% 55%)',
+            filter: 'blur(12px)',
+            animation: 'godRayPulse 6s ease-in-out 1.5s infinite',
+          }}
+        />
+        {/* Dust particles caught in the god rays */}
+        {Array.from({ length: 30 }).map((_, i) => {
+          const x = 5 + Math.random() * 45;
+          const y = 15 + Math.random() * 55;
+          const size = 1 + Math.random() * 2;
+          const dur = 8 + Math.random() * 12;
+          const delay = Math.random() * 10;
+          const brightness = 0.15 + Math.random() * 0.35;
+          return (
+            <div
+              key={`dust-${i}`}
+              className="absolute rounded-full"
+              style={{
+                left: `${x}%`,
+                top: `${y}%`,
+                width: `${size}px`,
+                height: `${size}px`,
+                background: `rgba(255,248,220,${brightness})`,
+                boxShadow: `0 0 ${size * 2}px rgba(255,248,220,${brightness * 0.5})`,
+                animation: `dustFloat ${dur}s ease-in-out ${delay}s infinite`,
+              }}
+            />
+          );
+        })}
+      </div>
+
       <div ref={containerRef} className="relative w-full max-w-5xl mx-auto px-4">
         {/* ── Floating text elements integrated in 3D space ── */}
         <FloatingText
