@@ -495,6 +495,27 @@ const CyberRoom = () => {
               <div className="absolute top-4 right-10 w-12 h-12 border border-cyan-500/10 bg-cyan-500/5 rounded-sm flex items-center justify-center">
                 <span className="text-[5px] text-cyan-400/30 font-mono">{'{ }'}</span>
               </div>
+              {/* AO - wall-floor junction shadow */}
+              <div className="absolute bottom-0 left-0 right-0 h-[50px]" style={{
+                background: 'linear-gradient(0deg, rgba(0,0,0,0.5) 0%, transparent 100%)',
+              }} />
+              {/* AO - wall corner shadows */}
+              <div className="absolute bottom-0 left-0 w-[60px] h-[80px]" style={{
+                background: 'radial-gradient(ellipse at 0% 100%, rgba(0,0,0,0.4) 0%, transparent 70%)',
+              }} />
+              <div className="absolute bottom-0 right-0 w-[60px] h-[80px]" style={{
+                background: 'radial-gradient(ellipse at 100% 100%, rgba(0,0,0,0.35) 0%, transparent 70%)',
+              }} />
+              {/* Monitor point light projection on back wall */}
+              <div className="absolute" style={{
+                bottom: '10px',
+                left: '40%',
+                width: '120px',
+                height: '80px',
+                background: 'radial-gradient(ellipse, rgba(0,229,255,0.08) 0%, rgba(236,72,153,0.04) 40%, transparent 70%)',
+                filter: 'blur(10px)',
+                animation: 'screenFlicker 3s ease-in-out infinite',
+              }} />
             </div>
 
             {/* ── Side wall (right) ── */}
@@ -515,6 +536,24 @@ const CyberRoom = () => {
               }}
             >
               <RGBStrip className="bottom-0 left-0 w-full h-1" color="purple" />
+              {/* AO - wall-floor junction */}
+              <div className="absolute bottom-0 left-0 right-0 h-[50px]" style={{
+                background: 'linear-gradient(0deg, rgba(0,0,0,0.45) 0%, transparent 100%)',
+              }} />
+              {/* AO - wall corner where walls meet */}
+              <div className="absolute bottom-0 left-0 w-[50px] h-[80px]" style={{
+                background: 'radial-gradient(ellipse at 0% 100%, rgba(0,0,0,0.4) 0%, transparent 70%)',
+              }} />
+              {/* Monitor side-spill light on wall */}
+              <div className="absolute" style={{
+                bottom: '40%',
+                left: '0',
+                width: '60px',
+                height: '100px',
+                background: 'radial-gradient(ellipse at 0% 50%, rgba(0,229,255,0.05) 0%, transparent 60%)',
+                filter: 'blur(8px)',
+                animation: 'screenGlow 4s ease-in-out 1s infinite',
+              }} />
             </div>
 
             {/* ── Desk ── */}
