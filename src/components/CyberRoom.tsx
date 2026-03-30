@@ -913,6 +913,7 @@ const CyberRoom = () => {
                       style={{
                         background: 'linear-gradient(180deg, #1a1a2e 0%, #1a1a2e 50%, transparent 65%)',
                         borderRadius: '50% 50% 45% 45%',
+                        boxShadow: '0 -2px 10px rgba(0,229,255,0.1)',
                       }}
                     />
                     {/* Side hair strands */}
