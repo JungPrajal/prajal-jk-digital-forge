@@ -634,6 +634,7 @@ const CyberRoom = () => {
                 background: 'linear-gradient(180deg, #1a1e24 0%, #22272e 100%)',
                 borderTop: '1px solid rgba(0,229,255,0.08)',
                 borderLeft: '1px solid rgba(255,255,255,0.04)',
+              }}
             >
               {/* Wall poster / decoration */}
               <div className="absolute top-6 left-8 w-16 h-20 border border-purple-500/15 bg-purple-500/5 rounded-sm flex items-center justify-center">
