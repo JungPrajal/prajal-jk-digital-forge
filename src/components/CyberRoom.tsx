@@ -1615,6 +1615,24 @@ const CyberRoom = () => {
           50% { transform: translateY(6px); opacity: 0.3; }
           100% { transform: translateY(0); opacity: 1; }
         }
+        @keyframes hudScan {
+          0% { background-position: -200% 0; }
+          100% { background-position: 200% 0; }
+        }
+        @keyframes gridGlow {
+          0%, 100% { opacity: 0.7; }
+          50% { opacity: 1; }
+        }
+        @keyframes gradientShift {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+        @keyframes iridescentShimmer {
+          0% { background-position: 0% 0%; }
+          50% { background-position: 100% 100%; }
+          100% { background-position: 0% 0%; }
+        }
       `}</style>
     </section>
   );
