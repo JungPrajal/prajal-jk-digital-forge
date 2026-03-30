@@ -267,6 +267,15 @@ const CyberRoom = () => {
   const perspX = 50 + mouseX * 12;
   const perspY = 30 + mouseY * 8;
 
+  // Detect mobile for camera zoom
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
+
   return (
     <section id="home" className="relative min-h-screen overflow-hidden flex items-center justify-center">
       {/* Dark ambient background */}
