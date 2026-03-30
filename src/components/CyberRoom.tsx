@@ -1534,6 +1534,21 @@ const CyberRoom = () => {
           0% { opacity: 1; }
           100% { opacity: 0; }
         }
+        @keyframes neonPulse {
+          0%, 100% { 
+            box-shadow: 0 0 12px rgba(0,229,255,0.3), 0 0 24px rgba(0,229,255,0.15);
+            text-shadow: 0 0 8px rgba(0,229,255,0.3);
+          }
+          50% { 
+            box-shadow: 0 0 20px rgba(0,229,255,0.5), 0 0 40px rgba(0,229,255,0.25), 0 0 60px rgba(168,85,247,0.15);
+            text-shadow: 0 0 12px rgba(0,229,255,0.5);
+          }
+        }
+        @keyframes scrollDot {
+          0% { transform: translateY(0); opacity: 1; }
+          50% { transform: translateY(6px); opacity: 0.3; }
+          100% { transform: translateY(0); opacity: 1; }
+        }
       `}</style>
     </section>
   );
