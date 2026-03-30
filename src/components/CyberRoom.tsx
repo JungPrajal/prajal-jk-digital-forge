@@ -631,9 +631,9 @@ const CyberRoom = () => {
                 transformStyle: 'preserve-3d',
                 transformOrigin: 'bottom center',
                 transform: 'rotateX(90deg)',
-                background: 'linear-gradient(180deg, #060a12 0%, #0d1420 100%)',
-                borderTop: '1px solid rgba(0,229,255,0.06)',
-              }}
+                background: 'linear-gradient(180deg, #1a1e24 0%, #22272e 100%)',
+                borderTop: '1px solid rgba(0,229,255,0.08)',
+                borderLeft: '1px solid rgba(255,255,255,0.04)',
             >
               {/* Wall poster / decoration */}
               <div className="absolute top-6 left-8 w-16 h-20 border border-purple-500/15 bg-purple-500/5 rounded-sm flex items-center justify-center">
@@ -678,8 +678,8 @@ const CyberRoom = () => {
                 transformStyle: 'preserve-3d',
                 transformOrigin: 'left center',
                 transform: 'rotateY(-90deg) translateZ(0px)',
-                background: 'linear-gradient(180deg, #060a12 0%, #0d1420 100%)',
-                borderTop: '1px solid rgba(0,229,255,0.06)',
+                background: 'linear-gradient(180deg, #1a1e24 0%, #22272e 100%)',
+                borderTop: '1px solid rgba(0,229,255,0.08)',
               }}
             >
               <RGBStrip className="bottom-0 left-0 w-full h-1" color="purple" />
