@@ -1361,17 +1361,21 @@ const CyberRoom = () => {
             </div>
           </div>
         </div>
+        {/* Close size div (452) */}
+        </div>
+        {/* Close pointer-events-auto div (441) */}
+        </div>
+        {/* Close absolute inset-0 div (437) */}
       </div>
+      {/* Close containerRef div (355) */}
 
       {/* ── Code Explode Overlay ── */}
       {codeExploding && (
         <div className="absolute inset-0 pointer-events-none z-50 overflow-hidden">
-          {/* Flash */}
           <div className="absolute inset-0" style={{
             background: 'radial-gradient(ellipse at 55% 40%, rgba(0,229,255,0.15) 0%, transparent 60%)',
             animation: 'explodeFlash 0.3s ease-out forwards',
           }} />
-          {/* Flying code snippets */}
           {explodeParticles.map((p) => {
             const endX = p.x + Math.cos(p.angle) * p.speed;
             const endY = p.y + Math.sin(p.angle) * p.speed * 0.6;
@@ -1400,11 +1404,6 @@ const CyberRoom = () => {
           })}
         </div>
       )}
-
-      {/* Close the 3D room wrapper divs */}
-      </div>
-      </div>
-      </div>
 
       {/* ── Scroll to Explore - Neon Mouse Icon ── */}
       <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-2">
