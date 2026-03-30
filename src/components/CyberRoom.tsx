@@ -555,7 +555,7 @@ const CyberRoom = () => {
               transition: 'transform 0.15s ease-out',
             }}
           >
-            {/* ── Floor - Polished Concrete with reflections ── */}
+            {/* ── Floor - Dark with glowing grid lines ── */}
             <div
               className="absolute"
               style={{
@@ -567,80 +567,55 @@ const CyberRoom = () => {
                 marginTop: '-175px',
                 transformStyle: 'preserve-3d',
                 transform: 'translateZ(0px)',
-                background: `
-                  radial-gradient(ellipse at 55% 40%, rgba(0,229,255,0.08) 0%, transparent 40%),
-                  radial-gradient(ellipse at 55% 40%, rgba(236,72,153,0.04) 0%, transparent 35%),
-                  linear-gradient(135deg, #0c1018 0%, #141c28 30%, #0e141e 60%, #0a0f18 100%)
-                `,
+                background: '#0a0e14',
                 border: '1px solid rgba(0,229,255,0.08)',
-                boxShadow: '0 0 80px rgba(0,229,255,0.05)',
               }}
             >
-              {/* Polished concrete subtle texture */}
+              {/* Glowing grid lines */}
               <div className="absolute inset-0" style={{
                 backgroundImage: `
-                  radial-gradient(ellipse at 30% 20%, rgba(255,255,255,0.015) 0%, transparent 50%),
-                  radial-gradient(ellipse at 70% 60%, rgba(255,255,255,0.01) 0%, transparent 40%),
-                  radial-gradient(ellipse at 50% 80%, rgba(255,255,255,0.008) 0%, transparent 35%),
-                  linear-gradient(rgba(0,229,255,0.03) 1px, transparent 1px),
-                  linear-gradient(90deg, rgba(0,229,255,0.03) 1px, transparent 1px)
+                  linear-gradient(rgba(0,229,255,0.08) 1px, transparent 1px),
+                  linear-gradient(90deg, rgba(0,229,255,0.08) 1px, transparent 1px)
                 `,
-                backgroundSize: '100% 100%, 100% 100%, 100% 100%, 35px 35px, 35px 35px',
+                backgroundSize: '35px 35px',
+                animation: 'gridGlow 3s ease-in-out infinite',
               }} />
-              {/* Monitor screen reflection on floor */}
+              {/* Grid intersection dots */}
+              <div className="absolute inset-0" style={{
+                backgroundImage: 'radial-gradient(circle 1.5px, rgba(0,229,255,0.15) 100%, transparent 100%)',
+                backgroundSize: '35px 35px',
+                backgroundPosition: '0 0',
+              }} />
+              {/* GI: Cyan glow from code window / monitor onto desk+floor */}
               <div className="absolute" style={{
-                width: '180px',
-                height: '120px',
+                width: '200px',
+                height: '150px',
                 left: '50%',
-                top: '25%',
-                marginLeft: '-40px',
-                background: 'radial-gradient(ellipse, rgba(0,229,255,0.06) 0%, rgba(236,72,153,0.03) 40%, transparent 70%)',
-                filter: 'blur(15px)',
+                top: '20%',
+                marginLeft: '-50px',
+                background: 'radial-gradient(ellipse, rgba(0,229,255,0.12) 0%, rgba(0,229,255,0.04) 40%, transparent 70%)',
+                filter: 'blur(20px)',
                 animation: 'screenGlow 4s ease-in-out infinite',
               }} />
-              {/* RGB keyboard reflection on floor */}
+              {/* Magenta secondary bounce */}
               <div className="absolute" style={{
-                width: '80px',
-                height: '40px',
-                left: '50%',
-                top: '50%',
-                marginLeft: '-25px',
-                marginTop: '-10px',
-                background: 'radial-gradient(ellipse, rgba(168,85,247,0.04) 0%, rgba(0,229,255,0.02) 50%, transparent 80%)',
-                filter: 'blur(8px)',
-                animation: 'rgbFlicker 1.5s ease-in-out infinite',
+                width: '120px',
+                height: '100px',
+                left: '55%',
+                top: '25%',
+                background: 'radial-gradient(ellipse, rgba(236,72,153,0.06) 0%, transparent 60%)',
+                filter: 'blur(15px)',
+                animation: 'screenGlow 4s ease-in-out 2s infinite',
               }} />
-
-              {/* ── Ambient Occlusion - deep shadows in room corners ── */}
-              {/* Back-left corner AO */}
-              <div className="absolute top-0 left-0 w-[100px] h-[100px]" style={{
-                background: 'radial-gradient(ellipse at 0% 0%, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.3) 40%, transparent 70%)',
-              }} />
-              {/* Back-right corner AO */}
-              <div className="absolute top-0 right-0 w-[100px] h-[100px]" style={{
-                background: 'radial-gradient(ellipse at 100% 0%, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.2) 40%, transparent 70%)',
-              }} />
-              {/* Front-left corner AO */}
-              <div className="absolute bottom-0 left-0 w-[80px] h-[80px]" style={{
-                background: 'radial-gradient(ellipse at 0% 100%, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.15) 50%, transparent 75%)',
-              }} />
-              {/* Wall-floor junction AO (back walls) */}
-              <div className="absolute top-0 left-0 right-0 h-[40px]" style={{
-                background: 'linear-gradient(180deg, rgba(0,0,0,0.45) 0%, transparent 100%)',
-              }} />
-              <div className="absolute top-0 right-0 w-[40px] h-full" style={{
-                background: 'linear-gradient(270deg, rgba(0,0,0,0.35) 0%, transparent 100%)',
-              }} />
-              {/* Desk shadow / AO under desk area */}
-              <div className="absolute" style={{
-                width: '240px',
-                height: '140px',
-                left: '50%',
-                top: '35%',
-                marginLeft: '-70px',
-                background: 'radial-gradient(ellipse, rgba(0,0,0,0.25) 0%, transparent 65%)',
-                filter: 'blur(5px)',
-              }} />
+              {/* AO corners */}
+              <div className="absolute top-0 left-0 w-[100px] h-[100px]" style={{ background: 'radial-gradient(ellipse at 0% 0%, rgba(0,0,0,0.6) 0%, transparent 70%)' }} />
+              <div className="absolute top-0 right-0 w-[100px] h-[100px]" style={{ background: 'radial-gradient(ellipse at 100% 0%, rgba(0,0,0,0.5) 0%, transparent 70%)' }} />
+              <div className="absolute bottom-0 left-0 w-[80px] h-[80px]" style={{ background: 'radial-gradient(ellipse at 0% 100%, rgba(0,0,0,0.4) 0%, transparent 75%)' }} />
+              {/* Wall-floor junction AO */}
+              <div className="absolute top-0 left-0 right-0 h-[40px]" style={{ background: 'linear-gradient(180deg, rgba(0,0,0,0.45) 0%, transparent 100%)' }} />
+              <div className="absolute top-0 right-0 w-[40px] h-full" style={{ background: 'linear-gradient(270deg, rgba(0,0,0,0.35) 0%, transparent 100%)' }} />
+              {/* Under-desk shadow */}
+              <div className="absolute" style={{ width: '240px', height: '140px', left: '50%', top: '35%', marginLeft: '-70px', background: 'radial-gradient(ellipse, rgba(0,0,0,0.25) 0%, transparent 65%)', filter: 'blur(5px)' }} />
             </div>
 
             {/* ── Back wall (left) ── */}
