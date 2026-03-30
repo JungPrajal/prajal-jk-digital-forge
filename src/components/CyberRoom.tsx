@@ -433,14 +433,27 @@ const CyberRoom = () => {
 
         </div>
 
-        {/* ── 3D Room positioned absolutely over the bento center ── */}
-
-        {/* ── Isometric 3D Room ── */}
+        {/* ── 3D Room - positioned to overlap bento center, mobile zooms to shoulder ── */}
         <div
-          className="relative mx-auto w-[320px] h-[320px] sm:w-[480px] sm:h-[480px] md:w-[580px] md:h-[520px] lg:w-[700px] lg:h-[560px]"
+          className="absolute inset-0 flex items-center justify-center pointer-events-none z-10"
+          style={{ perspective: isMobile ? '600px' : '1200px' }}
+        >
+        <div
+          className="relative pointer-events-auto"
           style={{
-            perspective: '1200px',
-            perspectiveOrigin: `${perspX}% ${perspY}%`,
+            width: isMobile ? '360px' : undefined,
+            height: isMobile ? '360px' : undefined,
+            perspective: isMobile ? '600px' : '1200px',
+            perspectiveOrigin: isMobile ? `${55 + mouseX * 5}% ${25 + mouseY * 5}%` : `${perspX}% ${perspY}%`,
+            transition: 'perspective-origin 0.3s ease-out',
+            transform: isMobile ? 'scale(1.6) translate(10%, 5%)' : 'none',
+          }}
+        >
+        <div
+          className={`relative ${isMobile ? 'w-[320px] h-[320px]' : 'w-[480px] h-[480px] sm:w-[480px] sm:h-[480px] md:w-[580px] md:h-[520px] lg:w-[700px] lg:h-[560px]'}`}
+          style={{
+            perspective: isMobile ? '600px' : '1200px',
+            perspectiveOrigin: isMobile ? `${55 + mouseX * 5}% ${25 + mouseY * 5}%` : `${perspX}% ${perspY}%`,
             transition: 'perspective-origin 0.3s ease-out',
           }}
         >
