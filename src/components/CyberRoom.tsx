@@ -944,8 +944,8 @@ const CyberRoom = () => {
                     margin: '0 auto',
                     background: 'linear-gradient(180deg, #1a1a2e 0%, #141428 50%, #101024 100%)',
                     borderRadius: '8px 8px 4px 4px',
-                    border: '1px solid rgba(255,255,255,0.04)',
-                    boxShadow: '0 4px 14px rgba(0,0,0,0.35)',
+                    border: '1px solid rgba(0,229,255,0.06)',
+                    boxShadow: '0 4px 14px rgba(0,0,0,0.35), 0 -3px 15px rgba(0,229,255,0.08), 3px 0 12px rgba(236,72,153,0.05)',
                     transform: 'rotateX(4deg)',
                   }}
                 >
