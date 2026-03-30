@@ -888,8 +888,8 @@ const CyberRoom = () => {
                       marginLeft: '-4px',
                       borderRadius: '50% 50% 40% 40%',
                       background: 'radial-gradient(ellipse at 40% 30%, #2a2a3e 0%, #1a1a2e 60%, #0f0f1e 100%)',
-                      border: '1px solid rgba(255,255,255,0.05)',
-                      boxShadow: '0 1px 4px rgba(0,0,0,0.3)',
+                      border: '1px solid rgba(0,229,255,0.1)',
+                      boxShadow: '0 1px 4px rgba(0,0,0,0.3), 0 -2px 8px rgba(0,229,255,0.15), 2px 0 6px rgba(0,229,255,0.08)',
                     }}
                   />
                   {/* Hair tie */}
