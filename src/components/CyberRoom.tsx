@@ -356,48 +356,105 @@ const CyberRoom = () => {
         {/* ── Bento Grid Layout ── */}
         <div className="grid grid-cols-4 md:grid-cols-12 grid-rows-[auto_1fr_auto] gap-3 md:gap-4 min-h-[85vh] items-center">
 
-          {/* Bento Cell: "Hi, I'm" tag - top left */}
+          {/* Bento Cell: "Hi, I'm" HUD widget - top left */}
           <div className="col-span-2 md:col-span-3 self-end z-30">
-            <div className="backdrop-blur-xl bg-white/[0.04] border border-white/[0.08] rounded-2xl px-4 py-3 shadow-[0_8px_32px_rgba(0,229,255,0.06)]">
+            <div className="relative overflow-hidden backdrop-blur-xl bg-white/[0.03] rounded-xl px-4 py-3"
+              style={{
+                border: '1px solid rgba(0,229,255,0.15)',
+                boxShadow: '0 0 20px rgba(0,229,255,0.06), inset 0 0 15px rgba(0,229,255,0.03)',
+              }}
+            >
+              {/* HUD scanning light bar */}
+              <div className="absolute top-0 left-0 right-0 h-[1px]" style={{
+                background: 'linear-gradient(90deg, transparent, rgba(0,229,255,0.6), transparent)',
+                backgroundSize: '200% 100%',
+                animation: 'hudScan 2.5s linear infinite',
+              }} />
+              {/* Corner brackets */}
+              <div className="absolute top-0 left-0 w-3 h-3 border-t border-l border-cyan-400/40" />
+              <div className="absolute top-0 right-0 w-3 h-3 border-t border-r border-cyan-400/40" />
+              <div className="absolute bottom-0 left-0 w-3 h-3 border-b border-l border-cyan-400/40" />
+              <div className="absolute bottom-0 right-0 w-3 h-3 border-b border-r border-cyan-400/40" />
               <p
-                className="text-[10px] sm:text-xs tracking-[0.3em] uppercase text-cyan-400/60"
-                style={{ fontFamily: "'Unbounded', sans-serif" }}
+                className="text-[10px] sm:text-xs tracking-[0.3em] uppercase text-cyan-400/70 font-mono"
               >
-                Hi, I'm
+                ▸ Hi, I'm
               </p>
             </div>
           </div>
 
-          {/* Bento Cell: Role pill - top right */}
+          {/* Bento Cell: Role pill HUD - top right */}
           <div className="col-span-2 md:col-start-10 md:col-span-3 self-end z-30">
-            <div className="backdrop-blur-xl bg-white/[0.04] border border-white/[0.08] rounded-2xl px-4 py-3 shadow-[0_8px_32px_rgba(168,85,247,0.06)]">
-              <p className="text-[10px] sm:text-xs text-cyan-300/50">
-                Future <span className="text-purple-400/70">AI/ML Developer</span>
+            <div className="relative overflow-hidden backdrop-blur-xl bg-white/[0.03] rounded-xl px-4 py-3"
+              style={{
+                border: '1px solid rgba(168,85,247,0.15)',
+                boxShadow: '0 0 20px rgba(168,85,247,0.06), inset 0 0 15px rgba(168,85,247,0.03)',
+              }}
+            >
+              {/* HUD scanning light bar */}
+              <div className="absolute top-0 left-0 right-0 h-[1px]" style={{
+                background: 'linear-gradient(90deg, transparent, rgba(168,85,247,0.6), transparent)',
+                backgroundSize: '200% 100%',
+                animation: 'hudScan 3s linear infinite 0.5s',
+              }} />
+              <div className="absolute top-0 left-0 w-3 h-3 border-t border-l border-purple-400/40" />
+              <div className="absolute top-0 right-0 w-3 h-3 border-t border-r border-purple-400/40" />
+              <div className="absolute bottom-0 left-0 w-3 h-3 border-b border-l border-purple-400/40" />
+              <div className="absolute bottom-0 right-0 w-3 h-3 border-b border-r border-purple-400/40" />
+              <p className="text-[10px] sm:text-xs text-cyan-300/60 font-mono">
+                ▸ Future <span className="text-purple-400/80">AI/ML Developer</span>
               </p>
-              <p className="text-[8px] sm:text-[10px] text-slate-500/40 mt-1 leading-relaxed hidden sm:block">
-                I create beautiful mobile apps and websites with cutting-edge technologies
+              <p className="text-[8px] sm:text-[10px] text-slate-500/40 mt-1 leading-relaxed hidden sm:block font-mono">
+                Building intelligent apps & experiences
               </p>
             </div>
           </div>
 
-          {/* Bento Cell: PRAJAL name - left side */}
+          {/* Bento Cell: PRAJAL name - left side with glassmorphism + tilt */}
           <div className="col-span-4 md:col-span-3 self-center z-30 order-3 md:order-none">
-            <div className="backdrop-blur-xl bg-white/[0.03] border border-white/[0.08] rounded-2xl px-5 py-5 md:py-8 shadow-[0_8px_40px_rgba(0,229,255,0.08)]">
+            <div
+              className="group relative overflow-hidden backdrop-blur-2xl rounded-2xl px-5 py-5 md:py-8 transition-transform duration-300 ease-out cursor-pointer"
+              style={{
+                background: 'rgba(255,255,255,0.04)',
+                border: '1px solid transparent',
+                borderImage: 'linear-gradient(135deg, rgba(0,229,255,0.3), rgba(168,85,247,0.3), rgba(236,72,153,0.3), rgba(0,229,255,0.3)) 1',
+                boxShadow: '0 8px 40px rgba(0,229,255,0.08), inset 0 0 30px rgba(255,255,255,0.02)',
+              }}
+              onMouseMove={(e) => {
+                const rect = e.currentTarget.getBoundingClientRect();
+                const x = (e.clientX - rect.left) / rect.width - 0.5;
+                const y = (e.clientY - rect.top) / rect.height - 0.5;
+                e.currentTarget.style.transform = `perspective(600px) rotateY(${x * 8}deg) rotateX(${-y * 8}deg) scale(1.02)`;
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'perspective(600px) rotateY(0deg) rotateX(0deg) scale(1)';
+              }}
+            >
+              {/* Iridescent shimmer overlay */}
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{
+                background: 'linear-gradient(135deg, rgba(0,229,255,0.05) 0%, rgba(168,85,247,0.05) 33%, rgba(236,72,153,0.05) 66%, rgba(0,229,255,0.05) 100%)',
+                backgroundSize: '200% 200%',
+                animation: 'iridescentShimmer 3s ease infinite',
+              }} />
               <h1
-                className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black leading-none"
+                className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold leading-none"
                 style={{
-                  fontFamily: "'Unbounded', sans-serif",
-                  background: 'linear-gradient(135deg, #00e5ff 0%, #a855f7 50%, #ec4899 100%)',
+                  fontFamily: "'Clash Display', 'Space Grotesk', 'Unbounded', sans-serif",
+                  fontWeight: 800,
+                  background: 'linear-gradient(135deg, #0088ff 0%, #00c8ff 25%, #a855f7 60%, #c026d3 100%)',
+                  backgroundSize: '200% 200%',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
-                  filter: 'drop-shadow(0 0 30px rgba(0,229,255,0.3))',
+                  backgroundClip: 'text',
+                  filter: 'drop-shadow(0 0 30px rgba(0,136,255,0.3))',
+                  animation: 'gradientShift 4s ease infinite',
                 }}
               >
                 PRAJAL
               </h1>
               <p
                 className="text-sm sm:text-lg tracking-[0.2em] uppercase text-slate-400/60 mt-2"
-                style={{ fontFamily: "'Unbounded', sans-serif" }}
+                style={{ fontFamily: "'Clash Display', 'Space Grotesk', sans-serif" }}
               >
                 Jung Kunwar
               </p>
@@ -407,26 +464,59 @@ const CyberRoom = () => {
           {/* Bento Cell: 3D Room - center */}
           <div className="col-span-4 md:col-span-6 self-center z-20 order-2 md:order-none row-span-1">{/* 3D room placeholder - rendered below */}</div>
 
-          {/* Bento Cell: Social links - right side */}
+          {/* Bento Cell: Social links HUD - right side */}
           <div className="col-span-4 md:col-span-3 self-center z-30 order-4 md:order-none">
-            <div className="backdrop-blur-xl bg-white/[0.03] border border-white/[0.08] rounded-2xl px-4 py-4 shadow-[0_8px_32px_rgba(0,229,255,0.06)]">
-              <p className="text-[9px] text-slate-500/40 mb-2 font-mono uppercase tracking-wider">Connect</p>
+            <div className="relative overflow-hidden backdrop-blur-xl bg-white/[0.03] rounded-xl px-4 py-4"
+              style={{
+                border: '1px solid rgba(0,229,255,0.12)',
+                boxShadow: '0 0 20px rgba(0,229,255,0.05), inset 0 0 15px rgba(0,229,255,0.02)',
+              }}
+            >
+              {/* HUD scanning light bar */}
+              <div className="absolute top-0 left-0 right-0 h-[1px]" style={{
+                background: 'linear-gradient(90deg, transparent, rgba(0,229,255,0.5), transparent)',
+                backgroundSize: '200% 100%',
+                animation: 'hudScan 2s linear infinite 1s',
+              }} />
+              <div className="absolute top-0 left-0 w-3 h-3 border-t border-l border-cyan-400/30" />
+              <div className="absolute top-0 right-0 w-3 h-3 border-t border-r border-cyan-400/30" />
+              <div className="absolute bottom-0 left-0 w-3 h-3 border-b border-l border-cyan-400/30" />
+              <div className="absolute bottom-0 right-0 w-3 h-3 border-b border-r border-cyan-400/30" />
+              <p className="text-[9px] text-cyan-400/40 mb-3 font-mono uppercase tracking-wider">▸ Connect</p>
               <div className="flex gap-3">
-                {[
-                  { href: 'https://github.com/JungPrajal', label: 'GH' },
-                  { href: 'https://www.linkedin.com/in/prajal-jung-kunwar-a2a7b2270/', label: 'LI' },
-                  { href: 'https://medium.com/@prajaljungkunwar', label: 'MD' },
-                ].map((link) => (
-                  <a
-                    key={link.label}
-                    href={link.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-9 h-9 rounded-xl border border-cyan-500/20 bg-cyan-500/5 flex items-center justify-center text-[10px] font-mono text-cyan-400/60 hover:bg-cyan-500/20 hover:text-cyan-300 transition-all duration-300"
-                  >
-                    {link.label}
-                  </a>
-                ))}
+                {/* GitHub Icon */}
+                <a
+                  href="https://github.com/JungPrajal"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group/icon w-10 h-10 rounded-xl border border-cyan-500/20 bg-cyan-500/5 flex items-center justify-center transition-all duration-300 hover:bg-cyan-500/15 hover:border-cyan-400/40 hover:scale-110 hover:shadow-[0_0_20px_rgba(0,229,255,0.3)]"
+                >
+                  <svg viewBox="0 0 24 24" className="w-5 h-5 text-cyan-400/60 group-hover/icon:text-cyan-300 transition-colors duration-300" fill="currentColor">
+                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                  </svg>
+                </a>
+                {/* LinkedIn Icon */}
+                <a
+                  href="https://www.linkedin.com/in/prajal-jung-kunwar-a2a7b2270/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group/icon w-10 h-10 rounded-xl border border-purple-500/20 bg-purple-500/5 flex items-center justify-center transition-all duration-300 hover:bg-purple-500/15 hover:border-purple-400/40 hover:scale-110 hover:shadow-[0_0_20px_rgba(168,85,247,0.3)]"
+                >
+                  <svg viewBox="0 0 24 24" className="w-5 h-5 text-purple-400/60 group-hover/icon:text-purple-300 transition-colors duration-300" fill="currentColor">
+                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                  </svg>
+                </a>
+                {/* Medium Icon */}
+                <a
+                  href="https://medium.com/@prajaljungkunwar"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group/icon w-10 h-10 rounded-xl border border-pink-500/20 bg-pink-500/5 flex items-center justify-center transition-all duration-300 hover:bg-pink-500/15 hover:border-pink-400/40 hover:scale-110 hover:shadow-[0_0_20px_rgba(236,72,153,0.3)]"
+                >
+                  <svg viewBox="0 0 24 24" className="w-5 h-5 text-pink-400/60 group-hover/icon:text-pink-300 transition-colors duration-300" fill="currentColor">
+                    <path d="M13.54 12a6.8 6.8 0 01-6.77 6.82A6.8 6.8 0 010 12a6.8 6.8 0 016.77-6.82A6.8 6.8 0 0113.54 12zM20.96 12c0 3.54-1.51 6.42-3.38 6.42-1.87 0-3.39-2.88-3.39-6.42s1.52-6.42 3.39-6.42 3.38 2.88 3.38 6.42M24 12c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75C23.47 6.25 24 8.83 24 12z"/>
+                  </svg>
+                </a>
               </div>
             </div>
           </div>
