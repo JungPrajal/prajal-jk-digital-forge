@@ -352,79 +352,88 @@ const CyberRoom = () => {
         })}
       </div>
 
-      <div ref={containerRef} className="relative w-full max-w-5xl mx-auto px-4">
-        {/* ── Floating text elements integrated in 3D space ── */}
-        <FloatingText
-          className="top-[5%] left-[3%] sm:left-[5%] z-30"
-          delay={0}
-        >
-          <p
-            className="text-[10px] sm:text-xs tracking-[0.3em] uppercase text-cyan-400/50"
-            style={{ fontFamily: "'Unbounded', sans-serif" }}
-          >
-            Hi, I'm
-          </p>
-        </FloatingText>
+      <div ref={containerRef} className="relative w-full max-w-6xl mx-auto px-4">
+        {/* ── Bento Grid Layout ── */}
+        <div className="grid grid-cols-4 md:grid-cols-12 grid-rows-[auto_1fr_auto] gap-3 md:gap-4 min-h-[85vh] items-center">
 
-        <FloatingText
-          className="top-[10%] left-[2%] sm:left-[3%] z-30"
-          delay={0.2}
-        >
-          <h1
-            className="text-3xl sm:text-5xl md:text-7xl font-black"
-            style={{
-              fontFamily: "'Unbounded', sans-serif",
-              background: 'linear-gradient(135deg, #00e5ff 0%, #a855f7 50%, #ec4899 100%)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              filter: 'drop-shadow(0 0 30px rgba(0,229,255,0.3))',
-            }}
-          >
-            PRAJAL
-          </h1>
-          <p
-            className="text-sm sm:text-lg tracking-[0.2em] uppercase text-slate-400/60 mt-1"
-            style={{ fontFamily: "'Unbounded', sans-serif" }}
-          >
-            Jung Kunwar
-          </p>
-        </FloatingText>
-
-        <FloatingText
-          className="top-[30%] sm:top-[28%] left-[2%] sm:left-[3%] z-30 max-w-[200px] sm:max-w-xs"
-          delay={0.5}
-        >
-          <p className="text-sm sm:text-base text-cyan-300/40 leading-relaxed">
-            Future <span className="text-purple-400/60">AI/ML Developer</span>
-          </p>
-          <p className="text-[10px] sm:text-xs text-slate-500/50 mt-2 leading-relaxed">
-            I create beautiful mobile apps and websites with cutting-edge technologies
-          </p>
-        </FloatingText>
-
-        {/* Social links floating */}
-        <FloatingText
-          className="bottom-[18%] sm:bottom-[15%] left-[2%] sm:left-[3%] z-30"
-          delay={0.8}
-        >
-          <div className="flex gap-3">
-            {[
-              { href: 'https://github.com/JungPrajal', label: 'GH' },
-              { href: 'https://www.linkedin.com/in/prajal-jung-kunwar-a2a7b2270/', label: 'LI' },
-              { href: 'https://medium.com/@prajaljungkunwar', label: 'MD' },
-            ].map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="pointer-events-auto w-8 h-8 sm:w-9 sm:h-9 rounded border border-cyan-500/20 bg-cyan-500/5 flex items-center justify-center text-[9px] sm:text-[10px] font-mono text-cyan-400/60 hover:bg-cyan-500/20 hover:text-cyan-300 transition-all duration-300"
+          {/* Bento Cell: "Hi, I'm" tag - top left */}
+          <div className="col-span-2 md:col-span-3 self-end z-30">
+            <div className="backdrop-blur-xl bg-white/[0.04] border border-white/[0.08] rounded-2xl px-4 py-3 shadow-[0_8px_32px_rgba(0,229,255,0.06)]">
+              <p
+                className="text-[10px] sm:text-xs tracking-[0.3em] uppercase text-cyan-400/60"
+                style={{ fontFamily: "'Unbounded', sans-serif" }}
               >
-                {link.label}
-              </a>
-            ))}
+                Hi, I'm
+              </p>
+            </div>
           </div>
-        </FloatingText>
+
+          {/* Bento Cell: Role pill - top right */}
+          <div className="col-span-2 md:col-start-10 md:col-span-3 self-end z-30">
+            <div className="backdrop-blur-xl bg-white/[0.04] border border-white/[0.08] rounded-2xl px-4 py-3 shadow-[0_8px_32px_rgba(168,85,247,0.06)]">
+              <p className="text-[10px] sm:text-xs text-cyan-300/50">
+                Future <span className="text-purple-400/70">AI/ML Developer</span>
+              </p>
+              <p className="text-[8px] sm:text-[10px] text-slate-500/40 mt-1 leading-relaxed hidden sm:block">
+                I create beautiful mobile apps and websites with cutting-edge technologies
+              </p>
+            </div>
+          </div>
+
+          {/* Bento Cell: PRAJAL name - left side */}
+          <div className="col-span-4 md:col-span-3 self-center z-30 order-3 md:order-none">
+            <div className="backdrop-blur-xl bg-white/[0.03] border border-white/[0.08] rounded-2xl px-5 py-5 md:py-8 shadow-[0_8px_40px_rgba(0,229,255,0.08)]">
+              <h1
+                className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black leading-none"
+                style={{
+                  fontFamily: "'Unbounded', sans-serif",
+                  background: 'linear-gradient(135deg, #00e5ff 0%, #a855f7 50%, #ec4899 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  filter: 'drop-shadow(0 0 30px rgba(0,229,255,0.3))',
+                }}
+              >
+                PRAJAL
+              </h1>
+              <p
+                className="text-sm sm:text-lg tracking-[0.2em] uppercase text-slate-400/60 mt-2"
+                style={{ fontFamily: "'Unbounded', sans-serif" }}
+              >
+                Jung Kunwar
+              </p>
+            </div>
+          </div>
+
+          {/* Bento Cell: 3D Room - center */}
+          <div className="col-span-4 md:col-span-6 self-center z-20 order-2 md:order-none row-span-1">{/* 3D room placeholder - rendered below */}</div>
+
+          {/* Bento Cell: Social links - right side */}
+          <div className="col-span-4 md:col-span-3 self-center z-30 order-4 md:order-none">
+            <div className="backdrop-blur-xl bg-white/[0.03] border border-white/[0.08] rounded-2xl px-4 py-4 shadow-[0_8px_32px_rgba(0,229,255,0.06)]">
+              <p className="text-[9px] text-slate-500/40 mb-2 font-mono uppercase tracking-wider">Connect</p>
+              <div className="flex gap-3">
+                {[
+                  { href: 'https://github.com/JungPrajal', label: 'GH' },
+                  { href: 'https://www.linkedin.com/in/prajal-jung-kunwar-a2a7b2270/', label: 'LI' },
+                  { href: 'https://medium.com/@prajaljungkunwar', label: 'MD' },
+                ].map((link) => (
+                  <a
+                    key={link.label}
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-9 h-9 rounded-xl border border-cyan-500/20 bg-cyan-500/5 flex items-center justify-center text-[10px] font-mono text-cyan-400/60 hover:bg-cyan-500/20 hover:text-cyan-300 transition-all duration-300"
+                  >
+                    {link.label}
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        {/* ── 3D Room positioned absolutely over the bento center ── */}
 
         {/* ── Isometric 3D Room ── */}
         <div
