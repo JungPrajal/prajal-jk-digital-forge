@@ -1401,11 +1401,36 @@ const CyberRoom = () => {
         </div>
       )}
 
-      {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 hidden sm:block">
-        <div className="w-5 h-8 border border-cyan-500/30 rounded-full flex justify-center">
-          <div className="w-0.5 h-2 bg-cyan-400/50 rounded-full mt-1.5 animate-bounce" />
+      {/* Close the 3D room wrapper divs */}
+      </div>
+      </div>
+      </div>
+
+      {/* ── Scroll to Explore - Neon Mouse Icon ── */}
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-2">
+        <div
+          className="relative w-7 h-11 rounded-full border-2 border-cyan-400/60 flex justify-center"
+          style={{
+            boxShadow: '0 0 12px rgba(0,229,255,0.3), 0 0 24px rgba(0,229,255,0.15), inset 0 0 8px rgba(0,229,255,0.1)',
+            animation: 'neonPulse 2s ease-in-out infinite',
+          }}
+        >
+          {/* Scroll wheel dot */}
+          <div
+            className="w-1 h-2.5 rounded-full mt-2"
+            style={{
+              background: 'linear-gradient(180deg, #00e5ff 0%, #a855f7 100%)',
+              boxShadow: '0 0 6px rgba(0,229,255,0.5)',
+              animation: 'scrollDot 1.5s ease-in-out infinite',
+            }}
+          />
         </div>
+        <span
+          className="text-[9px] sm:text-[10px] uppercase tracking-[0.25em] text-cyan-400/50 font-mono"
+          style={{ animation: 'neonPulse 2s ease-in-out infinite 0.5s' }}
+        >
+          Scroll to Explore
+        </span>
       </div>
 
       {/* CSS animations */}
