@@ -132,7 +132,10 @@ const MonitorScreen = React.memo(() => {
   const visibleLines = visible.split('\n');
 
   return (
-    <div className="w-full h-full flex flex-col bg-[#0d1117] overflow-hidden">
+    <div className="w-full h-full flex flex-col bg-[#0d1117] overflow-hidden" style={{
+      filter: 'brightness(1.1) contrast(1.05)',
+      boxShadow: 'inset 0 0 40px rgba(0,229,255,0.08)',
+    }}>
       {/* Tab bar */}
       <div className="flex items-center gap-1 px-2 py-1 bg-[#161b22] border-b border-white/5 shrink-0">
         <div className="flex gap-1.5 mr-3">
