@@ -282,6 +282,65 @@ const CyberRoom = () => {
       <div className="absolute inset-0 bg-[#05080f]" />
       <div className="absolute inset-0 bg-gradient-radial from-cyan-900/10 via-transparent to-transparent" />
 
+      {/* ── Vignette overlay ── */}
+      <div className="absolute inset-0 pointer-events-none z-40" style={{
+        background: 'radial-gradient(ellipse 70% 60% at 50% 50%, transparent 40%, rgba(0,0,0,0.5) 75%, rgba(0,0,0,0.85) 100%)',
+      }} />
+
+      {/* ── Volumetric Fog layers ── */}
+      <div className="absolute inset-0 pointer-events-none z-[5]">
+        <div className="absolute inset-0" style={{
+          background: 'radial-gradient(ellipse 80% 50% at 50% 60%, rgba(0,229,255,0.04) 0%, transparent 60%)',
+          animation: 'fogDrift 12s ease-in-out infinite',
+        }} />
+        <div className="absolute inset-0" style={{
+          background: 'radial-gradient(ellipse 60% 40% at 40% 45%, rgba(168,85,247,0.03) 0%, transparent 50%)',
+          animation: 'fogDrift 15s ease-in-out 3s infinite reverse',
+        }} />
+        <div className="absolute inset-0" style={{
+          background: 'radial-gradient(ellipse 90% 60% at 55% 55%, rgba(236,72,153,0.02) 0%, transparent 55%)',
+          animation: 'fogDrift 18s ease-in-out 6s infinite',
+        }} />
+      </div>
+
+      {/* ── Bloom glow layer (centered behind 3D scene) ── */}
+      <div className="absolute inset-0 pointer-events-none z-[4]" style={{
+        background: 'radial-gradient(circle at 50% 50%, rgba(0,229,255,0.06) 0%, rgba(168,85,247,0.03) 30%, transparent 60%)',
+        filter: 'blur(40px)',
+      }} />
+
+      {/* ── Digital Dust / Bokeh particles ── */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none z-[6]">
+        {Array.from({ length: 40 }).map((_, i) => {
+          const size = 2 + Math.random() * 6;
+          const isBokeh = size > 5;
+          const opacity = isBokeh ? 0.08 + Math.random() * 0.15 : 0.15 + Math.random() * 0.3;
+          const colors = ['rgba(0,229,255,', 'rgba(168,85,247,', 'rgba(236,72,153,', 'rgba(255,248,220,'];
+          const color = colors[Math.floor(Math.random() * colors.length)];
+          const dur = 10 + Math.random() * 20;
+          const delay = Math.random() * 15;
+          return (
+            <div
+              key={`bokeh-${i}`}
+              className="absolute rounded-full"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                width: `${size}px`,
+                height: `${size}px`,
+                background: isBokeh
+                  ? `radial-gradient(circle, ${color}${opacity}) 0%, ${color}0) 70%)`
+                  : `${color}${opacity})`,
+                boxShadow: isBokeh
+                  ? `0 0 ${size * 3}px ${color}${opacity * 0.5}), 0 0 ${size * 6}px ${color}${opacity * 0.2})`
+                  : `0 0 ${size * 2}px ${color}${opacity * 0.4})`,
+                animation: `bokehFloat ${dur}s ease-in-out ${delay}s infinite`,
+              }}
+            />
+          );
+        })}
+      </div>
+
       {/* Ambient particles */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {Array.from({ length: 20 }).map((_, i) => (
