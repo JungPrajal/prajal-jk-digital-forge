@@ -358,55 +358,83 @@ const CyberRoom = () => {
 
           {/* Bento Cell: "Hi, I'm" HUD widget - top left */}
           <div className="col-span-2 md:col-span-3 self-end z-30">
-            <div className="relative overflow-hidden backdrop-blur-xl bg-white/[0.03] rounded-xl px-4 py-3"
+            <div className="group/hud relative overflow-hidden rounded-xl px-5 py-4 transition-all duration-500 hover:scale-[1.03]"
               style={{
-                border: '1px solid rgba(0,229,255,0.15)',
-                boxShadow: '0 0 20px rgba(0,229,255,0.06), inset 0 0 15px rgba(0,229,255,0.03)',
+                background: 'linear-gradient(135deg, rgba(0,229,255,0.04) 0%, rgba(10,10,20,0.6) 50%, rgba(168,85,247,0.03) 100%)',
+                backdropFilter: 'blur(20px) saturate(1.4)',
+                border: '1px solid rgba(0,229,255,0.18)',
+                boxShadow: '0 0 30px rgba(0,229,255,0.08), inset 0 1px 0 rgba(255,255,255,0.05), 0 4px 20px rgba(0,0,0,0.4)',
               }}
             >
-              {/* HUD scanning light bar */}
-              <div className="absolute top-0 left-0 right-0 h-[1px]" style={{
-                background: 'linear-gradient(90deg, transparent, rgba(0,229,255,0.6), transparent)',
+              {/* Primary scanning light bar */}
+              <div className="absolute top-0 left-0 right-0 h-[2px]" style={{
+                background: 'linear-gradient(90deg, transparent 0%, rgba(0,229,255,0.8) 50%, transparent 100%)',
                 backgroundSize: '200% 100%',
-                animation: 'hudScan 2.5s linear infinite',
+                animation: 'hudScan 2s ease-in-out infinite',
               }} />
-              {/* Corner brackets */}
-              <div className="absolute top-0 left-0 w-3 h-3 border-t border-l border-cyan-400/40" />
-              <div className="absolute top-0 right-0 w-3 h-3 border-t border-r border-cyan-400/40" />
-              <div className="absolute bottom-0 left-0 w-3 h-3 border-b border-l border-cyan-400/40" />
-              <div className="absolute bottom-0 right-0 w-3 h-3 border-b border-r border-cyan-400/40" />
-              <p
-                className="text-[10px] sm:text-xs tracking-[0.3em] uppercase text-cyan-400/70 font-mono"
-              >
-                ▸ Hi, I'm
-              </p>
+              {/* Secondary subtle bottom scan */}
+              <div className="absolute bottom-0 left-0 right-0 h-[1px] opacity-40" style={{
+                background: 'linear-gradient(90deg, transparent 0%, rgba(168,85,247,0.6) 50%, transparent 100%)',
+                backgroundSize: '200% 100%',
+                animation: 'hudScan 3s ease-in-out infinite 1s',
+              }} />
+              {/* Corner brackets - enhanced */}
+              <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-cyan-400/50 rounded-tl-sm" />
+              <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-cyan-400/50 rounded-tr-sm" />
+              <div className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-cyan-400/50 rounded-bl-sm" />
+              <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-cyan-400/50 rounded-br-sm" />
+              {/* Status dot */}
+              <div className="flex items-center gap-2">
+                <div className="w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_8px_rgba(0,229,255,0.8)]" style={{ animation: 'neonPulse 2s ease-in-out infinite' }} />
+                <p className="text-[10px] sm:text-xs tracking-[0.3em] uppercase text-cyan-300/80 font-mono">
+                  Hi, I'm
+                </p>
+              </div>
+              {/* Hover glow overlay */}
+              <div className="absolute inset-0 opacity-0 group-hover/hud:opacity-100 transition-opacity duration-500 rounded-xl" style={{
+                background: 'radial-gradient(ellipse at center, rgba(0,229,255,0.06) 0%, transparent 70%)',
+              }} />
             </div>
           </div>
 
           {/* Bento Cell: Role pill HUD - top right */}
           <div className="col-span-2 md:col-start-10 md:col-span-3 self-end z-30">
-            <div className="relative overflow-hidden backdrop-blur-xl bg-white/[0.03] rounded-xl px-4 py-3"
+            <div className="group/hud relative overflow-hidden rounded-xl px-5 py-4 transition-all duration-500 hover:scale-[1.03]"
               style={{
-                border: '1px solid rgba(168,85,247,0.15)',
-                boxShadow: '0 0 20px rgba(168,85,247,0.06), inset 0 0 15px rgba(168,85,247,0.03)',
+                background: 'linear-gradient(135deg, rgba(168,85,247,0.04) 0%, rgba(10,10,20,0.6) 50%, rgba(236,72,153,0.03) 100%)',
+                backdropFilter: 'blur(20px) saturate(1.4)',
+                border: '1px solid rgba(168,85,247,0.18)',
+                boxShadow: '0 0 30px rgba(168,85,247,0.08), inset 0 1px 0 rgba(255,255,255,0.05), 0 4px 20px rgba(0,0,0,0.4)',
               }}
             >
-              {/* HUD scanning light bar */}
-              <div className="absolute top-0 left-0 right-0 h-[1px]" style={{
-                background: 'linear-gradient(90deg, transparent, rgba(168,85,247,0.6), transparent)',
+              {/* Primary scanning light bar */}
+              <div className="absolute top-0 left-0 right-0 h-[2px]" style={{
+                background: 'linear-gradient(90deg, transparent 0%, rgba(168,85,247,0.8) 50%, transparent 100%)',
                 backgroundSize: '200% 100%',
-                animation: 'hudScan 3s linear infinite 0.5s',
+                animation: 'hudScan 2.5s ease-in-out infinite 0.5s',
               }} />
-              <div className="absolute top-0 left-0 w-3 h-3 border-t border-l border-purple-400/40" />
-              <div className="absolute top-0 right-0 w-3 h-3 border-t border-r border-purple-400/40" />
-              <div className="absolute bottom-0 left-0 w-3 h-3 border-b border-l border-purple-400/40" />
-              <div className="absolute bottom-0 right-0 w-3 h-3 border-b border-r border-purple-400/40" />
-              <p className="text-[10px] sm:text-xs text-cyan-300/60 font-mono">
-                ▸ Future <span className="text-purple-400/80">AI/ML Developer</span>
-              </p>
-              <p className="text-[8px] sm:text-[10px] text-slate-500/40 mt-1 leading-relaxed hidden sm:block font-mono">
+              <div className="absolute bottom-0 left-0 right-0 h-[1px] opacity-40" style={{
+                background: 'linear-gradient(90deg, transparent 0%, rgba(0,229,255,0.5) 50%, transparent 100%)',
+                backgroundSize: '200% 100%',
+                animation: 'hudScan 3.5s ease-in-out infinite 1.5s',
+              }} />
+              {/* Corner brackets */}
+              <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-purple-400/50 rounded-tl-sm" />
+              <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-purple-400/50 rounded-tr-sm" />
+              <div className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-purple-400/50 rounded-bl-sm" />
+              <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-purple-400/50 rounded-br-sm" />
+              <div className="flex items-center gap-2">
+                <div className="w-1.5 h-1.5 rounded-full bg-purple-400 shadow-[0_0_8px_rgba(168,85,247,0.8)]" style={{ animation: 'neonPulse 2.5s ease-in-out infinite 0.3s' }} />
+                <p className="text-[10px] sm:text-xs text-purple-300/80 font-mono">
+                  Future <span className="text-cyan-300/70">AI/ML Developer</span>
+                </p>
+              </div>
+              <p className="text-[8px] sm:text-[10px] text-slate-400/40 mt-1.5 leading-relaxed hidden sm:block font-mono pl-3.5">
                 Building intelligent apps & experiences
               </p>
+              <div className="absolute inset-0 opacity-0 group-hover/hud:opacity-100 transition-opacity duration-500 rounded-xl" style={{
+                background: 'radial-gradient(ellipse at center, rgba(168,85,247,0.06) 0%, transparent 70%)',
+              }} />
             </div>
           </div>
 
