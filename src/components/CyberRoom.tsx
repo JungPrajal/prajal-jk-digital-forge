@@ -462,10 +462,10 @@ const CyberRoom = () => {
           </div>
 
           {/* Bento Cell: 3D Room - center */}
-          <div className="col-span-4 md:col-span-6 self-center z-20 order-2 md:order-none row-span-1">{/* 3D room placeholder - rendered below */}</div>
+          <div className="col-span-4 md:col-span-4 self-center z-20 order-2 md:order-none row-span-1">{/* 3D room placeholder - rendered below */}</div>
 
           {/* Bento Cell: Social links HUD - right side */}
-          <div className="col-span-4 md:col-span-3 self-center z-30 order-4 md:order-none">
+          <div className="col-span-4 md:col-span-4 self-center z-30 order-4 md:order-none">
             <div className="relative overflow-hidden backdrop-blur-xl bg-white/[0.03] rounded-xl px-4 py-4"
               style={{
                 border: '1px solid rgba(0,229,255,0.12)',
