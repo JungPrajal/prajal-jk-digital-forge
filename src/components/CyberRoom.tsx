@@ -358,55 +358,83 @@ const CyberRoom = () => {
 
           {/* Bento Cell: "Hi, I'm" HUD widget - top left */}
           <div className="col-span-2 md:col-span-3 self-end z-30">
-            <div className="relative overflow-hidden backdrop-blur-xl bg-white/[0.03] rounded-xl px-4 py-3"
+            <div className="group/hud relative overflow-hidden rounded-xl px-5 py-4 transition-all duration-500 hover:scale-[1.03]"
               style={{
-                border: '1px solid rgba(0,229,255,0.15)',
-                boxShadow: '0 0 20px rgba(0,229,255,0.06), inset 0 0 15px rgba(0,229,255,0.03)',
+                background: 'linear-gradient(135deg, rgba(0,229,255,0.04) 0%, rgba(10,10,20,0.6) 50%, rgba(168,85,247,0.03) 100%)',
+                backdropFilter: 'blur(20px) saturate(1.4)',
+                border: '1px solid rgba(0,229,255,0.18)',
+                boxShadow: '0 0 30px rgba(0,229,255,0.08), inset 0 1px 0 rgba(255,255,255,0.05), 0 4px 20px rgba(0,0,0,0.4)',
               }}
             >
-              {/* HUD scanning light bar */}
-              <div className="absolute top-0 left-0 right-0 h-[1px]" style={{
-                background: 'linear-gradient(90deg, transparent, rgba(0,229,255,0.6), transparent)',
+              {/* Primary scanning light bar */}
+              <div className="absolute top-0 left-0 right-0 h-[2px]" style={{
+                background: 'linear-gradient(90deg, transparent 0%, rgba(0,229,255,0.8) 50%, transparent 100%)',
                 backgroundSize: '200% 100%',
-                animation: 'hudScan 2.5s linear infinite',
+                animation: 'hudScan 2s ease-in-out infinite',
               }} />
-              {/* Corner brackets */}
-              <div className="absolute top-0 left-0 w-3 h-3 border-t border-l border-cyan-400/40" />
-              <div className="absolute top-0 right-0 w-3 h-3 border-t border-r border-cyan-400/40" />
-              <div className="absolute bottom-0 left-0 w-3 h-3 border-b border-l border-cyan-400/40" />
-              <div className="absolute bottom-0 right-0 w-3 h-3 border-b border-r border-cyan-400/40" />
-              <p
-                className="text-[10px] sm:text-xs tracking-[0.3em] uppercase text-cyan-400/70 font-mono"
-              >
-                ▸ Hi, I'm
-              </p>
+              {/* Secondary subtle bottom scan */}
+              <div className="absolute bottom-0 left-0 right-0 h-[1px] opacity-40" style={{
+                background: 'linear-gradient(90deg, transparent 0%, rgba(168,85,247,0.6) 50%, transparent 100%)',
+                backgroundSize: '200% 100%',
+                animation: 'hudScan 3s ease-in-out infinite 1s',
+              }} />
+              {/* Corner brackets - enhanced */}
+              <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-cyan-400/50 rounded-tl-sm" />
+              <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-cyan-400/50 rounded-tr-sm" />
+              <div className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-cyan-400/50 rounded-bl-sm" />
+              <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-cyan-400/50 rounded-br-sm" />
+              {/* Status dot */}
+              <div className="flex items-center gap-2">
+                <div className="w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_8px_rgba(0,229,255,0.8)]" style={{ animation: 'neonPulse 2s ease-in-out infinite' }} />
+                <p className="text-[10px] sm:text-xs tracking-[0.3em] uppercase text-cyan-300/80 font-mono">
+                  Hi, I'm
+                </p>
+              </div>
+              {/* Hover glow overlay */}
+              <div className="absolute inset-0 opacity-0 group-hover/hud:opacity-100 transition-opacity duration-500 rounded-xl" style={{
+                background: 'radial-gradient(ellipse at center, rgba(0,229,255,0.06) 0%, transparent 70%)',
+              }} />
             </div>
           </div>
 
           {/* Bento Cell: Role pill HUD - top right */}
           <div className="col-span-2 md:col-start-10 md:col-span-3 self-end z-30">
-            <div className="relative overflow-hidden backdrop-blur-xl bg-white/[0.03] rounded-xl px-4 py-3"
+            <div className="group/hud relative overflow-hidden rounded-xl px-5 py-4 transition-all duration-500 hover:scale-[1.03]"
               style={{
-                border: '1px solid rgba(168,85,247,0.15)',
-                boxShadow: '0 0 20px rgba(168,85,247,0.06), inset 0 0 15px rgba(168,85,247,0.03)',
+                background: 'linear-gradient(135deg, rgba(168,85,247,0.04) 0%, rgba(10,10,20,0.6) 50%, rgba(236,72,153,0.03) 100%)',
+                backdropFilter: 'blur(20px) saturate(1.4)',
+                border: '1px solid rgba(168,85,247,0.18)',
+                boxShadow: '0 0 30px rgba(168,85,247,0.08), inset 0 1px 0 rgba(255,255,255,0.05), 0 4px 20px rgba(0,0,0,0.4)',
               }}
             >
-              {/* HUD scanning light bar */}
-              <div className="absolute top-0 left-0 right-0 h-[1px]" style={{
-                background: 'linear-gradient(90deg, transparent, rgba(168,85,247,0.6), transparent)',
+              {/* Primary scanning light bar */}
+              <div className="absolute top-0 left-0 right-0 h-[2px]" style={{
+                background: 'linear-gradient(90deg, transparent 0%, rgba(168,85,247,0.8) 50%, transparent 100%)',
                 backgroundSize: '200% 100%',
-                animation: 'hudScan 3s linear infinite 0.5s',
+                animation: 'hudScan 2.5s ease-in-out infinite 0.5s',
               }} />
-              <div className="absolute top-0 left-0 w-3 h-3 border-t border-l border-purple-400/40" />
-              <div className="absolute top-0 right-0 w-3 h-3 border-t border-r border-purple-400/40" />
-              <div className="absolute bottom-0 left-0 w-3 h-3 border-b border-l border-purple-400/40" />
-              <div className="absolute bottom-0 right-0 w-3 h-3 border-b border-r border-purple-400/40" />
-              <p className="text-[10px] sm:text-xs text-cyan-300/60 font-mono">
-                ▸ Future <span className="text-purple-400/80">AI/ML Developer</span>
-              </p>
-              <p className="text-[8px] sm:text-[10px] text-slate-500/40 mt-1 leading-relaxed hidden sm:block font-mono">
+              <div className="absolute bottom-0 left-0 right-0 h-[1px] opacity-40" style={{
+                background: 'linear-gradient(90deg, transparent 0%, rgba(0,229,255,0.5) 50%, transparent 100%)',
+                backgroundSize: '200% 100%',
+                animation: 'hudScan 3.5s ease-in-out infinite 1.5s',
+              }} />
+              {/* Corner brackets */}
+              <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-purple-400/50 rounded-tl-sm" />
+              <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-purple-400/50 rounded-tr-sm" />
+              <div className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-purple-400/50 rounded-bl-sm" />
+              <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-purple-400/50 rounded-br-sm" />
+              <div className="flex items-center gap-2">
+                <div className="w-1.5 h-1.5 rounded-full bg-purple-400 shadow-[0_0_8px_rgba(168,85,247,0.8)]" style={{ animation: 'neonPulse 2.5s ease-in-out infinite 0.3s' }} />
+                <p className="text-[10px] sm:text-xs text-purple-300/80 font-mono">
+                  Future <span className="text-cyan-300/70">AI/ML Developer</span>
+                </p>
+              </div>
+              <p className="text-[8px] sm:text-[10px] text-slate-400/40 mt-1.5 leading-relaxed hidden sm:block font-mono pl-3.5">
                 Building intelligent apps & experiences
               </p>
+              <div className="absolute inset-0 opacity-0 group-hover/hud:opacity-100 transition-opacity duration-500 rounded-xl" style={{
+                background: 'radial-gradient(ellipse at center, rgba(168,85,247,0.06) 0%, transparent 70%)',
+              }} />
             </div>
           </div>
 
@@ -466,32 +494,50 @@ const CyberRoom = () => {
 
           {/* Bento Cell: Social links HUD - right side */}
           <div className="col-span-4 md:col-span-4 self-center z-30 order-4 md:order-none">
-            <div className="relative overflow-hidden backdrop-blur-xl bg-white/[0.03] rounded-xl px-4 py-4"
+            <div className="group/hud relative overflow-hidden rounded-xl px-5 py-5 transition-all duration-500 hover:scale-[1.03]"
               style={{
-                border: '1px solid rgba(0,229,255,0.12)',
-                boxShadow: '0 0 20px rgba(0,229,255,0.05), inset 0 0 15px rgba(0,229,255,0.02)',
+                background: 'linear-gradient(135deg, rgba(0,229,255,0.03) 0%, rgba(10,10,20,0.6) 50%, rgba(168,85,247,0.03) 100%)',
+                backdropFilter: 'blur(20px) saturate(1.4)',
+                border: '1px solid rgba(0,229,255,0.15)',
+                boxShadow: '0 0 30px rgba(0,229,255,0.06), inset 0 1px 0 rgba(255,255,255,0.05), 0 4px 20px rgba(0,0,0,0.4)',
               }}
             >
-              {/* HUD scanning light bar */}
-              <div className="absolute top-0 left-0 right-0 h-[1px]" style={{
-                background: 'linear-gradient(90deg, transparent, rgba(0,229,255,0.5), transparent)',
+              {/* Primary scanning light bar */}
+              <div className="absolute top-0 left-0 right-0 h-[2px]" style={{
+                background: 'linear-gradient(90deg, transparent 0%, rgba(0,229,255,0.7) 50%, transparent 100%)',
                 backgroundSize: '200% 100%',
-                animation: 'hudScan 2s linear infinite 1s',
+                animation: 'hudScan 2s ease-in-out infinite 1s',
               }} />
-              <div className="absolute top-0 left-0 w-3 h-3 border-t border-l border-cyan-400/30" />
-              <div className="absolute top-0 right-0 w-3 h-3 border-t border-r border-cyan-400/30" />
-              <div className="absolute bottom-0 left-0 w-3 h-3 border-b border-l border-cyan-400/30" />
-              <div className="absolute bottom-0 right-0 w-3 h-3 border-b border-r border-cyan-400/30" />
-              <p className="text-[9px] text-cyan-400/40 mb-3 font-mono uppercase tracking-wider">▸ Connect</p>
+              <div className="absolute bottom-0 left-0 right-0 h-[1px] opacity-40" style={{
+                background: 'linear-gradient(90deg, transparent 0%, rgba(168,85,247,0.5) 50%, transparent 100%)',
+                backgroundSize: '200% 100%',
+                animation: 'hudScan 3s ease-in-out infinite 2s',
+              }} />
+              {/* Corner brackets */}
+              <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-cyan-400/40 rounded-tl-sm" />
+              <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-cyan-400/40 rounded-tr-sm" />
+              <div className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-cyan-400/40 rounded-bl-sm" />
+              <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-cyan-400/40 rounded-br-sm" />
+              <div className="flex items-center gap-2 mb-4">
+                <div className="w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_8px_rgba(0,229,255,0.8)]" style={{ animation: 'neonPulse 2s ease-in-out infinite 0.5s' }} />
+                <p className="text-[9px] text-cyan-300/60 font-mono uppercase tracking-[0.2em]">Connect</p>
+              </div>
               <div className="flex gap-3">
                 {/* GitHub Icon */}
                 <a
                   href="https://github.com/JungPrajal"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group/icon w-10 h-10 rounded-xl border border-cyan-500/20 bg-cyan-500/5 flex items-center justify-center transition-all duration-300 hover:bg-cyan-500/15 hover:border-cyan-400/40 hover:scale-110 hover:shadow-[0_0_20px_rgba(0,229,255,0.3)]"
+                  className="group/icon relative w-11 h-11 rounded-xl flex items-center justify-center transition-all duration-400 hover:scale-125"
+                  style={{
+                    background: 'linear-gradient(135deg, rgba(0,229,255,0.08), rgba(0,229,255,0.02))',
+                    border: '1px solid rgba(0,229,255,0.2)',
+                    boxShadow: '0 0 12px rgba(0,229,255,0.05)',
+                  }}
+                  onMouseEnter={(e) => { e.currentTarget.style.boxShadow = '0 0 30px rgba(0,229,255,0.4), 0 0 60px rgba(0,229,255,0.15)'; e.currentTarget.style.borderColor = 'rgba(0,229,255,0.5)'; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.boxShadow = '0 0 12px rgba(0,229,255,0.05)'; e.currentTarget.style.borderColor = 'rgba(0,229,255,0.2)'; }}
                 >
-                  <svg viewBox="0 0 24 24" className="w-5 h-5 text-cyan-400/60 group-hover/icon:text-cyan-300 transition-colors duration-300" fill="currentColor">
+                  <svg viewBox="0 0 24 24" className="w-5 h-5 text-cyan-400/70 group-hover/icon:text-cyan-200 transition-all duration-300" fill="currentColor" style={{ filter: 'drop-shadow(0 0 4px rgba(0,229,255,0.3))' }}>
                     <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
                   </svg>
                 </a>
@@ -500,9 +546,16 @@ const CyberRoom = () => {
                   href="https://www.linkedin.com/in/prajal-jung-kunwar-a2a7b2270/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group/icon w-10 h-10 rounded-xl border border-purple-500/20 bg-purple-500/5 flex items-center justify-center transition-all duration-300 hover:bg-purple-500/15 hover:border-purple-400/40 hover:scale-110 hover:shadow-[0_0_20px_rgba(168,85,247,0.3)]"
+                  className="group/icon relative w-11 h-11 rounded-xl flex items-center justify-center transition-all duration-400 hover:scale-125"
+                  style={{
+                    background: 'linear-gradient(135deg, rgba(168,85,247,0.08), rgba(168,85,247,0.02))',
+                    border: '1px solid rgba(168,85,247,0.2)',
+                    boxShadow: '0 0 12px rgba(168,85,247,0.05)',
+                  }}
+                  onMouseEnter={(e) => { e.currentTarget.style.boxShadow = '0 0 30px rgba(168,85,247,0.4), 0 0 60px rgba(168,85,247,0.15)'; e.currentTarget.style.borderColor = 'rgba(168,85,247,0.5)'; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.boxShadow = '0 0 12px rgba(168,85,247,0.05)'; e.currentTarget.style.borderColor = 'rgba(168,85,247,0.2)'; }}
                 >
-                  <svg viewBox="0 0 24 24" className="w-5 h-5 text-purple-400/60 group-hover/icon:text-purple-300 transition-colors duration-300" fill="currentColor">
+                  <svg viewBox="0 0 24 24" className="w-5 h-5 text-purple-400/70 group-hover/icon:text-purple-200 transition-all duration-300" fill="currentColor" style={{ filter: 'drop-shadow(0 0 4px rgba(168,85,247,0.3))' }}>
                     <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
                   </svg>
                 </a>
@@ -511,13 +564,24 @@ const CyberRoom = () => {
                   href="https://medium.com/@prajaljungkunwar"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group/icon w-10 h-10 rounded-xl border border-pink-500/20 bg-pink-500/5 flex items-center justify-center transition-all duration-300 hover:bg-pink-500/15 hover:border-pink-400/40 hover:scale-110 hover:shadow-[0_0_20px_rgba(236,72,153,0.3)]"
+                  className="group/icon relative w-11 h-11 rounded-xl flex items-center justify-center transition-all duration-400 hover:scale-125"
+                  style={{
+                    background: 'linear-gradient(135deg, rgba(236,72,153,0.08), rgba(236,72,153,0.02))',
+                    border: '1px solid rgba(236,72,153,0.2)',
+                    boxShadow: '0 0 12px rgba(236,72,153,0.05)',
+                  }}
+                  onMouseEnter={(e) => { e.currentTarget.style.boxShadow = '0 0 30px rgba(236,72,153,0.4), 0 0 60px rgba(236,72,153,0.15)'; e.currentTarget.style.borderColor = 'rgba(236,72,153,0.5)'; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.boxShadow = '0 0 12px rgba(236,72,153,0.05)'; e.currentTarget.style.borderColor = 'rgba(236,72,153,0.2)'; }}
                 >
-                  <svg viewBox="0 0 24 24" className="w-5 h-5 text-pink-400/60 group-hover/icon:text-pink-300 transition-colors duration-300" fill="currentColor">
+                  <svg viewBox="0 0 24 24" className="w-5 h-5 text-pink-400/70 group-hover/icon:text-pink-200 transition-all duration-300" fill="currentColor" style={{ filter: 'drop-shadow(0 0 4px rgba(236,72,153,0.3))' }}>
                     <path d="M13.54 12a6.8 6.8 0 01-6.77 6.82A6.8 6.8 0 010 12a6.8 6.8 0 016.77-6.82A6.8 6.8 0 0113.54 12zM20.96 12c0 3.54-1.51 6.42-3.38 6.42-1.87 0-3.39-2.88-3.39-6.42s1.52-6.42 3.39-6.42 3.38 2.88 3.38 6.42M24 12c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75C23.47 6.25 24 8.83 24 12z"/>
                   </svg>
                 </a>
               </div>
+              {/* Hover glow overlay */}
+              <div className="absolute inset-0 opacity-0 group-hover/hud:opacity-100 transition-opacity duration-500 rounded-xl" style={{
+                background: 'radial-gradient(ellipse at center, rgba(0,229,255,0.05) 0%, transparent 70%)',
+              }} />
             </div>
           </div>
 
