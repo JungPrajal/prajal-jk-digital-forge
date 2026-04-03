@@ -411,9 +411,9 @@ const CyberRoom = () => {
           </div>
 
           {/* Bento Cell: PRAJAL name - left side with glassmorphism + tilt */}
-          <div className="col-span-4 md:col-span-3 self-center z-30 order-3 md:order-none">
+          <div className="col-span-4 md:col-span-4 self-center z-30 order-3 md:order-none">
             <div
-              className="group relative overflow-hidden backdrop-blur-2xl rounded-2xl px-5 py-5 md:py-8 transition-transform duration-300 ease-out cursor-pointer"
+              className="group relative overflow-visible backdrop-blur-2xl rounded-2xl px-5 py-5 md:py-8 transition-transform duration-300 ease-out cursor-pointer"
               style={{
                 background: 'rgba(255,255,255,0.04)',
                 border: '1px solid transparent',
