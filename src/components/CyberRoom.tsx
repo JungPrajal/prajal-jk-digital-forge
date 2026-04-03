@@ -1762,6 +1762,19 @@ const CyberRoom = () => {
           50% { background-position: 100% 100%; }
           100% { background-position: 0% 0%; }
         }
+        @keyframes fogDrift {
+          0%, 100% { opacity: 0.6; transform: translateX(0) scale(1); }
+          25% { opacity: 1; transform: translateX(15px) scale(1.05); }
+          50% { opacity: 0.8; transform: translateX(-10px) scale(1.02); }
+          75% { opacity: 1; transform: translateX(8px) scale(1.04); }
+        }
+        @keyframes bokehFloat {
+          0% { transform: translate(0, 0) scale(1); opacity: var(--bokeh-opacity, 0.2); }
+          25% { transform: translate(20px, -30px) scale(1.1); opacity: calc(var(--bokeh-opacity, 0.2) * 1.3); }
+          50% { transform: translate(-15px, -50px) scale(0.9); opacity: var(--bokeh-opacity, 0.2); }
+          75% { transform: translate(25px, -20px) scale(1.15); opacity: calc(var(--bokeh-opacity, 0.2) * 1.5); }
+          100% { transform: translate(0, 0) scale(1); opacity: var(--bokeh-opacity, 0.2); }
+        }
       `}</style>
     </section>
   );
