@@ -1345,13 +1345,15 @@ const CyberRoom = () => {
                   borderRadius: '8px',
                   border: '2.5px solid rgba(255,255,255,0.1)',
                   boxShadow: `
-                    0 0 60px rgba(0,229,255,0.22),
-                    0 0 120px rgba(236,72,153,0.08),
-                    0 0 40px rgba(168,85,247,0.06),
-                    inset 0 0 30px rgba(0,229,255,0.06)
+                    0 0 60px rgba(0,229,255,0.28),
+                    0 0 120px rgba(0,229,255,0.12),
+                    0 0 180px rgba(236,72,153,0.08),
+                    0 0 40px rgba(168,85,247,0.08),
+                    inset 0 0 30px rgba(0,229,255,0.08)
                   `,
                   borderTopLeftRadius: '10px',
                   borderTopRightRadius: '10px',
+                  filter: 'brightness(1.15)',
                 }}
               >
                 {/* Curved top edge highlight */}
