@@ -511,7 +511,7 @@ const CyberRoom = () => {
                 background: 'radial-gradient(ellipse at center, rgba(168,85,247,0.06) 0%, transparent 70%)',
               }} />
             </div>
-          </div>
+          </motion.div>
 
           {/* Bento Cell: PRAJAL name - left side with glassmorphism + tilt */}
           <motion.div className="col-span-4 md:col-span-4 self-center z-30 order-3 md:order-none" style={{ opacity: nameOpacity, y: nameY }}>
