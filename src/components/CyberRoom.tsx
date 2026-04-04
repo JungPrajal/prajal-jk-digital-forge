@@ -658,7 +658,7 @@ const CyberRoom = () => {
                 background: 'radial-gradient(ellipse at center, rgba(0,229,255,0.05) 0%, transparent 70%)',
               }} />
             </div>
-          </div>
+          </motion.div>
 
         </div>
 
