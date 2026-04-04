@@ -1,63 +1,9 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Server, Brain, Terminal, Palette, Globe, Clock, Cpu, Zap } from 'lucide-react';
+import MeshGradientCard from './MeshGradientCard';
 
-/* ─── Mouse-tracking border light card ─── */
-const GlassCard = ({
-  children,
-  className = '',
-  style = {},
-}: {
-  children: React.ReactNode;
-  className?: string;
-  style?: React.CSSProperties;
-}) => {
-  const cardRef = useRef<HTMLDivElement>(null);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-  const [isHovered, setIsHovered] = useState(false);
-
-  const handleMouseMove = useCallback((e: React.MouseEvent) => {
-    const rect = cardRef.current?.getBoundingClientRect();
-    if (!rect) return;
-    setMousePos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
-  }, []);
-
-  return (
-    <div
-      ref={cardRef}
-      onMouseMove={handleMouseMove}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      className={`relative rounded-2xl overflow-hidden transition-transform duration-300 hover:scale-[1.02] ${className}`}
-      style={style}
-    >
-      {/* Dynamic border light */}
-      <div
-        className="absolute inset-0 rounded-2xl pointer-events-none transition-opacity duration-300 z-10"
-        style={{
-          opacity: isHovered ? 1 : 0,
-          background: `radial-gradient(400px circle at ${mousePos.x}px ${mousePos.y}px, rgba(0,229,255,0.25), transparent 60%)`,
-        }}
-      />
-      {/* Border */}
-      <div
-        className="absolute inset-0 rounded-2xl pointer-events-none z-10"
-        style={{
-          border: '1px solid transparent',
-          background: isHovered
-            ? `radial-gradient(400px circle at ${mousePos.x}px ${mousePos.y}px, rgba(0,229,255,0.4), rgba(168,85,247,0.1) 60%) border-box`
-            : 'linear-gradient(135deg, rgba(168,85,247,0.2), rgba(0,229,255,0.1)) border-box',
-          WebkitMask: 'linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0)',
-          WebkitMaskComposite: 'exclude',
-          maskComposite: 'exclude',
-        }}
-      />
-      {/* Glass fill */}
-      <div className="absolute inset-0 bg-[rgba(10,15,26,0.6)] backdrop-blur-xl rounded-2xl" />
-      {/* Content */}
-      <div className="relative z-20 h-full">{children}</div>
-    </div>
-  );
-};
+/* GlassCard is now MeshGradientCard */
+const GlassCard = MeshGradientCard;
 
 /* ─── 3D Icon with CSS depth ─── */
 const Icon3D = ({ icon: Icon, color, size = 40 }: { icon: React.ElementType; color: string; size?: number }) => {
