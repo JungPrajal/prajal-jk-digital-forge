@@ -663,9 +663,9 @@ const CyberRoom = () => {
         </div>
 
         {/* ── 3D Room - positioned to overlap bento center, mobile zooms to shoulder ── */}
-        <div
+        <motion.div
           className="absolute inset-0 flex items-center justify-center pointer-events-none z-10"
-          style={{ perspective: isMobile ? '600px' : '1200px' }}
+          style={{ perspective: isMobile ? '600px' : '1200px', scale: roomScale }}
         >
         <div
           className="relative pointer-events-auto"
