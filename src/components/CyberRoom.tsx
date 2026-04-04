@@ -1615,7 +1615,12 @@ const CyberRoom = () => {
       )}
 
       {/* ── Scroll to Explore - Neon Mouse Icon ── */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-2">
+      <motion.div
+        className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-2"
+        style={{ opacity: scrollIconOpacity }}
+        animate={{ y: [0, -10, 0] }}
+        transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+      >
         <div
           className="relative w-7 h-11 rounded-full border-2 border-cyan-400/60 flex justify-center"
           style={{
@@ -1639,7 +1644,7 @@ const CyberRoom = () => {
         >
           Scroll to Explore
         </span>
-      </div>
+      </motion.div>
 
       {/* CSS animations */}
       <style>{`
