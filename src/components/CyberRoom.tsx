@@ -568,7 +568,7 @@ const CyberRoom = () => {
           <div className="col-span-4 md:col-span-4 self-center z-20 order-2 md:order-none row-span-1">{/* 3D room placeholder - rendered below */}</div>
 
           {/* Bento Cell: Social links HUD - right side */}
-          <div className="col-span-4 md:col-span-4 self-center z-30 order-4 md:order-none">
+          <motion.div className="col-span-4 md:col-span-4 self-center z-30 order-4 md:order-none" style={{ opacity: hudOpacity }}>
             <div className="group/hud relative overflow-hidden rounded-xl px-5 py-5 transition-all duration-500 hover:scale-[1.03]"
               style={{
                 background: 'linear-gradient(135deg, rgba(0,229,255,0.03) 0%, rgba(10,10,20,0.6) 50%, rgba(168,85,247,0.03) 100%)',
