@@ -1574,7 +1574,7 @@ const CyberRoom = () => {
         {/* Close pointer-events-auto div (441) */}
         </div>
         {/* Close absolute inset-0 div (437) */}
-      </div>
+      </motion.div>
       {/* Close containerRef div (355) */}
 
       {/* ── Code Explode Overlay ── */}
