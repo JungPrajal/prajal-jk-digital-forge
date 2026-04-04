@@ -339,10 +339,6 @@ const SkillsSection = () => {
 };
 
 const ProjectsSection = () => {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const trackRef = useRef<HTMLDivElement>(null);
-  const [hoveredColor, setHoveredColor] = useState<string | null>(null);
-
   const projects = [
     {
       title: "E-commerce Mobile App",
@@ -350,6 +346,7 @@ const ProjectsSection = () => {
       tech: ["Flutter", "Dart", "Mobile Development"],
       type: "Mobile App",
       color: "#06b6d4",
+      span: "md:col-span-2 md:row-span-2",
     },
     {
       title: "E-learning Mobile App",
@@ -357,211 +354,124 @@ const ProjectsSection = () => {
       tech: ["Flutter", "Dart", "Node.js", "Backend API"],
       type: "Full Stack",
       color: "#8b5cf6",
+      span: "md:col-span-1 md:row-span-1",
     },
     {
       title: "E-commerce Clothing App",
       description: "Java-based clothing store application with inventory management and user authentication.",
-      tech: ["Java", "Object-Oriented Programming"],
+      tech: ["Java", "OOP"],
       type: "Desktop App",
       color: "#f59e0b",
+      span: "md:col-span-1 md:row-span-1",
     },
     {
       title: "AI Image & Face Recognition",
       description: "Python-based computer vision project implementing image detection and facial recognition algorithms.",
-      tech: ["Python", "OpenCV", "Machine Learning", "AI"],
+      tech: ["Python", "OpenCV", "ML", "AI"],
       type: "AI/ML",
       color: "#10b981",
+      span: "md:col-span-1 md:row-span-2",
     },
     {
       title: "Fast Track Repair Service Website",
       description: "Business website with SEO optimization, responsive design, and integrated booking system.",
-      tech: ["Wix", "SEO", "Web Design", "Digital Marketing"],
+      tech: ["Wix", "SEO", "Web Design"],
       type: "Web Development",
       color: "#ec4899",
+      span: "md:col-span-1 md:row-span-1",
     },
   ];
 
-  // Horizontal scroll on vertical scroll (pin section)
-  useEffect(() => {
-    const section = sectionRef.current;
-    const track = trackRef.current;
-    if (!section || !track) return;
-
-    const handleScroll = () => {
-      const rect = section.getBoundingClientRect();
-      const sectionTop = section.offsetTop;
-      const scrollY = window.scrollY;
-      const sectionHeight = section.offsetHeight;
-      const viewportH = window.innerHeight;
-      const scrollableDistance = sectionHeight - viewportH;
-
-      if (scrollableDistance <= 0) return;
-
-      const progress = Math.max(0, Math.min(1, (scrollY - sectionTop) / scrollableDistance));
-      const maxTranslate = track.scrollWidth - window.innerWidth;
-      track.style.transform = `translateX(${-progress * maxTranslate}px)`;
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   return (
-    <>
-      {/* Global color overlay */}
-      <div
-        className="fixed inset-0 z-[5] pointer-events-none transition-all duration-700"
-        style={{
-          background: hoveredColor
-            ? `radial-gradient(ellipse at center, ${hoveredColor}15 0%, transparent 70%)`
-            : 'transparent',
-        }}
-      />
+    <section id="projects" className="min-h-screen py-20 relative">
+      <div className="container mx-auto px-6">
+        <h2 className="text-4xl md:text-5xl font-bold text-center mb-4 text-gradient">
+          Featured Projects
+        </h2>
+        <p className="text-center text-muted-foreground mb-12 max-w-lg mx-auto">
+          A curated selection of work spanning mobile, web, AI, and design.
+        </p>
 
-      <section
-        id="projects"
-        ref={sectionRef}
-        className="relative"
-        style={{ height: `${projects.length * 100}vh` }}
-      >
-        <div className="sticky top-0 h-screen overflow-hidden flex flex-col justify-center">
-          <h2 className="text-4xl md:text-5xl font-bold text-center mb-8 text-gradient relative z-10 px-6">
-            Featured Projects
-          </h2>
+        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4 auto-rows-[220px]">
+          {projects.map((project, index) => (
+            <BentoProjectCard key={index} project={project} index={index} />
+          ))}
 
-          <div
-            ref={trackRef}
-            className="flex gap-8 px-[10vw] items-center will-change-transform"
-            style={{ width: 'max-content' }}
-          >
-            {projects.map((project, index) => (
-              <FloatingProjectCard
-                key={index}
-                project={project}
-                index={index}
-                onHover={(color) => setHoveredColor(color)}
-                onLeave={() => setHoveredColor(null)}
-              />
-            ))}
-
-            {/* GitHub CTA at end */}
-            <div className="flex-shrink-0 w-[300px] flex items-center justify-center">
-              <MagneticButton
-                href="https://github.com/JungPrajal"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-3 glass px-8 py-4 rounded-xl border border-border hover:border-accent transition-all duration-300 text-lg font-semibold text-muted-foreground hover:text-accent"
-              >
-                <Github className="w-6 h-6" />
-                View All
-                <ExternalLink className="w-5 h-5" />
-              </MagneticButton>
-            </div>
-          </div>
+          {/* GitHub CTA cell */}
+          <MeshGradientCard className="md:col-span-1 md:row-span-1 h-full" glowColor="rgba(168,85,247,0.5)">
+            <a
+              href="https://github.com/JungPrajal"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-6 flex flex-col items-center justify-center h-full gap-3 group"
+            >
+              <Github className="w-10 h-10 text-muted-foreground group-hover:text-accent transition-colors duration-300" />
+              <span className="text-sm font-bold text-foreground">View All on GitHub</span>
+              <ExternalLink className="w-4 h-4 text-muted-foreground group-hover:text-accent transition-colors duration-300" />
+            </a>
+          </MeshGradientCard>
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   );
 };
 
-const FloatingProjectCard = ({
+const BentoProjectCard = ({
   project,
   index,
-  onHover,
-  onLeave,
 }: {
-  project: { title: string; description: string; tech: string[]; type: string; color: string };
+  project: { title: string; description: string; tech: string[]; type: string; color: string; span: string };
   index: number;
-  onHover: (color: string) => void;
-  onLeave: () => void;
 }) => {
-  const cardRef = useRef<HTMLDivElement>(null);
-  const [tilt, setTilt] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
 
-  const handleMouseMove = (e: React.MouseEvent) => {
-    const card = cardRef.current;
-    if (!card) return;
-    const rect = card.getBoundingClientRect();
-    const x = (e.clientX - rect.left) / rect.width - 0.5;
-    const y = (e.clientY - rect.top) / rect.height - 0.5;
-    setTilt({ x: y * -25, y: x * 25 });
-  };
-
-  const handleMouseEnter = () => {
-    setIsHovered(true);
-    onHover(project.color);
-  };
-
-  const handleMouseLeave = () => {
-    setTilt({ x: 0, y: 0 });
-    setIsHovered(false);
-    onLeave();
-  };
-
   return (
-    <div
-      ref={cardRef}
-      className="flex-shrink-0 w-[420px] h-[480px] cursor-pointer"
-      style={{ perspective: '1000px' }}
-      onMouseMove={handleMouseMove}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
+    <MeshGradientCard
+      className={`${project.span} h-full`}
+      glowColor={project.color + '80'}
     >
       <div
-        className="relative w-full h-full rounded-2xl p-6 flex flex-col justify-between transition-shadow duration-500 overflow-hidden border"
-        style={{
-          transform: `rotateX(${tilt.x}deg) rotateY(${tilt.y}deg) translateZ(${isHovered ? 40 : 0}px)`,
-          transition: 'transform 0.15s ease-out, box-shadow 0.5s ease',
-          transformStyle: 'preserve-3d',
-          background: `linear-gradient(135deg, rgba(16,16,16,0.8) 0%, rgba(16,16,16,0.4) 100%)`,
-          backdropFilter: 'blur(12px)',
-          borderColor: isHovered ? project.color + '80' : 'rgba(168,85,247,0.2)',
-          boxShadow: isHovered
-            ? `0 30px 60px -15px ${project.color}40, 0 0 40px ${project.color}15`
-            : '0 10px 30px -10px rgba(0,0,0,0.5)',
-        }}
+        className="p-6 flex flex-col justify-between h-full"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
       >
-        {/* Glow accent top bar */}
-        <div
-          className="absolute top-0 left-0 right-0 h-1 rounded-t-2xl transition-opacity duration-500"
-          style={{
-            background: `linear-gradient(90deg, transparent, ${project.color}, transparent)`,
-            opacity: isHovered ? 1 : 0.3,
-          }}
-        />
-
-        <div className="relative z-10" style={{ transform: 'translateZ(30px)', transformStyle: 'preserve-3d' }}>
-          <div className="flex justify-between items-start mb-4">
+        {/* Header */}
+        <div>
+          <div className="flex justify-between items-start mb-3">
             <span
-              className="px-3 py-1 rounded-full text-xs font-bold tracking-wider uppercase"
+              className="px-3 py-1 rounded-full text-[10px] font-bold tracking-wider uppercase"
               style={{
                 background: project.color + '20',
                 color: project.color,
-                border: `1px solid ${project.color}40`,
+                border: `0.5px solid ${project.color}40`,
               }}
             >
               {project.type}
             </span>
-            <span className="text-xs text-muted-foreground">0{index + 1}</span>
+            <span className="text-xs text-muted-foreground font-mono">0{index + 1}</span>
           </div>
 
           <h3
-            className="text-2xl font-bold mb-3 transition-colors duration-300"
+            className="text-lg md:text-xl font-bold mb-2 transition-colors duration-300"
             style={{ color: isHovered ? project.color : 'hsl(var(--foreground))' }}
           >
             {project.title}
           </h3>
 
-          <p className="text-muted-foreground text-sm leading-relaxed">{project.description}</p>
+          <p className="text-muted-foreground text-xs leading-relaxed line-clamp-3">
+            {project.description}
+          </p>
         </div>
 
-        <div className="relative z-10 flex flex-wrap gap-2" style={{ transform: 'translateZ(20px)' }}>
+        {/* Tech tags */}
+        <div className="flex flex-wrap gap-1.5 mt-3">
           {project.tech.map((tech, i) => (
             <span
               key={i}
-              className="px-3 py-1 rounded-full text-xs border transition-all duration-300"
+              className="px-2.5 py-0.5 rounded-full text-[10px] font-medium transition-all duration-300"
               style={{
+                borderWidth: '0.5px',
+                borderStyle: 'solid',
                 borderColor: isHovered ? project.color + '50' : 'rgba(100,100,100,0.3)',
                 color: isHovered ? project.color : 'hsl(var(--muted-foreground))',
                 background: isHovered ? project.color + '10' : 'rgba(30,30,30,0.5)',
@@ -571,19 +481,8 @@ const FloatingProjectCard = ({
             </span>
           ))}
         </div>
-
-        {/* Hover arrow */}
-        <div
-          className="absolute bottom-6 right-6 transition-all duration-300"
-          style={{
-            opacity: isHovered ? 1 : 0,
-            transform: `translateX(${isHovered ? 0 : 10}px) translateZ(40px)`,
-          }}
-        >
-          <ExternalLink className="w-5 h-5" style={{ color: project.color }} />
-        </div>
       </div>
-    </div>
+    </MeshGradientCard>
   );
 };
 
