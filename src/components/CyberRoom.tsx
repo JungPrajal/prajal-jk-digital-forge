@@ -1572,8 +1572,7 @@ const CyberRoom = () => {
         {/* Close size div (452) */}
         </div>
         {/* Close pointer-events-auto div (441) */}
-        </div>
-        {/* Close absolute inset-0 div (437) */}
+        {/* motion.div (absolute inset-0) closed below */}
       </motion.div>
       </div>
       {/* Close containerRef div */}
