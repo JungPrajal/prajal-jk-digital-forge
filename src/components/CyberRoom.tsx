@@ -562,7 +562,7 @@ const CyberRoom = () => {
                 Jung Kunwar
               </p>
             </div>
-          </div>
+          </motion.div>
 
           {/* Bento Cell: 3D Room - center */}
           <div className="col-span-4 md:col-span-4 self-center z-20 order-2 md:order-none row-span-1">{/* 3D room placeholder - rendered below */}</div>
