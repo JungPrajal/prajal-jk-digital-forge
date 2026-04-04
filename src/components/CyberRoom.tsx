@@ -293,7 +293,7 @@ const CyberRoom = () => {
   }, []);
 
   return (
-    <section id="home" className="relative min-h-screen overflow-hidden flex items-center justify-center">
+    <section ref={sectionRef} id="home" className="relative min-h-screen overflow-hidden flex items-center justify-center">
       {/* Dark ambient background */}
       <div className="absolute inset-0 bg-[#05080f]" />
       <div className="absolute inset-0 bg-gradient-radial from-cyan-900/10 via-transparent to-transparent" />
