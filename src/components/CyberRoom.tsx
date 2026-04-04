@@ -470,10 +470,10 @@ const CyberRoom = () => {
                 background: 'radial-gradient(ellipse at center, rgba(0,229,255,0.06) 0%, transparent 70%)',
               }} />
             </div>
-          </div>
+          </motion.div>
 
           {/* Bento Cell: Role pill HUD - top right */}
-          <div className="col-span-2 md:col-start-10 md:col-span-3 self-end z-30">
+          <motion.div className="col-span-2 md:col-start-10 md:col-span-3 self-end z-30" style={{ opacity: hudOpacity }}>
             <div className="group/hud relative overflow-hidden rounded-xl px-5 py-4 transition-all duration-500 hover:scale-[1.03]"
               style={{
                 background: 'linear-gradient(135deg, rgba(168,85,247,0.04) 0%, rgba(10,10,20,0.6) 50%, rgba(236,72,153,0.03) 100%)',
@@ -511,7 +511,6 @@ const CyberRoom = () => {
                 background: 'radial-gradient(ellipse at center, rgba(168,85,247,0.06) 0%, transparent 70%)',
               }} />
             </div>
-          </div>
           </motion.div>
 
           {/* Bento Cell: PRAJAL name - left side with glassmorphism + tilt */}
