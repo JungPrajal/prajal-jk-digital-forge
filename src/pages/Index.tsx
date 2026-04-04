@@ -7,6 +7,7 @@ import TechStackDashboard from '../components/TechStackDashboard';
 import LiquidCursor from '../components/LiquidCursor';
 import MagneticButton from '../components/MagneticButton';
 import GrainOverlay from '../components/GrainOverlay';
+import MeshGradientCard from '../components/MeshGradientCard';
 
 
 const Navigation = ({ activeSection, setActiveSection }) => {
