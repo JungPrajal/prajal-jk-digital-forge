@@ -232,6 +232,18 @@ const CyberRoom = () => {
     x: number; y: number; angle: number; speed: number; rotation: number; scale: number;
   }>>([]);
   const containerRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  // Scroll-driven animations
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start start', 'end start'],
+  });
+  const roomScale = useTransform(scrollYProgress, [0, 0.3], [1, 1.15]);
+  const nameOpacity = useTransform(scrollYProgress, [0, 0.15], [1, 0]);
+  const nameY = useTransform(scrollYProgress, [0, 0.15], [0, -40]);
+  const hudOpacity = useTransform(scrollYProgress, [0, 0.15], [1, 0]);
+  const scrollIconOpacity = useTransform(scrollYProgress, [0, 0.08], [1, 0]);
 
   useEffect(() => {
     const handleMouse = (e: MouseEvent) => {
