@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 
 /* ── Typewriter code snippets for the monitor ── */
 const CODE_SNIPPETS = [
