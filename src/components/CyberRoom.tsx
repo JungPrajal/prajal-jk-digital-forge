@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 
 /* ── Typewriter code snippets for the monitor ── */
 const CODE_SNIPPETS = [
@@ -231,6 +232,18 @@ const CyberRoom = () => {
     x: number; y: number; angle: number; speed: number; rotation: number; scale: number;
   }>>([]);
   const containerRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  // Scroll-driven animations
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start start', 'end start'],
+  });
+  const roomScale = useTransform(scrollYProgress, [0, 0.3], [1, 1.15]);
+  const nameOpacity = useTransform(scrollYProgress, [0, 0.15], [1, 0]);
+  const nameY = useTransform(scrollYProgress, [0, 0.15], [0, -40]);
+  const hudOpacity = useTransform(scrollYProgress, [0, 0.15], [1, 0]);
+  const scrollIconOpacity = useTransform(scrollYProgress, [0, 0.08], [1, 0]);
 
   useEffect(() => {
     const handleMouse = (e: MouseEvent) => {
@@ -280,7 +293,7 @@ const CyberRoom = () => {
   }, []);
 
   return (
-    <section id="home" className="relative min-h-screen overflow-hidden flex items-center justify-center">
+    <section ref={sectionRef} id="home" className="relative min-h-screen overflow-hidden flex items-center justify-center">
       {/* Dark ambient background */}
       <div className="absolute inset-0 bg-[#05080f]" />
       <div className="absolute inset-0 bg-gradient-radial from-cyan-900/10 via-transparent to-transparent" />
@@ -419,7 +432,7 @@ const CyberRoom = () => {
         <div className="grid grid-cols-4 md:grid-cols-12 grid-rows-[auto_1fr_auto] gap-3 md:gap-4 min-h-[85vh] items-center">
 
           {/* Bento Cell: "Hi, I'm" HUD widget - top left */}
-          <div className="col-span-2 md:col-span-3 self-end z-30">
+          <motion.div className="col-span-2 md:col-span-3 self-end z-30" style={{ opacity: hudOpacity }}>
             <div className="group/hud relative overflow-hidden rounded-xl px-5 py-4 transition-all duration-500 hover:scale-[1.03]"
               style={{
                 background: 'linear-gradient(135deg, rgba(0,229,255,0.04) 0%, rgba(10,10,20,0.6) 50%, rgba(168,85,247,0.03) 100%)',
@@ -457,10 +470,10 @@ const CyberRoom = () => {
                 background: 'radial-gradient(ellipse at center, rgba(0,229,255,0.06) 0%, transparent 70%)',
               }} />
             </div>
-          </div>
+          </motion.div>
 
           {/* Bento Cell: Role pill HUD - top right */}
-          <div className="col-span-2 md:col-start-10 md:col-span-3 self-end z-30">
+          <motion.div className="col-span-2 md:col-start-10 md:col-span-3 self-end z-30" style={{ opacity: hudOpacity }}>
             <div className="group/hud relative overflow-hidden rounded-xl px-5 py-4 transition-all duration-500 hover:scale-[1.03]"
               style={{
                 background: 'linear-gradient(135deg, rgba(168,85,247,0.04) 0%, rgba(10,10,20,0.6) 50%, rgba(236,72,153,0.03) 100%)',
@@ -498,10 +511,10 @@ const CyberRoom = () => {
                 background: 'radial-gradient(ellipse at center, rgba(168,85,247,0.06) 0%, transparent 70%)',
               }} />
             </div>
-          </div>
+          </motion.div>
 
           {/* Bento Cell: PRAJAL name - left side with glassmorphism + tilt */}
-          <div className="col-span-4 md:col-span-4 self-center z-30 order-3 md:order-none">
+          <motion.div className="col-span-4 md:col-span-4 self-center z-30 order-3 md:order-none" style={{ opacity: nameOpacity, y: nameY }}>
             <div
               className="group relative overflow-visible backdrop-blur-2xl rounded-2xl px-5 py-5 md:py-8 transition-transform duration-300 ease-out cursor-pointer"
               style={{
@@ -549,13 +562,13 @@ const CyberRoom = () => {
                 Jung Kunwar
               </p>
             </div>
-          </div>
+          </motion.div>
 
           {/* Bento Cell: 3D Room - center */}
           <div className="col-span-4 md:col-span-4 self-center z-20 order-2 md:order-none row-span-1">{/* 3D room placeholder - rendered below */}</div>
 
           {/* Bento Cell: Social links HUD - right side */}
-          <div className="col-span-4 md:col-span-4 self-center z-30 order-4 md:order-none">
+          <motion.div className="col-span-4 md:col-span-4 self-center z-30 order-4 md:order-none" style={{ opacity: hudOpacity }}>
             <div className="group/hud relative overflow-hidden rounded-xl px-5 py-5 transition-all duration-500 hover:scale-[1.03]"
               style={{
                 background: 'linear-gradient(135deg, rgba(0,229,255,0.03) 0%, rgba(10,10,20,0.6) 50%, rgba(168,85,247,0.03) 100%)',
@@ -645,14 +658,14 @@ const CyberRoom = () => {
                 background: 'radial-gradient(ellipse at center, rgba(0,229,255,0.05) 0%, transparent 70%)',
               }} />
             </div>
-          </div>
+          </motion.div>
 
         </div>
 
         {/* ── 3D Room - positioned to overlap bento center, mobile zooms to shoulder ── */}
-        <div
+        <motion.div
           className="absolute inset-0 flex items-center justify-center pointer-events-none z-10"
-          style={{ perspective: isMobile ? '600px' : '1200px' }}
+          style={{ perspective: isMobile ? '600px' : '1200px', scale: roomScale }}
         >
         <div
           className="relative pointer-events-auto"
@@ -1561,8 +1574,9 @@ const CyberRoom = () => {
         {/* Close pointer-events-auto div (441) */}
         </div>
         {/* Close absolute inset-0 div (437) */}
+      </motion.div>
       </div>
-      {/* Close containerRef div (355) */}
+      {/* Close containerRef div */}
 
       {/* ── Code Explode Overlay ── */}
       {codeExploding && (
@@ -1601,7 +1615,12 @@ const CyberRoom = () => {
       )}
 
       {/* ── Scroll to Explore - Neon Mouse Icon ── */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-2">
+      <motion.div
+        className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-2"
+        style={{ opacity: scrollIconOpacity }}
+        animate={{ y: [0, -10, 0] }}
+        transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+      >
         <div
           className="relative w-7 h-11 rounded-full border-2 border-cyan-400/60 flex justify-center"
           style={{
@@ -1625,7 +1644,7 @@ const CyberRoom = () => {
         >
           Scroll to Explore
         </span>
-      </div>
+      </motion.div>
 
       {/* CSS animations */}
       <style>{`
