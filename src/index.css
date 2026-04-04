@@ -150,6 +150,22 @@
   }
 }
 
+/* Mesh gradient drift animation */
+@keyframes meshDrift {
+  0% {
+    background-position: 0% 50%;
+    filter: hue-rotate(0deg);
+  }
+  50% {
+    background-position: 100% 50%;
+    filter: hue-rotate(15deg);
+  }
+  100% {
+    background-position: 0% 50%;
+    filter: hue-rotate(0deg);
+  }
+}
+
 /* Custom Animations */
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
