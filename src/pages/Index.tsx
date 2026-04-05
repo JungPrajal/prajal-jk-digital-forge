@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Mail, Phone, MapPin, Github, ExternalLink, Code, Palette, Database, Smartphone, Globe, Brain, Server, Terminal, Menu, X } from 'lucide-react';
 import ParticleField3D from '../components/ParticleField3D';
 import CyberRoom from '../components/CyberRoom';
@@ -346,7 +346,6 @@ const ProjectsSection = () => {
       tech: ["Flutter", "Dart", "Mobile Development"],
       type: "Mobile App",
       color: "#06b6d4",
-      span: "md:col-span-2 md:row-span-2",
     },
     {
       title: "E-learning Mobile App",
@@ -354,7 +353,6 @@ const ProjectsSection = () => {
       tech: ["Flutter", "Dart", "Node.js", "Backend API"],
       type: "Full Stack",
       color: "#8b5cf6",
-      span: "md:col-span-1 md:row-span-1",
     },
     {
       title: "E-commerce Clothing App",
@@ -362,7 +360,6 @@ const ProjectsSection = () => {
       tech: ["Java", "OOP"],
       type: "Desktop App",
       color: "#f59e0b",
-      span: "md:col-span-1 md:row-span-1",
     },
     {
       title: "AI Image & Face Recognition",
@@ -370,7 +367,6 @@ const ProjectsSection = () => {
       tech: ["Python", "OpenCV", "ML", "AI"],
       type: "AI/ML",
       color: "#10b981",
-      span: "md:col-span-1 md:row-span-2",
     },
     {
       title: "Fast Track Repair Service Website",
@@ -378,9 +374,32 @@ const ProjectsSection = () => {
       tech: ["Wix", "SEO", "Web Design"],
       type: "Web Development",
       color: "#ec4899",
-      span: "md:col-span-1 md:row-span-1",
     },
   ];
+
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [activeIndex, setActiveIndex] = useState(-1);
+
+  // IntersectionObserver to detect active card
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  useEffect(() => {
+    const observers: IntersectionObserver[] = [];
+    cardRefs.current.forEach((card, i) => {
+      if (!card) return;
+      const obs = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting && entry.intersectionRatio >= 0.6) {
+            setActiveIndex(i);
+          }
+        },
+        { threshold: 0.6, root: scrollRef.current }
+      );
+      obs.observe(card);
+      observers.push(obs);
+    });
+    return () => observers.forEach(o => o.disconnect());
+  }, []);
 
   return (
     <section id="projects" className="min-h-screen py-20 relative">
@@ -391,101 +410,173 @@ const ProjectsSection = () => {
         <p className="text-center text-muted-foreground mb-12 max-w-lg mx-auto">
           A curated selection of work spanning mobile, web, AI, and design.
         </p>
+      </div>
 
-        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4 auto-rows-[220px]">
-          {projects.map((project, index) => (
-            <BentoProjectCard key={index} project={project} index={index} />
-          ))}
+      {/* Horizontal parallax slider */}
+      <div
+        ref={scrollRef}
+        className="flex gap-8 overflow-x-auto snap-x snap-mandatory px-[max(2rem,calc((100vw-560px)/2))] pb-8 scrollbar-hide"
+        style={{ scrollBehavior: 'smooth' }}
+      >
+        {projects.map((project, index) => (
+          <ParallaxProjectCard
+            key={index}
+            project={project}
+            index={index}
+            isActive={activeIndex === index}
+            ref={(el) => { cardRefs.current[index] = el; }}
+          />
+        ))}
+      </div>
 
-          {/* GitHub CTA cell */}
-          <MeshGradientCard className="md:col-span-1 md:row-span-1 h-full" glowColor="rgba(168,85,247,0.5)">
-            <a
-              href="https://github.com/JungPrajal"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-6 flex flex-col items-center justify-center h-full gap-3 group"
-            >
-              <Github className="w-10 h-10 text-muted-foreground group-hover:text-accent transition-colors duration-300" />
-              <span className="text-sm font-bold text-foreground">View All on GitHub</span>
-              <ExternalLink className="w-4 h-4 text-muted-foreground group-hover:text-accent transition-colors duration-300" />
-            </a>
-          </MeshGradientCard>
-        </div>
+      {/* GitHub CTA */}
+      <div className="flex justify-center mt-12">
+        <MagneticButton
+          href="https://github.com/JungPrajal"
+          target="_blank"
+          rel="noopener noreferrer"
+          strength={0.4}
+          className="glass px-8 py-4 rounded-xl border border-purple-500/30 hover:border-cyan-400/50 transition-all duration-300 flex items-center gap-3 text-muted-foreground hover:text-foreground"
+        >
+          <Github className="w-5 h-5" />
+          <span className="text-sm font-bold">View All on GitHub</span>
+          <ExternalLink className="w-4 h-4" />
+        </MagneticButton>
       </div>
     </section>
   );
 };
 
-const BentoProjectCard = ({
-  project,
-  index,
-}: {
-  project: { title: string; description: string; tech: string[]; type: string; color: string; span: string };
-  index: number;
-}) => {
-  const [isHovered, setIsHovered] = useState(false);
+const ParallaxProjectCard = React.forwardRef<
+  HTMLDivElement,
+  {
+    project: { title: string; description: string; tech: string[]; type: string; color: string };
+    index: number;
+    isActive: boolean;
+  }
+>(({ project, index, isActive }, ref) => {
+  const innerRef = useRef<HTMLDivElement>(null);
+  const [tilt, setTilt] = useState({ rotateX: 0, rotateY: 0 });
+  const [mouseInCard, setMouseInCard] = useState(false);
+
+  // Merge forwarded ref with inner ref
+  const setRefs = useCallback((el: HTMLDivElement | null) => {
+    (innerRef as React.MutableRefObject<HTMLDivElement | null>).current = el;
+    if (typeof ref === 'function') ref(el);
+    else if (ref) (ref as React.MutableRefObject<HTMLDivElement | null>).current = el;
+  }, [ref]);
+
+  const handleMouseMove = useCallback((e: React.MouseEvent) => {
+    const el = innerRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+    const dx = (e.clientX - cx) / (rect.width / 2);
+    const dy = (e.clientY - cy) / (rect.height / 2);
+    setTilt({ rotateX: -dy * 8, rotateY: dx * 8 });
+  }, []);
+
+  const handleMouseLeave = useCallback(() => {
+    setTilt({ rotateX: 0, rotateY: 0 });
+    setMouseInCard(false);
+  }, []);
 
   return (
-    <MeshGradientCard
-      className={`${project.span} h-full`}
-      glowColor={project.color + '80'}
+    <div
+      ref={setRefs}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={() => setMouseInCard(true)}
+      onMouseLeave={handleMouseLeave}
+      className="flex-shrink-0 snap-center"
+      style={{
+        width: 'min(480px, 80vw)',
+        perspective: '800px',
+      }}
     >
-      <div
-        className="p-6 flex flex-col justify-between h-full"
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
+      <MeshGradientCard
+        className="h-full"
+        glowColor={project.color + '80'}
+        style={{
+          transform: isActive
+            ? `scale(1.1) rotateX(${tilt.rotateX}deg) rotateY(${tilt.rotateY}deg)`
+            : 'scale(0.92)',
+          transition: mouseInCard
+            ? 'transform 0.15s ease-out'
+            : 'transform 0.6s cubic-bezier(0.23, 1, 0.32, 1)',
+          transformStyle: 'preserve-3d',
+        }}
       >
-        {/* Header */}
-        <div>
-          <div className="flex justify-between items-start mb-3">
-            <span
-              className="px-3 py-1 rounded-full text-[10px] font-bold tracking-wider uppercase"
-              style={{
-                background: project.color + '20',
-                color: project.color,
-                border: `0.5px solid ${project.color}40`,
-              }}
+        <div className="p-8 flex flex-col justify-between h-full min-h-[340px] relative">
+          {/* Header */}
+          <div>
+            <div className="flex justify-between items-start mb-4">
+              <span
+                className="px-3 py-1 rounded-full text-[10px] font-bold tracking-wider uppercase"
+                style={{
+                  background: project.color + '20',
+                  color: project.color,
+                  border: `0.5px solid ${project.color}40`,
+                }}
+              >
+                {project.type}
+              </span>
+              <span className="text-xs text-muted-foreground font-mono">0{index + 1}</span>
+            </div>
+
+            <h3
+              className="text-xl md:text-2xl font-bold mb-3 transition-colors duration-300"
+              style={{ color: isActive ? project.color : 'hsl(var(--foreground))' }}
             >
-              {project.type}
-            </span>
-            <span className="text-xs text-muted-foreground font-mono">0{index + 1}</span>
+              {project.title}
+            </h3>
+
+            <p className="text-muted-foreground text-sm leading-relaxed">
+              {project.description}
+            </p>
           </div>
 
-          <h3
-            className="text-lg md:text-xl font-bold mb-2 transition-colors duration-300"
-            style={{ color: isHovered ? project.color : 'hsl(var(--foreground))' }}
-          >
-            {project.title}
-          </h3>
+          {/* Tech tags */}
+          <div className="flex flex-wrap gap-2 mt-4">
+            {project.tech.map((tech, i) => (
+              <span
+                key={i}
+                className="px-3 py-1 rounded-full text-[11px] font-medium transition-all duration-300"
+                style={{
+                  borderWidth: '0.5px',
+                  borderStyle: 'solid',
+                  borderColor: isActive ? project.color + '50' : 'rgba(100,100,100,0.3)',
+                  color: isActive ? project.color : 'hsl(var(--muted-foreground))',
+                  background: isActive ? project.color + '10' : 'rgba(30,30,30,0.5)',
+                }}
+              >
+                {tech}
+              </span>
+            ))}
+          </div>
 
-          <p className="text-muted-foreground text-xs leading-relaxed line-clamp-3">
-            {project.description}
-          </p>
+          {/* Magnetic "View Project" button */}
+          {isActive && (
+            <div className="mt-6 flex justify-center">
+              <MagneticButton
+                strength={0.5}
+                className="px-6 py-2.5 rounded-full text-sm font-bold transition-all duration-300"
+                style={{
+                  background: `linear-gradient(135deg, ${project.color}30, ${project.color}10)`,
+                  border: `1px solid ${project.color}60`,
+                  color: project.color,
+                  backdropFilter: 'blur(8px)',
+                }}
+              >
+                View Project →
+              </MagneticButton>
+            </div>
+          )}
         </div>
-
-        {/* Tech tags */}
-        <div className="flex flex-wrap gap-1.5 mt-3">
-          {project.tech.map((tech, i) => (
-            <span
-              key={i}
-              className="px-2.5 py-0.5 rounded-full text-[10px] font-medium transition-all duration-300"
-              style={{
-                borderWidth: '0.5px',
-                borderStyle: 'solid',
-                borderColor: isHovered ? project.color + '50' : 'rgba(100,100,100,0.3)',
-                color: isHovered ? project.color : 'hsl(var(--muted-foreground))',
-                background: isHovered ? project.color + '10' : 'rgba(30,30,30,0.5)',
-              }}
-            >
-              {tech}
-            </span>
-          ))}
-        </div>
-      </div>
-    </MeshGradientCard>
+      </MeshGradientCard>
+    </div>
   );
-};
-
+});
 const ContactSection = () => {
   return (
     <section id="contact" className="min-h-screen flex items-center py-20">
