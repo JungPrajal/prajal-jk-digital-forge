@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Mail, Phone, MapPin, Github, ExternalLink, Code, Palette, Database, Smartphone, Globe, Brain, Server, Terminal, Menu, X } from 'lucide-react';
 import ParticleField3D from '../components/ParticleField3D';
 import CyberRoom from '../components/CyberRoom';
