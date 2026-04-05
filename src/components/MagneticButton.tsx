@@ -3,6 +3,7 @@ import React, { useRef, useState, useCallback, useEffect } from 'react';
 interface MagneticButtonProps {
   children: React.ReactNode;
   className?: string;
+  style?: React.CSSProperties;
   onClick?: () => void;
   href?: string;
   target?: string;
@@ -13,6 +14,7 @@ interface MagneticButtonProps {
 const MagneticButton: React.FC<MagneticButtonProps> = ({
   children,
   className = '',
+  style: externalStyle,
   onClick,
   href,
   target,
@@ -54,6 +56,7 @@ const MagneticButton: React.FC<MagneticButtonProps> = ({
   }, [handleMouseMove]);
 
   const style: React.CSSProperties = {
+    ...externalStyle,
     transform: `translate(${offset.x}px, ${offset.y}px)`,
     transition: offset.x === 0 && offset.y === 0 ? 'transform 0.6s cubic-bezier(0.23, 1, 0.32, 1)' : 'transform 0.15s ease-out',
   };
