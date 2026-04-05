@@ -255,3 +255,24 @@
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
+
+/* CRT Terminal Effects */
+@keyframes crtFlicker {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.97; }
+  75% { opacity: 0.99; }
+}
+
+.animate-crt-flicker {
+  animation: crtFlicker 0.1s infinite;
+}
+
+.crt-scanlines {
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 2px,
+    rgba(0, 0, 0, 0.25) 2px,
+    rgba(0, 0, 0, 0.25) 4px
+  );
+}

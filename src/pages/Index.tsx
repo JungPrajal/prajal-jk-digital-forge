@@ -153,9 +153,13 @@ const EducationSection = () => {
     <section id="education" className="min-h-screen flex items-center py-20">
       <div className="container mx-auto px-6">
         <h2 className="text-4xl md:text-5xl font-bold text-center mb-16 text-gradient">
-          Education
+          About Me
         </h2>
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+          {/* CRT Terminal */}
+          <RetroTerminal />
+
+          {/* Education Card */}
           <div 
             ref={cardRef}
             className={`glass p-8 rounded-2xl border-2 transition-all duration-1000 transform hover:scale-105 hover:shadow-2xl hover:shadow-cyan-400/30 hover:border-cyan-400/80 group cursor-pointer relative overflow-hidden ${
