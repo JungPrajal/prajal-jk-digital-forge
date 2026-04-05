@@ -8,6 +8,7 @@ import LiquidCursor from '../components/LiquidCursor';
 import MagneticButton from '../components/MagneticButton';
 import GrainOverlay from '../components/GrainOverlay';
 import MeshGradientCard from '../components/MeshGradientCard';
+import RetroTerminal from '../components/RetroTerminal';
 
 
 const Navigation = ({ activeSection, setActiveSection }) => {
