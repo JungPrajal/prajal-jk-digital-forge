@@ -9,6 +9,7 @@ import MagneticButton from '../components/MagneticButton';
 import GrainOverlay from '../components/GrainOverlay';
 import MeshGradientCard from '../components/MeshGradientCard';
 import RetroTerminal from '../components/RetroTerminal';
+import SmoothScroll from '../components/SmoothScroll';
 
 
 const Navigation = ({ activeSection, setActiveSection }) => {
@@ -26,16 +27,14 @@ const Navigation = ({ activeSection, setActiveSection }) => {
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      // Better mobile scroll handling
       const headerOffset = 80;
-      const elementPosition = element.offsetTop;
-      const offsetPosition = elementPosition - headerOffset;
-      
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
-      
+      const lenis = (window as any).__lenis;
+      if (lenis) {
+        lenis.scrollTo(element, { offset: -headerOffset });
+      } else {
+        const elementPosition = element.offsetTop;
+        window.scrollTo({ top: elementPosition - headerOffset, behavior: 'smooth' });
+      }
       setActiveSection(sectionId);
       setIsMobileMenuOpen(false);
     }
@@ -661,6 +660,7 @@ const Index = () => {
 
 
   return (
+    <SmoothScroll>
     <div className="relative min-h-screen">
       <LiquidCursor />
       <GrainOverlay />
@@ -684,6 +684,7 @@ const Index = () => {
         </div>
       </footer>
     </div>
+    </SmoothScroll>
   );
 };
 
