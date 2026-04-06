@@ -240,6 +240,7 @@ const CyberRoom = () => {
     offset: ['start start', 'end start'],
   });
   const roomScale = useTransform(scrollYProgress, [0, 0.3], [1, 1.15]);
+  const roomRotateY = useTransform(scrollYProgress, [0, 0.5], [0, 15]);
   const nameOpacity = useTransform(scrollYProgress, [0, 0.15], [1, 0]);
   const nameY = useTransform(scrollYProgress, [0, 0.15], [0, -40]);
   const hudOpacity = useTransform(scrollYProgress, [0, 0.15], [1, 0]);
@@ -665,7 +666,7 @@ const CyberRoom = () => {
         {/* ── 3D Room - positioned to overlap bento center, mobile zooms to shoulder ── */}
         <motion.div
           className="absolute inset-0 flex items-center justify-center pointer-events-none z-10"
-          style={{ perspective: isMobile ? '600px' : '1200px', scale: roomScale }}
+          style={{ perspective: isMobile ? '600px' : '1200px', scale: roomScale, rotateY: roomRotateY }}
         >
         <div
           className="relative pointer-events-auto"
