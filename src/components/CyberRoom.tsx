@@ -240,6 +240,7 @@ const CyberRoom = () => {
     offset: ['start start', 'end start'],
   });
   const roomScale = useTransform(scrollYProgress, [0, 0.3], [1, 1.15]);
+  const roomRotateY = useTransform(scrollYProgress, [0, 0.5], [0, 15]);
   const nameOpacity = useTransform(scrollYProgress, [0, 0.15], [1, 0]);
   const nameY = useTransform(scrollYProgress, [0, 0.15], [0, -40]);
   const hudOpacity = useTransform(scrollYProgress, [0, 0.15], [1, 0]);
