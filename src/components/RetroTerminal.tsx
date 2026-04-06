@@ -100,8 +100,8 @@ const RetroTerminal = () => {
                 {/* Flicker layer */}
                 <div className="absolute inset-0 pointer-events-none z-20 animate-crt-flicker" />
 
-                {/* Terminal content */}
-                <div ref={scrollRef} className="relative z-10 p-5 h-64 md:h-72 overflow-y-auto font-mono text-sm scrollbar-hide">
+                {/* Terminal content with chromatic aberration */}
+                <div ref={scrollRef} className="relative z-10 p-5 h-64 md:h-72 overflow-y-auto font-mono text-sm scrollbar-hide crt-chromatic">
                   {displayedLines.map((line, i) => (
                     <div key={i} className="mb-1 leading-relaxed" style={{ textShadow: '0 0 8px rgba(0,255,65,0.5)' }}>
                       <span style={{ color: line.type === 'cmd' ? '#00ff41' : '#00cc33' }}>
@@ -116,6 +116,9 @@ const RetroTerminal = () => {
                     <span className="inline-block w-2 h-4 animate-pulse" style={{ background: '#00ff41' }} />
                   )}
                 </div>
+
+                {/* Film grain / static noise overlay */}
+                <div className="absolute inset-0 pointer-events-none z-30 crt-grain" />
 
                 {/* Phosphor backlight glow */}
                 <div className="absolute inset-0 pointer-events-none z-0"
