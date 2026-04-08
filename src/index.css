@@ -258,6 +258,15 @@
   display: none;
 }
 
+/* Binary rain scroll for server blade cards */
+@keyframes binaryScroll {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+.animate-binary-scroll {
+  animation: binaryScroll 4s linear infinite;
+}
+
 /* CRT Terminal Effects */
 @keyframes crtFlicker {
   0%, 100% { opacity: 1; }

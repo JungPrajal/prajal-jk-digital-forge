@@ -500,6 +500,7 @@ const Index = () => {
 
   return (
     <SmoothScroll>
+    <GlitchTransition>
     <div className="relative min-h-screen">
       <LiquidCursor />
       <GrainOverlay />
@@ -515,14 +516,17 @@ const Index = () => {
         <ContactSection />
       </main>
       
-      <footer className="relative z-10 glass border-t border-purple-500/30 py-8">
+      <footer className="relative z-10 glass border-t border-purple-500/30 py-8 pb-12">
         <div className="container mx-auto px-6 text-center">
           <p className="text-gray-400">
             © 2025 Prajal Jung Kunwar. Crafted with passion and future tech.
           </p>
         </div>
       </footer>
+
+      <SystemStatusBar />
     </div>
+    </GlitchTransition>
     </SmoothScroll>
   );
 };
