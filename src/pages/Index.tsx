@@ -384,71 +384,37 @@ const ProjectsSection = () => {
     },
   ];
 
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const [activeIndex, setActiveIndex] = useState(-1);
-
-  // IntersectionObserver to detect active card
-  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
-
-  useEffect(() => {
-    const observers: IntersectionObserver[] = [];
-    cardRefs.current.forEach((card, i) => {
-      if (!card) return;
-      const obs = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting && entry.intersectionRatio >= 0.6) {
-            setActiveIndex(i);
-          }
-        },
-        { threshold: 0.6, root: scrollRef.current }
-      );
-      obs.observe(card);
-      observers.push(obs);
-    });
-    return () => observers.forEach(o => o.disconnect());
-  }, []);
-
   return (
     <section id="projects" className="min-h-screen py-20 relative">
       <div className="container mx-auto px-6">
         <h2 className="text-4xl md:text-5xl font-bold text-center mb-4 text-gradient">
-          Featured Projects
+          Server Rack
         </h2>
         <p className="text-center text-muted-foreground mb-12 max-w-lg mx-auto">
-          A curated selection of work spanning mobile, web, AI, and design.
+          Each project is a blade in the rack — hover to inspect, watch the data streams flow.
         </p>
-      </div>
 
-      {/* Horizontal parallax slider */}
-      <div
-        ref={scrollRef}
-        className="flex gap-8 overflow-x-auto snap-x snap-mandatory px-[max(2rem,calc((100vw-560px)/2))] pb-8 scrollbar-hide"
-        style={{ scrollBehavior: 'smooth' }}
-      >
-        {projects.map((project, index) => (
-          <ParallaxProjectCard
-            key={index}
-            project={project}
-            index={index}
-            isActive={activeIndex === index}
-            ref={(el) => { cardRefs.current[index] = el; }}
-          />
-        ))}
-      </div>
+        {/* Server Blade Rack */}
+        <div className="max-w-3xl mx-auto flex flex-col gap-4">
+          {projects.map((project, index) => (
+            <ServerBladeCard key={index} project={project} index={index} />
+          ))}
+        </div>
 
-      {/* GitHub CTA */}
-      <div className="flex justify-center mt-12">
-        <MagneticButton
-          href="https://github.com/JungPrajal"
-          target="_blank"
-          rel="noopener noreferrer"
-          strength={0.4}
-          className="glass px-8 py-4 rounded-xl border border-purple-500/30 hover:border-cyan-400/50 transition-all duration-300 flex items-center gap-3 text-muted-foreground hover:text-foreground"
-        >
-          <Github className="w-5 h-5" />
-          <span className="text-sm font-bold">View All on GitHub</span>
-          <ExternalLink className="w-4 h-4" />
-        </MagneticButton>
+        {/* GitHub CTA */}
+        <div className="flex justify-center mt-12">
+          <MagneticButton
+            href="https://github.com/JungPrajal"
+            target="_blank"
+            rel="noopener noreferrer"
+            strength={0.4}
+            className="glass px-8 py-4 rounded-xl border border-purple-500/30 hover:border-cyan-400/50 transition-all duration-300 flex items-center gap-3 text-muted-foreground hover:text-foreground"
+          >
+            <Github className="w-5 h-5" />
+            <span className="text-sm font-bold">View All on GitHub</span>
+            <ExternalLink className="w-4 h-4" />
+          </MagneticButton>
+        </div>
       </div>
     </section>
   );
