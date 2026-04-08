@@ -3,13 +3,16 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Mail, Phone, MapPin, Github, ExternalLink, Code, Palette, Database, Smartphone, Globe, Brain, Server, Terminal, Menu, X } from 'lucide-react';
 import ParticleField3D from '../components/ParticleField3D';
 import CyberRoom from '../components/CyberRoom';
-import TechStackDashboard from '../components/TechStackDashboard';
+import SkillWeb3D from '../components/SkillWeb3D';
 import LiquidCursor from '../components/LiquidCursor';
 import MagneticButton from '../components/MagneticButton';
 import GrainOverlay from '../components/GrainOverlay';
 import MeshGradientCard from '../components/MeshGradientCard';
 import RetroTerminal from '../components/RetroTerminal';
 import SmoothScroll from '../components/SmoothScroll';
+import ServerBladeCard from '../components/ServerBladeCard';
+import GlitchTransition from '../components/GlitchTransition';
+import SystemStatusBar from '../components/SystemStatusBar';
 
 
 const Navigation = ({ activeSection, setActiveSection }) => {
@@ -339,7 +342,7 @@ const ExperienceSection = () => {
 };
 
 const SkillsSection = () => {
-  return <TechStackDashboard />;
+  return <SkillWeb3D />;
 };
 
 const ProjectsSection = () => {
