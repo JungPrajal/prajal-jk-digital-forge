@@ -1,50 +1,51 @@
 
+# Neural Interface Portfolio — Final Phase
 
-# Retro CRT Terminal for the About Section
+## Phase 1: Skill Web (3D Force-Directed Graph)
+**Create `src/components/SkillWeb3D.tsx`**
+- 3D force-directed graph using `@react-three/fiber` + `@react-three/drei`
+- Nodes: Flutter/Dart, PHP/Laravel, Python/Django (per user's skill focus)
+- Glowing cyan neon connection lines between related skills
+- Hover triggers "neural firing": connected nodes pulse brighter, lines intensify
+- `React.memo` wrapped, only renders when in viewport via IntersectionObserver
+- Replace current skills display in `Index.tsx`
 
-## Overview
-Create a new `RetroTerminal.tsx` component styled as a physical CRT monitor with scanline overlay, barrel-bulge distortion, and green monospaced auto-typing text. Integrate it into the existing `EducationSection` (which serves as the "About" section) alongside the current education card.
+## Phase 2: Server Blade Gallery (Work Section)
+**Create `src/components/ServerBladeCard.tsx`**
+- Project cards styled as 3D server blades with metallic edges
+- Scroll-triggered "slide out" animation using Framer Motion (translateX from rack)
+- Binary code data stream overlay on project images (CSS animation, fades on hover)
+- Subtle mechanical sound effect on entrance (Web Audio API, short click sample)
+- Replace current project cards in `Index.tsx`
 
-## Component: `src/components/RetroTerminal.tsx`
+## Phase 3: Enhanced Cursor & Transitions
+**Modify `src/components/LiquidCursor.tsx`**
+- Add "flashlight" mode: radial reveal of a faint circuit-board SVG texture on background
+- Keep existing liquid cursor behavior, layer circuit reveal underneath
 
-### Auto-Typing Engine
-- Store "About Me" text as an array of terminal-style lines (e.g., `$ cat about.txt`, followed by bio paragraphs about Prajal).
-- Use a character-by-character typing effect with `useState`/`useEffect`, ~50ms per character, with a blinking green cursor (`█`).
-- After all lines are typed, pause 3 seconds, then reset and loop.
+**Create `src/components/GlitchTransition.tsx`**
+- On link/nav click: momentary CSS `filter` pixelation effect (100ms glitch)
+- Applied via a global wrapper component
 
-### CRT Visual Effects
-- **Scanline overlay**: A pseudo-element or overlay div with repeating linear gradient (`transparent 50%, rgba(0,0,0,0.3) 50%`) at 2-3px intervals, `pointer-events: none`.
-- **Barrel bulge distortion**: CSS `filter` isn't sufficient, so use a subtle CSS trick: apply a very slight `border-radius` on the screen area combined with `box-shadow: inset` to fake curvature, plus a radial gradient overlay that darkens edges (vignette). For actual distortion, we can use a small SVG `<filter>` with `feTurbulence` or simply rely on the visual illusion.
-- **Screen glow**: Multi-layered `box-shadow` in green (`0 0 30px rgba(0,255,0,0.15)`) to simulate phosphor glow.
-- **Flicker**: A subtle CSS animation that varies opacity between 0.97-1.0 rapidly.
+## Phase 4: System Status Bar
+**Create `src/components/SystemStatusBar.tsx`**
+- Fixed bottom bar, 10px monospace font
+- Displays: `MEM: XX.X% | CPU: XX.X% | CONNECTION: SECURE | UPTIME: XXhXXm`
+- Values randomize subtly every 2-3 seconds
+- Minimal height (~20px), semi-transparent background
 
-### 3D Monitor Frame
-- Thick dark-grey bezel (`bg-gray-800/bg-gray-900`) with rounded corners and inner shadow.
-- Monitor stand and base below (similar to existing `DeskSetup3D` pattern).
-- Perspective transform matching the Cyber-LoFi room aesthetic.
+## Phase 5: Performance
+- Wrap 3D components in `React.memo` + viewport gating
+- Use `dpr={[1, 1.5]}` and `powerPreference: 'high-performance'` on all Canvases
+- Lazy-load heavy components with `React.lazy` + `Suspense`
 
-### Color Palette
-- Screen background: near-black with slight green tint (`#0a120a`)
-- Text: classic terminal green (`#00ff41`)
-- Commands (`$`): brighter green
-- Output lines: slightly dimmer green
-- Bezel: dark greys matching `CyberRoom` palette
+## Files to Create
+1. `src/components/SkillWeb3D.tsx`
+2. `src/components/ServerBladeCard.tsx`
+3. `src/components/GlitchTransition.tsx`
+4. `src/components/SystemStatusBar.tsx`
 
-## Integration: `src/pages/Index.tsx`
-
-- Import `RetroTerminal` into the `EducationSection`.
-- Restructure the section into a two-column layout (on `md+`): the CRT terminal on the left, the existing education card on the right.
-- On mobile, stack vertically: terminal on top, education card below.
-- Update section title from "Education" to "About Me" to match the nav label.
-
-## CSS: `src/index.css`
-
-- Add `@keyframes scanlineScroll` for a moving scanline bar effect.
-- Add `@keyframes crtFlicker` for the subtle opacity flicker.
-- Add `.crt-screen` utility class combining the scanline overlay and effects.
-
-## Files to Create/Modify
-1. **Create** `src/components/RetroTerminal.tsx` — the full CRT terminal component
-2. **Modify** `src/pages/Index.tsx` — integrate terminal into EducationSection, two-column layout
-3. **Modify** `src/index.css` — add CRT keyframes and utility classes
-
+## Files to Modify
+1. `src/pages/Index.tsx` — integrate all new components
+2. `src/components/LiquidCursor.tsx` — add circuit flashlight
+3. `src/index.css` — binary stream animation, circuit texture, glitch keyframes
