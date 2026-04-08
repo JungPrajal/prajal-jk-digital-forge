@@ -65,14 +65,14 @@ const ConnectionLines = React.memo(() => {
         const points = [new THREE.Vector3(...line.from), new THREE.Vector3(...line.to)];
         const geometry = new THREE.BufferGeometry().setFromPoints(points);
         return (
-          <line key={i} geometry={geometry}>
-            <lineBasicMaterial
-              color={isActive ? '#00e5ff' : '#00e5ff'}
-              transparent
-              opacity={isActive ? 0.9 : 0.12}
-              linewidth={1}
-            />
-          </line>
+          <primitive key={i} object={new THREE.Line(
+            geometry,
+            new THREE.LineBasicMaterial({
+              color: '#00e5ff',
+              transparent: true,
+              opacity: isActive ? 0.9 : 0.12,
+            })
+          )} />
         );
       })}
     </group>
