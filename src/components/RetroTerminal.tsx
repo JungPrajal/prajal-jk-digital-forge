@@ -65,7 +65,16 @@ const RetroTerminal = () => {
   }, [displayedLines]);
 
   return (
-    <div className="relative w-full max-w-lg mx-auto">
+    <div className="relative w-full max-w-lg mx-auto depth-foreground">
+      {/* Floor shadow for floating effect */}
+      <div
+        className="absolute -bottom-8 left-8 right-8 h-12 rounded-full pointer-events-none"
+        style={{
+          background: 'radial-gradient(ellipse, rgba(0,255,65,0.12) 0%, transparent 70%)',
+          filter: 'blur(12px)',
+          transform: 'scaleY(0.4)',
+        }}
+      />
       {/* 3D Monitor Shell */}
       <div className="relative" style={{ perspective: '800px' }}>
         <div style={{ transform: 'rotateX(2deg) rotateY(-3deg)' }}>
