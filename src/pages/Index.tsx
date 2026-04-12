@@ -14,6 +14,7 @@ import ServerBladeCard from '../components/ServerBladeCard';
 import GlitchTransition from '../components/GlitchTransition';
 import SystemStatusBar from '../components/SystemStatusBar';
 import ParallaxSection from '../components/ParallaxSection';
+import StickyHeroTransition from '../components/StickyHeroTransition';
 import useScrollWeight from '../hooks/useScrollWeight';
 
 
