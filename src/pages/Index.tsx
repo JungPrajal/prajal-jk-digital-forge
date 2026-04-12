@@ -120,7 +120,7 @@ const Navigation = ({ activeSection, setActiveSection }) => {
 };
 
 const HomeSection = () => {
-  return <CyberRoom />;
+  return <StickyHeroTransition />;
 };
 
 const useScrollAnimation = (): [React.RefObject<HTMLDivElement>, boolean] => {
@@ -544,7 +544,6 @@ const Index = () => {
       
       <main className="relative z-10">
         <HomeSection />
-        <EducationSection />
         <ExperienceSection />
         <SkillsSection />
         <ProjectsSection />
