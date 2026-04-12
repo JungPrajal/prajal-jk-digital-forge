@@ -127,6 +127,22 @@
     min-height: 100vh;
     background: linear-gradient(135deg, #0a0a0a 0%, #1a0a1a 50%, #0a0a1a 100%);
   }
+
+  /* Layered Spatial Depth Engine */
+  .depth-container {
+    perspective: 1200px;
+    transform-style: preserve-3d;
+  }
+
+  .depth-background {
+    transform: translateZ(-500px) scale(1.5);
+    transform-style: preserve-3d;
+  }
+
+  .depth-foreground {
+    transform: translateZ(50px);
+    transform-style: preserve-3d;
+  }
   
   /* Mobile optimizations */
   @media (max-width: 768px) {
