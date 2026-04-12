@@ -533,10 +533,12 @@ const Index = () => {
   return (
     <SmoothScroll>
     <GlitchTransition>
-    <div className="relative min-h-screen">
+    <div className="relative min-h-screen depth-container">
       <LiquidCursor />
       <GrainOverlay />
-      <ParticleField3D />
+      <div className="depth-background fixed inset-0 z-0">
+        <ParticleField3D />
+      </div>
       <Navigation activeSection={activeSection} setActiveSection={setActiveSection} />
       
       <main className="relative z-10">
