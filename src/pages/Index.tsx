@@ -293,6 +293,7 @@ const ExperienceCard = ({ exp, index, isVisible }) => {
 
 const ExperienceSection = () => {
   const [sectionRef, isSectionVisible] = useScrollAnimation();
+  const { ref: headingRef, weight: headingWeight } = useScrollWeight();
   
   const experiences = [
     {
@@ -328,9 +329,14 @@ const ExperienceSection = () => {
   ];
 
   return (
+    <ParallaxSection>
     <section id="experience" className="min-h-screen flex items-center py-20">
       <div className="container mx-auto px-6">
-        <h2 className="text-4xl md:text-5xl font-bold text-center mb-16 text-gradient">
+        <h2
+          ref={headingRef}
+          className="text-4xl md:text-5xl font-bold text-center mb-16 text-gradient"
+          style={{ fontVariationSettings: `'wght' ${headingWeight}`, transition: 'font-variation-settings 0.3s ease' }}
+        >
           Experience
         </h2>
         <div className="max-w-6xl mx-auto" ref={sectionRef}>
@@ -347,6 +353,7 @@ const ExperienceSection = () => {
         </div>
       </div>
     </section>
+    </ParallaxSection>
   );
 };
 
@@ -393,10 +400,17 @@ const ProjectsSection = () => {
     },
   ];
 
+  const { ref: headingRef, weight: headingWeight } = useScrollWeight();
+
   return (
+    <ParallaxSection>
     <section id="projects" className="min-h-screen py-20 relative">
       <div className="container mx-auto px-6">
-        <h2 className="text-4xl md:text-5xl font-bold text-center mb-4 text-gradient">
+        <h2
+          ref={headingRef}
+          className="text-4xl md:text-5xl font-bold text-center mb-4 text-gradient"
+          style={{ fontVariationSettings: `'wght' ${headingWeight}`, transition: 'font-variation-settings 0.3s ease' }}
+        >
           Server Rack
         </h2>
         <p className="text-center text-muted-foreground mb-12 max-w-lg mx-auto">
@@ -426,14 +440,22 @@ const ProjectsSection = () => {
         </div>
       </div>
     </section>
+    </ParallaxSection>
   );
 };
 
 const ContactSection = () => {
+  const { ref: headingRef, weight: headingWeight } = useScrollWeight();
+
   return (
+    <ParallaxSection>
     <section id="contact" className="min-h-screen flex items-center py-20">
       <div className="container mx-auto px-6">
-        <h2 className="text-4xl md:text-5xl font-bold text-center mb-16 text-gradient">
+        <h2
+          ref={headingRef}
+          className="text-4xl md:text-5xl font-bold text-center mb-16 text-gradient"
+          style={{ fontVariationSettings: `'wght' ${headingWeight}`, transition: 'font-variation-settings 0.3s ease' }}
+        >
           Get In Touch
         </h2>
         <div className="max-w-4xl mx-auto text-center">
@@ -477,6 +499,7 @@ const ContactSection = () => {
         </div>
       </div>
     </section>
+    </ParallaxSection>
   );
 };
 
