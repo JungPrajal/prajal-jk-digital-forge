@@ -153,11 +153,17 @@ const useScrollAnimation = (): [React.RefObject<HTMLDivElement>, boolean] => {
 
 const EducationSection = () => {
   const [cardRef, isCardVisible] = useScrollAnimation();
+  const { ref: headingRef, weight: headingWeight } = useScrollWeight();
 
   return (
+    <ParallaxSection>
     <section id="education" className="min-h-screen flex items-center py-20">
       <div className="container mx-auto px-6">
-        <h2 className="text-4xl md:text-5xl font-bold text-center mb-16 text-gradient">
+        <h2
+          ref={headingRef}
+          className="text-4xl md:text-5xl font-bold text-center mb-16 text-gradient"
+          style={{ fontVariationSettings: `'wght' ${headingWeight}`, transition: 'font-variation-settings 0.3s ease' }}
+        >
           About Me
         </h2>
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
@@ -216,6 +222,7 @@ const EducationSection = () => {
         </div>
       </div>
     </section>
+    </ParallaxSection>
   );
 };
 
