@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import CyberRoom from './CyberRoom';
 import RetroTerminal from './RetroTerminal';
 
@@ -16,25 +16,30 @@ const StickyHeroTransition = () => {
     target: containerRef,
     offset: ['start start', 'end end'],
   });
+  const sp = useSpring(scrollYProgress, { stiffness: 300, damping: 40, mass: 0.5 });
 
-  // Hero: scale 1 → 0.45, move to top-left
-  const heroScale = useTransform(scrollYProgress, [0, 0.6], [1, 0.45]);
-  const heroX = useTransform(scrollYProgress, [0, 0.6], ['0%', '-28%']);
-  const heroY = useTransform(scrollYProgress, [0, 0.6], ['0%', '-20%']);
-  const heroOpacity = useTransform(scrollYProgress, [0.5, 0.85], [1, 0.7]);
+  const heroScale = useTransform(sp, [0, 0.6], [1, 0.45]);
+  const heroX = useTransform(sp, [0, 0.6], ['0%', '-28%']);
+  const heroY = useTransform(sp, [0, 0.6], ['0%', '-20%']);
+  const heroOpacity = useTransform(sp, [0.5, 0.85], [1, 0.7]);
 
-  // Terminal: slide in from bottom-right
-  const termX = useTransform(scrollYProgress, [0.25, 0.7], ['120%', '0%']);
-  const termY = useTransform(scrollYProgress, [0.25, 0.7], ['80%', '0%']);
-  const termOpacity = useTransform(scrollYProgress, [0.25, 0.5], [0, 1]);
-  const termScale = useTransform(scrollYProgress, [0.25, 0.7], [0.8, 1]);
+  const termX = useTransform(sp, [0.25, 0.7], ['120%', '0%']);
+  const termY = useTransform(sp, [0.25, 0.7], ['80%', '0%']);
+  const termOpacity = useTransform(sp, [0.25, 0.5], [0, 1]);
+  const termScale = useTransform(sp, [0.25, 0.7], [0.8, 1]);
 
-  // Background grid opacity
-  const gridOpacity = useTransform(scrollYProgress, [0.2, 0.6], [0, 1]);
-  const particleFade = useTransform(scrollYProgress, [0.2, 0.6], [1, 0.15]);
+  const gridOpacity = useTransform(sp, [0.2, 0.6], [0, 1]);
+  const particleFade = useTransform(sp, [0.2, 0.6], [1, 0.15]);
+
+  const headingOpacity = useTransform(sp, [0.6, 0.85], [0, 1]);
+  const headingY = useTransform(sp, [0.6, 0.85], [40, 0]);
 
   return (
-    <div ref={containerRef} className="relative" style={{ height: '250vh' }}>
+    <div
+      ref={containerRef}
+      className="relative"
+      style={{ height: '250vh', contain: 'paint layout' }}
+    >
       {/* Sticky viewport */}
       <div className="sticky top-0 h-screen w-full overflow-hidden">
         {/* Glowing grid background */}
@@ -98,8 +103,8 @@ const StickyHeroTransition = () => {
         <motion.div
           className="absolute top-20 left-1/2 -translate-x-1/2 z-30 pointer-events-none"
           style={{
-            opacity: useTransform(scrollYProgress, [0.6, 0.85], [0, 1]),
-            y: useTransform(scrollYProgress, [0.6, 0.85], [40, 0]),
+            opacity: headingOpacity,
+            y: headingY,
           }}
         >
           <h2 className="text-4xl md:text-5xl font-bold text-gradient text-center">
