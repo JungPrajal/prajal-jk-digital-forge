@@ -1,7 +1,9 @@
-import React, { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import React, { useEffect, useRef, useState, lazy, Suspense } from 'react';
+import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import CyberRoom from './CyberRoom';
-import RetroTerminal from './RetroTerminal';
+
+// Defer terminal until after hero settles
+const RetroTerminal = lazy(() => import('./RetroTerminal'));
 
 /**
  * Sticky-scroll wrapper that pins the Hero + About transition.
@@ -11,30 +13,51 @@ import RetroTerminal from './RetroTerminal';
  */
 const StickyHeroTransition = () => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [heroReady, setHeroReady] = useState(false);
+
+  useEffect(() => {
+    // Wait for hero animation + first paint to finish before mounting terminal
+    let raf2 = 0;
+    const raf1 = requestAnimationFrame(() => {
+      raf2 = requestAnimationFrame(() => {
+        const t = setTimeout(() => setHeroReady(true), 1500);
+        (raf2 as any).__t = t;
+      });
+    });
+    return () => {
+      cancelAnimationFrame(raf1);
+      cancelAnimationFrame(raf2);
+    };
+  }, []);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ['start start', 'end end'],
   });
+  const sp = useSpring(scrollYProgress, { stiffness: 300, damping: 40, mass: 0.5 });
 
-  // Hero: scale 1 → 0.45, move to top-left
-  const heroScale = useTransform(scrollYProgress, [0, 0.6], [1, 0.45]);
-  const heroX = useTransform(scrollYProgress, [0, 0.6], ['0%', '-28%']);
-  const heroY = useTransform(scrollYProgress, [0, 0.6], ['0%', '-20%']);
-  const heroOpacity = useTransform(scrollYProgress, [0.5, 0.85], [1, 0.7]);
+  const heroScale = useTransform(sp, [0, 0.6], [1, 0.45]);
+  const heroX = useTransform(sp, [0, 0.6], ['0%', '-28%']);
+  const heroY = useTransform(sp, [0, 0.6], ['0%', '-20%']);
+  const heroOpacity = useTransform(sp, [0.5, 0.85], [1, 0.7]);
 
-  // Terminal: slide in from bottom-right
-  const termX = useTransform(scrollYProgress, [0.25, 0.7], ['120%', '0%']);
-  const termY = useTransform(scrollYProgress, [0.25, 0.7], ['80%', '0%']);
-  const termOpacity = useTransform(scrollYProgress, [0.25, 0.5], [0, 1]);
-  const termScale = useTransform(scrollYProgress, [0.25, 0.7], [0.8, 1]);
+  const termX = useTransform(sp, [0.25, 0.7], ['120%', '0%']);
+  const termY = useTransform(sp, [0.25, 0.7], ['80%', '0%']);
+  const termOpacity = useTransform(sp, [0.25, 0.5], [0, 1]);
+  const termScale = useTransform(sp, [0.25, 0.7], [0.8, 1]);
 
-  // Background grid opacity
-  const gridOpacity = useTransform(scrollYProgress, [0.2, 0.6], [0, 1]);
-  const particleFade = useTransform(scrollYProgress, [0.2, 0.6], [1, 0.15]);
+  const gridOpacity = useTransform(sp, [0.2, 0.6], [0, 1]);
+  const particleFade = useTransform(sp, [0.2, 0.6], [1, 0.15]);
+
+  const headingOpacity = useTransform(sp, [0.6, 0.85], [0, 1]);
+  const headingY = useTransform(sp, [0.6, 0.85], [40, 0]);
 
   return (
-    <div ref={containerRef} className="relative" style={{ height: '250vh' }}>
+    <div
+      ref={containerRef}
+      className="relative"
+      style={{ height: '250vh', contain: 'paint layout' }}
+    >
       {/* Sticky viewport */}
       <div className="sticky top-0 h-screen w-full overflow-hidden">
         {/* Glowing grid background */}
@@ -82,7 +105,11 @@ const StickyHeroTransition = () => {
           }}
         >
           <div className="depth-foreground">
-            <RetroTerminal />
+            {heroReady && (
+              <Suspense fallback={null}>
+                <RetroTerminal />
+              </Suspense>
+            )}
             {/* Floor shadow */}
             <div
               className="absolute -bottom-6 left-1/2 -translate-x-1/2 w-[80%] h-8 rounded-full pointer-events-none"
@@ -98,8 +125,8 @@ const StickyHeroTransition = () => {
         <motion.div
           className="absolute top-20 left-1/2 -translate-x-1/2 z-30 pointer-events-none"
           style={{
-            opacity: useTransform(scrollYProgress, [0.6, 0.85], [0, 1]),
-            y: useTransform(scrollYProgress, [0.6, 0.85], [40, 0]),
+            opacity: headingOpacity,
+            y: headingY,
           }}
         >
           <h2 className="text-4xl md:text-5xl font-bold text-gradient text-center">

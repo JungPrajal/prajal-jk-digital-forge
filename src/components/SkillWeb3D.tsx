@@ -187,7 +187,7 @@ const SkillWeb3D: React.FC = () => {
   }, []);
 
   return (
-    <section id="skills" className="min-h-screen py-20 relative">
+    <section id="skills" className="min-h-screen py-20 relative" style={{ contain: 'paint layout' }}>
       <div className="container mx-auto px-6">
         <h2 className="text-4xl md:text-5xl font-bold text-center mb-4 text-gradient">
           Neural Network

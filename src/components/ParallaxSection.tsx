@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 
 interface ParallaxSectionProps {
   children: React.ReactNode;
@@ -15,12 +15,13 @@ const ParallaxSection = ({ children, className = '', intensity = 1 }: ParallaxSe
     offset: ['start end', 'end start'],
   });
 
-  // Map scroll progress to animation values
-  // Section enters from bottom (0) → centered (0.5) → exits top (1)
-  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
-  const scale = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0.9, 1, 1, 0.95]);
+  // Smooth raw scroll progress with a spring before mapping to CSS
+  const smoothProgress = useSpring(scrollYProgress, { stiffness: 300, damping: 40, mass: 0.5 });
+
+  const opacity = useTransform(smoothProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
+  const scale = useTransform(smoothProgress, [0, 0.2, 0.8, 1], [0.9, 1, 1, 0.95]);
   const z = useTransform(
-    scrollYProgress,
+    smoothProgress,
     [0, 0.2, 0.8, 1],
     [-100 * intensity, 0, 0, -50 * intensity]
   );
@@ -29,7 +30,11 @@ const ParallaxSection = ({ children, className = '', intensity = 1 }: ParallaxSe
     <div
       ref={ref}
       className={className}
-      style={{ willChange: 'transform, opacity', transform: 'translate3d(0,0,0)' }}
+      style={{
+        willChange: 'transform, opacity',
+        transform: 'translate3d(0,0,0)',
+        contain: 'paint layout',
+      }}
     >
       <motion.div
         style={{
