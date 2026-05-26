@@ -1,7 +1,9 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState, lazy, Suspense } from 'react';
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import CyberRoom from './CyberRoom';
-import RetroTerminal from './RetroTerminal';
+
+// Defer terminal until after hero settles
+const RetroTerminal = lazy(() => import('./RetroTerminal'));
 
 /**
  * Sticky-scroll wrapper that pins the Hero + About transition.
@@ -11,6 +13,22 @@ import RetroTerminal from './RetroTerminal';
  */
 const StickyHeroTransition = () => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [heroReady, setHeroReady] = useState(false);
+
+  useEffect(() => {
+    // Wait for hero animation + first paint to finish before mounting terminal
+    let raf2 = 0;
+    const raf1 = requestAnimationFrame(() => {
+      raf2 = requestAnimationFrame(() => {
+        const t = setTimeout(() => setHeroReady(true), 1500);
+        (raf2 as any).__t = t;
+      });
+    });
+    return () => {
+      cancelAnimationFrame(raf1);
+      cancelAnimationFrame(raf2);
+    };
+  }, []);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -87,7 +105,11 @@ const StickyHeroTransition = () => {
           }}
         >
           <div className="depth-foreground">
-            <RetroTerminal />
+            {heroReady && (
+              <Suspense fallback={null}>
+                <RetroTerminal />
+              </Suspense>
+            )}
             {/* Floor shadow */}
             <div
               className="absolute -bottom-6 left-1/2 -translate-x-1/2 w-[80%] h-8 rounded-full pointer-events-none"
