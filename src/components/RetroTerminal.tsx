@@ -36,39 +36,66 @@ const RetroTerminal = () => {
     return () => obs.disconnect();
   }, []);
 
+  // requestAnimationFrame-driven typewriter — syncs to display refresh
   useEffect(() => {
     if (!isTyping || !inView) return;
 
-    if (currentLine >= terminalLines.length) {
-      const timeout = setTimeout(() => {
-        setDisplayedLines([]);
-        setCurrentLine(0);
-        setCurrentChar(0);
-      }, 3000);
-      return () => clearTimeout(timeout);
-    }
+    let rafId: number;
+    let waitUntil = 0;
 
-    const line = terminalLines[currentLine];
-    const speed = line.type === 'cmd' ? 60 : 30;
+    const tick = (now: number) => {
+      if (now < waitUntil) {
+        rafId = requestAnimationFrame(tick);
+        return;
+      }
 
-    if (currentChar < line.text.length) {
-      const timer = setTimeout(() => {
-        setDisplayedLines(prev => {
-          const copy = [...prev];
-          copy[currentLine] = { type: line.type, text: line.text.substring(0, currentChar + 1) };
-          return copy;
+      if (currentLine >= terminalLines.length) {
+        waitUntil = now + 3000;
+        rafId = requestAnimationFrame(() => {
+          setDisplayedLines([]);
+          setCurrentLine(0);
+          setCurrentChar(0);
         });
-        setCurrentChar(c => c + 1);
-      }, speed);
-      return () => clearTimeout(timer);
-    } else {
-      const pause = line.type === 'cmd' ? 400 : 150;
-      const timer = setTimeout(() => {
-        setCurrentLine(l => l + 1);
-        setCurrentChar(0);
-      }, pause);
-      return () => clearTimeout(timer);
-    }
+        // schedule reset after delay using rAF loop
+        const reset = (t: number) => {
+          if (t < waitUntil) { rafId = requestAnimationFrame(reset); return; }
+          setDisplayedLines([]);
+          setCurrentLine(0);
+          setCurrentChar(0);
+        };
+        rafId = requestAnimationFrame(reset);
+        return;
+      }
+
+      const line = terminalLines[currentLine];
+
+      if (currentChar < line.text.length) {
+        const speed = line.type === 'cmd' ? 60 : 30;
+        waitUntil = now + speed;
+        const step = (t: number) => {
+          if (t < waitUntil) { rafId = requestAnimationFrame(step); return; }
+          setDisplayedLines(prev => {
+            const copy = [...prev];
+            copy[currentLine] = { type: line.type, text: line.text.substring(0, currentChar + 1) };
+            return copy;
+          });
+          setCurrentChar(c => c + 1);
+        };
+        rafId = requestAnimationFrame(step);
+      } else {
+        const pause = line.type === 'cmd' ? 400 : 150;
+        waitUntil = now + pause;
+        const step = (t: number) => {
+          if (t < waitUntil) { rafId = requestAnimationFrame(step); return; }
+          setCurrentLine(l => l + 1);
+          setCurrentChar(0);
+        };
+        rafId = requestAnimationFrame(step);
+      }
+    };
+
+    rafId = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(rafId);
   }, [currentLine, currentChar, isTyping, inView]);
 
   useEffect(() => {
