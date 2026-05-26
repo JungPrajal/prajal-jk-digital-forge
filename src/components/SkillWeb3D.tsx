@@ -197,18 +197,26 @@ const SkillWeb3D: React.FC = () => {
         </p>
       </div>
 
-      <div ref={containerRef} className="max-w-5xl mx-auto h-[500px] md:h-[600px] relative">
-        {inView && (
+      <div
+        ref={containerRef}
+        className="max-w-5xl mx-auto h-[500px] md:h-[600px] relative"
+        style={{ willChange: 'transform, opacity', transform: 'translate3d(0,0,0)' }}
+      >
+        {inView ? (
           <HoverContext.Provider value={{ hovered, setHovered }}>
             <Canvas
               camera={{ position: [0, 0, 7], fov: 50 }}
-              dpr={[1, 1.5]}
+              dpr={[1, Math.min(typeof window !== 'undefined' ? window.devicePixelRatio : 1, 2)]}
+              frameloop={inView ? 'always' : 'never'}
+              shadows={false}
               gl={{ antialias: true, powerPreference: 'high-performance', alpha: true }}
               style={{ background: 'transparent' }}
             >
               <Scene />
             </Canvas>
           </HoverContext.Provider>
+        ) : (
+          <div style={{ display: 'none' }} />
         )}
 
         {/* Legend */}
