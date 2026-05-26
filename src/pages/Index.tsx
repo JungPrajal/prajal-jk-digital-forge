@@ -10,7 +10,7 @@ import GrainOverlay from '../components/GrainOverlay';
 import MeshGradientCard from '../components/MeshGradientCard';
 import RetroTerminal from '../components/RetroTerminal';
 import SmoothScroll from '../components/SmoothScroll';
-import ServerBladeCard from '../components/ServerBladeCard';
+const ServerBladeCard = React.lazy(() => import('../components/ServerBladeCard'));
 import GlitchTransition from '../components/GlitchTransition';
 import SystemStatusBar from '../components/SystemStatusBar';
 import ParallaxSection from '../components/ParallaxSection';
