@@ -2,7 +2,7 @@ import React, { useRef, useMemo } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 
-const PARTICLE_COUNT = 1200;
+const PARTICLE_COUNT = 600;
 const SPREAD = 12;
 const MOUSE_RADIUS = 2.5;
 const MOUSE_FORCE = 0.8;
@@ -160,11 +160,41 @@ function Particles() {
 }
 
 const ParticleField3D: React.FC = () => {
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const [active, setActive] = React.useState(true);
+
+  React.useEffect(() => {
+    const el = wrapRef.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([e]) => setActive(e.isIntersecting),
+      { threshold: 0, rootMargin: '200px' }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
+  const dprCap = Math.min(
+    typeof window !== 'undefined' ? window.devicePixelRatio : 1,
+    2
+  );
+
   return (
-    <div className="fixed inset-0 z-0" style={{ background: '#0a0f1a' }}>
+    <div
+      ref={wrapRef}
+      className="fixed inset-0 z-0"
+      style={{
+        background: '#0a0f1a',
+        display: active ? 'block' : 'none',
+        willChange: 'transform, opacity',
+        transform: 'translate3d(0,0,0)',
+      }}
+    >
       <Canvas
         camera={{ position: [0, 0, 8], fov: 60 }}
-        dpr={[1, 1.5]}
+        dpr={[1, dprCap]}
+        frameloop={active ? 'always' : 'never'}
+        shadows={false}
         gl={{
           antialias: false,
           powerPreference: 'high-performance',

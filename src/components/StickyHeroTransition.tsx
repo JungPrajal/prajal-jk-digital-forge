@@ -62,6 +62,8 @@ const StickyHeroTransition = () => {
             y: heroY,
             opacity: heroOpacity,
             transformOrigin: 'top left',
+            willChange: 'transform, opacity',
+            translateZ: 0,
           }}
         >
           <CyberRoom />
@@ -75,6 +77,8 @@ const StickyHeroTransition = () => {
             y: termY,
             opacity: termOpacity,
             scale: termScale,
+            willChange: 'transform, opacity',
+            translateZ: 0,
           }}
         >
           <div className="depth-foreground">

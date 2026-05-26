@@ -26,13 +26,18 @@ const ParallaxSection = ({ children, className = '', intensity = 1 }: ParallaxSe
   );
 
   return (
-    <div ref={ref} className={className}>
+    <div
+      ref={ref}
+      className={className}
+      style={{ willChange: 'transform, opacity', transform: 'translate3d(0,0,0)' }}
+    >
       <motion.div
         style={{
           opacity,
           scale,
           translateZ: z,
           transformStyle: 'preserve-3d',
+          willChange: 'transform, opacity',
         }}
       >
         {children}

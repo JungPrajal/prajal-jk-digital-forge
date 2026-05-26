@@ -21,10 +21,23 @@ const RetroTerminal = () => {
   const [currentLine, setCurrentLine] = useState(0);
   const [currentChar, setCurrentChar] = useState(0);
   const [isTyping, setIsTyping] = useState(true);
+  const [inView, setInView] = useState(true);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const rootRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!isTyping) return;
+    const el = rootRef.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([e]) => setInView(e.isIntersecting),
+      { threshold: 0, rootMargin: '150px' }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!isTyping || !inView) return;
 
     if (currentLine >= terminalLines.length) {
       const timeout = setTimeout(() => {
@@ -56,7 +69,7 @@ const RetroTerminal = () => {
       }, pause);
       return () => clearTimeout(timer);
     }
-  }, [currentLine, currentChar, isTyping]);
+  }, [currentLine, currentChar, isTyping, inView]);
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -65,7 +78,15 @@ const RetroTerminal = () => {
   }, [displayedLines]);
 
   return (
-    <div className="relative w-full max-w-lg mx-auto depth-foreground">
+    <div
+      ref={rootRef}
+      className="relative w-full max-w-lg mx-auto depth-foreground"
+      style={{
+        display: inView ? 'block' : 'none',
+        willChange: 'transform, opacity',
+        transform: 'translate3d(0,0,0)',
+      }}
+    >
       {/* Floor shadow for floating effect */}
       <div
         className="absolute -bottom-8 left-8 right-8 h-12 rounded-full pointer-events-none"
