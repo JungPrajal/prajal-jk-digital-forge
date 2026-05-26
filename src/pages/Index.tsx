@@ -418,11 +418,13 @@ const ProjectsSection = () => {
           Each project is a blade in the rack — hover to inspect, watch the data streams flow.
         </p>
 
-        {/* Server Blade Rack */}
-        <div className="max-w-3xl mx-auto flex flex-col gap-4">
-          {projects.map((project, index) => (
-            <ServerBladeCard key={index} project={project} index={index} />
-          ))}
+        {/* Server Blade Rack — lazy-loaded after hero settles */}
+        <div className="max-w-3xl mx-auto flex flex-col gap-4" style={{ contain: 'paint layout' }}>
+          <React.Suspense fallback={<div className="h-64" />}>
+            {projects.map((project, index) => (
+              <ServerBladeCard key={index} project={project} index={index} />
+            ))}
+          </React.Suspense>
         </div>
 
         {/* GitHub CTA */}
