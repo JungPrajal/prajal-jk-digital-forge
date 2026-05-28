@@ -36,15 +36,15 @@ const StickyHeroTransition = () => {
   });
   const sp = useSpring(scrollYProgress, { stiffness: 300, damping: 40, mass: 0.5 });
 
-  const heroScale = useTransform(sp, [0, 0.6], [1, 0.45]);
-  const heroX = useTransform(sp, [0, 0.6], ['0%', '-28%']);
-  const heroY = useTransform(sp, [0, 0.6], ['0%', '-20%']);
-  const heroOpacity = useTransform(sp, [0.5, 0.85], [1, 0.7]);
+  // Hero: scale 1 -> 0.7, fade out, translate -100px on Y across 0% -> 50%
+  const heroScale = useTransform(sp, [0, 0.5], [1, 0.7]);
+  const heroY = useTransform(sp, [0, 0.5], [0, -100]);
+  const heroOpacity = useTransform(sp, [0, 0.5], [1, 0]);
 
-  const termX = useTransform(sp, [0.25, 0.7], ['120%', '0%']);
-  const termY = useTransform(sp, [0.25, 0.7], ['80%', '0%']);
-  const termOpacity = useTransform(sp, [0.25, 0.5], [0, 1]);
-  const termScale = useTransform(sp, [0.25, 0.7], [0.8, 1]);
+  // Terminal: hidden until 30%, fully in by 80%. translateY 150 -> 0, scale 0.9 -> 1
+  const termY = useTransform(sp, [0.3, 0.8], [150, 0]);
+  const termOpacity = useTransform(sp, [0.3, 0.8], [0, 1]);
+  const termScale = useTransform(sp, [0.3, 0.8], [0.9, 1]);
 
   const gridOpacity = useTransform(sp, [0.2, 0.6], [0, 1]);
   const particleFade = useTransform(sp, [0.2, 0.6], [1, 0.15]);
@@ -56,10 +56,13 @@ const StickyHeroTransition = () => {
     <div
       ref={containerRef}
       className="relative"
-      style={{ height: '250vh', contain: 'paint layout' }}
+      style={{ height: '150vh', contain: 'paint layout' }}
     >
       {/* Sticky viewport */}
-      <div className="sticky top-0 h-screen w-full overflow-hidden">
+      <div
+        className="sticky top-0 h-screen w-full overflow-hidden"
+        style={{ willChange: 'transform, opacity' }}
+      >
         {/* Glowing grid background */}
         <motion.div
           className="absolute inset-0 z-0 pointer-events-none"
@@ -81,10 +84,9 @@ const StickyHeroTransition = () => {
           className="absolute inset-0 z-10"
           style={{
             scale: heroScale,
-            x: heroX,
             y: heroY,
             opacity: heroOpacity,
-            transformOrigin: 'top left',
+            transformOrigin: 'center center',
             willChange: 'transform, opacity',
             translateZ: 0,
           }}
@@ -92,11 +94,10 @@ const StickyHeroTransition = () => {
           <CyberRoom />
         </motion.div>
 
-        {/* RetroTerminal – slides in from bottom-right */}
+        {/* RetroTerminal – slides up into grid position */}
         <motion.div
-          className="absolute bottom-8 right-8 z-20 w-full max-w-xl"
+          className="absolute inset-x-0 bottom-16 z-20 mx-auto w-full max-w-2xl px-4"
           style={{
-            x: termX,
             y: termY,
             opacity: termOpacity,
             scale: termScale,
