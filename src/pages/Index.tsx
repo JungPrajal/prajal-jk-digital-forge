@@ -15,6 +15,7 @@ import GlitchTransition from '../components/GlitchTransition';
 import SystemStatusBar from '../components/SystemStatusBar';
 import ParallaxSection from '../components/ParallaxSection';
 import StickyHeroTransition from '../components/StickyHeroTransition';
+import SystemDiagnosticsCard from '../components/SystemDiagnosticsCard';
 import useScrollWeight from '../hooks/useScrollWeight';
 
 
@@ -153,7 +154,6 @@ const useScrollAnimation = (): [React.RefObject<HTMLDivElement>, boolean] => {
 };
 
 const EducationSection = () => {
-  const [cardRef, isCardVisible] = useScrollAnimation();
   const { ref: headingRef, weight: headingWeight } = useScrollWeight();
 
   return (
@@ -167,58 +167,17 @@ const EducationSection = () => {
         >
           About Me
         </h2>
-        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
-          {/* CRT Terminal */}
-          <RetroTerminal />
+        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+          {/* Left: CRT Terminal (kept centered, wrapped to contain 3D tilt) */}
+          <div className="flex items-center justify-center min-w-0" style={{ perspective: '1200px' }}>
+            <div className="w-full max-w-xl">
+              <RetroTerminal />
+            </div>
+          </div>
 
-          {/* Education Card */}
-          <div 
-            ref={cardRef}
-            className={`glass p-8 rounded-2xl border-2 transition-all duration-1000 transform hover:scale-105 hover:shadow-2xl hover:shadow-cyan-400/30 hover:border-cyan-400/80 group cursor-pointer relative overflow-hidden ${
-              isCardVisible 
-                ? 'opacity-100 scale-100 translate-y-0 border-cyan-400/50' 
-                : 'opacity-0 scale-95 translate-y-10 border-purple-500/30'
-            }`}
-          >
-            {/* Floating particles effect */}
-            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
-              <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-cyan-400/60 rounded-full animate-bounce" style={{ animationDelay: '0s' }}></div>
-              <div className="absolute top-3/4 right-1/4 w-1 h-1 bg-purple-400/60 rounded-full animate-bounce" style={{ animationDelay: '0.3s' }}></div>
-              <div className="absolute top-1/2 left-3/4 w-1.5 h-1.5 bg-cyan-300/60 rounded-full animate-bounce" style={{ animationDelay: '0.6s' }}></div>
-            </div>
-            
-            {/* Gradient overlay */}
-            <div className="absolute inset-0 bg-gradient-to-br from-purple-600/5 to-cyan-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-            <div className="flex items-start gap-6">
-              <div className={`w-16 h-16 bg-gradient-to-r from-purple-600 to-cyan-500 rounded-xl flex items-center justify-center transition-all duration-700 transform ${
-                isCardVisible ? 'rotate-0 scale-100' : 'rotate-12 scale-90'
-              }`}>
-                <Brain className="w-8 h-8 text-white" />
-              </div>
-              <div className="flex-1">
-                <h3 className={`text-2xl font-bold text-purple-300 mb-2 transition-all duration-700 transform ${
-                  isCardVisible ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'
-                }`} style={{ transitionDelay: '0.2s' }}>
-                  BSc (Hons) in Business Information Technology
-                </h3>
-                <p className={`text-xl text-cyan-400 mb-2 transition-all duration-700 transform ${
-                  isCardVisible ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'
-                }`} style={{ transitionDelay: '0.3s' }}>
-                  London Metropolitan University
-                </p>
-                <p className={`text-gray-300 mb-4 transition-all duration-700 transform ${
-                  isCardVisible ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'
-                }`} style={{ transitionDelay: '0.4s' }}>
-                  Percentage: 54.22%
-                </p>
-                <p className={`text-gray-400 transition-all duration-700 transform ${
-                  isCardVisible ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'
-                }`} style={{ transitionDelay: '0.5s' }}>
-                  Comprehensive study of business processes, information systems, 
-                  and technology integration in modern enterprises.
-                </p>
-              </div>
-            </div>
+          {/* Right: System Diagnostics card */}
+          <div className="min-w-0">
+            <SystemDiagnosticsCard />
           </div>
         </div>
       </div>
