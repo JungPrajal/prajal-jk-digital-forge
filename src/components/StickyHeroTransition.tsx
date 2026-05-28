@@ -18,15 +18,16 @@ const StickyHeroTransition = () => {
   useEffect(() => {
     // Wait for hero animation + first paint to finish before mounting terminal
     let raf2 = 0;
+    let timeoutId: ReturnType<typeof setTimeout> | undefined;
     const raf1 = requestAnimationFrame(() => {
       raf2 = requestAnimationFrame(() => {
-        const t = setTimeout(() => setHeroReady(true), 1500);
-        (raf2 as any).__t = t;
+        timeoutId = setTimeout(() => setHeroReady(true), 1500);
       });
     });
     return () => {
       cancelAnimationFrame(raf1);
       cancelAnimationFrame(raf2);
+      if (timeoutId) clearTimeout(timeoutId);
     };
   }, []);
 
