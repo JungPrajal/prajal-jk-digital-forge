@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Mail, Phone, MapPin, Github, Linkedin } from 'lucide-react';
+import { Mail, Phone, MapPin, Github } from 'lucide-react';
 import HeroClean from '../components/HeroClean';
 import AboutPanel from '../components/AboutPanel';
 import SkillsGrid from '../components/SkillsGrid';
 import ProjectCard, { type Project } from '../components/ProjectCard';
-import SystemDiagnosticsCard from '../components/SystemDiagnosticsCard';
+import EducationCard from '../components/SystemDiagnosticsCard';
 
 const SECTIONS = [
   { id: 'home', label: 'Home' },
@@ -205,7 +205,7 @@ const Index = () => {
             <SectionHeading eyebrow="About">Who I am</SectionHeading>
             <div className="grid gap-6 lg:grid-cols-2">
               <AboutPanel />
-              <SystemDiagnosticsCard />
+              <EducationCard />
             </div>
           </div>
         </section>
