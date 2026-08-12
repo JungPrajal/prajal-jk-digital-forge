@@ -4,7 +4,7 @@ import HeroClean from '../components/HeroClean';
 import AboutPanel from '../components/AboutPanel';
 import SkillsGrid from '../components/SkillsGrid';
 import ProjectCard, { type Project } from '../components/ProjectCard';
-import EducationCard from '../components/SystemDiagnosticsCard';
+import EducationCard from '../components/EducationCard';
 
 const SECTIONS = [
   { id: 'home', label: 'Home' },
