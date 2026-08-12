@@ -1,528 +1,328 @@
+import React, { useEffect, useState } from 'react';
+import { Mail, Phone, MapPin, Github } from 'lucide-react';
+import HeroClean from '../components/HeroClean';
+import AboutPanel from '../components/AboutPanel';
+import SkillsGrid from '../components/SkillsGrid';
+import ProjectCard, { type Project } from '../components/ProjectCard';
+import EducationCard from '../components/EducationCard';
 
-import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { Mail, Phone, MapPin, Github, ExternalLink, Code, Palette, Database, Smartphone, Globe, Brain, Server, Terminal, Menu, X } from 'lucide-react';
-import ParticleField3D from '../components/ParticleField3D';
-import CyberRoom from '../components/CyberRoom';
-import SkillWeb3D from '../components/SkillWeb3D';
-import LiquidCursor from '../components/LiquidCursor';
-import MagneticButton from '../components/MagneticButton';
-import GrainOverlay from '../components/GrainOverlay';
-import MeshGradientCard from '../components/MeshGradientCard';
-import RetroTerminal from '../components/RetroTerminal';
-import SmoothScroll from '../components/SmoothScroll';
-const ServerBladeCard = React.lazy(() => import('../components/ServerBladeCard'));
-import GlitchTransition from '../components/GlitchTransition';
-import SystemStatusBar from '../components/SystemStatusBar';
-import ParallaxSection from '../components/ParallaxSection';
-import StickyHeroTransition from '../components/StickyHeroTransition';
-import SystemDiagnosticsCard from '../components/SystemDiagnosticsCard';
-import useScrollWeight from '../hooks/useScrollWeight';
+const SECTIONS = [
+  { id: 'home', label: 'Home' },
+  { id: 'about', label: 'About' },
+  { id: 'experience', label: 'Experience' },
+  { id: 'skills', label: 'Skills' },
+  { id: 'projects', label: 'Work' },
+  { id: 'contact', label: 'Contact' },
+];
 
-
-const Navigation = ({ activeSection, setActiveSection }) => {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  
-  const sections = [
-    { id: 'home', label: 'Home' },
-    { id: 'education', label: 'About' },
-    { id: 'experience', label: 'Experience' },
-    { id: 'skills', label: 'Skills' },
-    { id: 'projects', label: 'Work' },
-    { id: 'contact', label: 'Contact' }
-  ];
-
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      const headerOffset = 80;
-      const lenis = (window as any).__lenis;
-      if (lenis) {
-        lenis.scrollTo(element, { offset: -headerOffset });
-      } else {
-        const elementPosition = element.offsetTop;
-        window.scrollTo({ top: elementPosition - headerOffset, behavior: 'smooth' });
-      }
-      setActiveSection(sectionId);
-      setIsMobileMenuOpen(false);
-    }
-  };
+const Navigation = ({ activeSection }: { activeSection: string }) => {
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 glass border-b border-purple-500/20">
-      <div className="container mx-auto px-6">
-        <div className="flex items-center justify-between h-20">
-          {/* Logo */}
-          <div 
-            className="flex items-center gap-3 cursor-pointer"
-            onClick={() => scrollToSection('home')}
+    <header className="fixed inset-x-0 top-0 z-50 border-b border-border/80 bg-background/85 backdrop-blur-xl">
+      <nav aria-label="Main navigation" className="container mx-auto px-6">
+        <div className="flex h-16 items-center justify-between md:h-20">
+          <a
+            href="#home"
+            className="rounded-md text-base font-semibold tracking-tight text-foreground"
           >
-            <div className="w-10 h-10 flex items-center justify-center">
-              <img 
-                src="/lovable-uploads/9ff0586a-8ee7-454c-9fe3-00ce1b180ee8.png" 
-                alt="JK Logo" 
-                className="w-10 h-10 object-contain"
-              />
-            </div>
-            <span className="text-xl font-semibold text-white hidden sm:block">Prajal</span>
-          </div>
-          
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex space-x-8">
-            {sections.map((section) => (
-              <button
-                key={section.id}
-                onClick={() => scrollToSection(section.id)}
-                className={`px-4 py-2 text-lg font-medium transition-all duration-300 relative group ${
-                  activeSection === section.id
-                    ? 'text-cyan-400'
-                    : 'text-gray-300 hover:text-white'
-                }`}
-              >
-                {section.label}
-                <span className={`absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-purple-500 to-cyan-500 transition-transform duration-300 ${
-                  activeSection === section.id ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
-                }`}></span>
-              </button>
-            ))}
-          </div>
+            Prajal Jung Kunwar
+          </a>
 
-          {/* Mobile Menu Button */}
+          <ul className="hidden items-center gap-1 md:flex">
+            {SECTIONS.map((s) => (
+              <li key={s.id}>
+                <a
+                  href={`#${s.id}`}
+                  aria-current={activeSection === s.id ? 'true' : undefined}
+                  className={`rounded-md px-3 py-2 text-sm font-medium transition-colors ${
+                    activeSection === s.id
+                      ? 'text-primary'
+                      : 'text-muted-foreground hover:text-foreground'
+                  }`}
+                >
+                  {s.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+
           <button
-            className="md:hidden p-3 text-white hover:text-cyan-400 transition-colors bg-gray-800/80 rounded-lg border border-purple-500/30"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            type="button"
+            aria-expanded={isOpen}
+            aria-controls="mobile-nav"
+            aria-label={isOpen ? 'Close menu' : 'Open menu'}
+            onClick={() => setIsOpen((v) => !v)}
+            className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-md border border-border text-foreground md:hidden"
           >
-            {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            <span aria-hidden="true" className="text-sm font-medium">
+              {isOpen ? 'Close' : 'Menu'}
+            </span>
           </button>
         </div>
 
-        {/* Mobile Navigation */}
-        {isMobileMenuOpen && (
-          <div className="md:hidden absolute top-20 left-0 right-0 bg-gray-900/95 backdrop-blur-md border-t border-purple-500/30 animate-fade-in shadow-xl">
-            <div className="px-6 py-4 space-y-2">
-              {sections.map((section) => (
-                <button
-                  key={section.id}
-                  onClick={() => scrollToSection(section.id)}
-                  className={`block w-full text-left px-4 py-3 text-lg font-medium transition-all duration-300 rounded-lg ${
-                    activeSection === section.id
-                      ? 'text-cyan-400 bg-purple-500/30'
-                      : 'text-gray-200 hover:text-white hover:bg-purple-500/20'
+        {isOpen && (
+          <ul id="mobile-nav" className="border-t border-border py-3 md:hidden">
+            {SECTIONS.map((s) => (
+              <li key={s.id}>
+                <a
+                  href={`#${s.id}`}
+                  onClick={() => setIsOpen(false)}
+                  className={`block min-h-11 rounded-md px-3 py-3 text-base font-medium ${
+                    activeSection === s.id
+                      ? 'bg-secondary text-primary'
+                      : 'text-muted-foreground hover:bg-secondary hover:text-foreground'
                   }`}
                 >
-                  {section.label}
-                </button>
-              ))}
-            </div>
-          </div>
+                  {s.label}
+                </a>
+              </li>
+            ))}
+          </ul>
         )}
-      </div>
-    </nav>
+      </nav>
+    </header>
   );
 };
 
-const HomeSection = () => {
-  return <StickyHeroTransition />;
-};
+const experiences = [
+  {
+    title: 'Product/Graphics Design and Video Editor',
+    company: 'Jude Fashion Industry Nepal',
+    period: 'March 2025 — Present',
+    description:
+      'Creating engaging product designs and social media content including reels and promotional videos.',
+  },
+  {
+    title: 'UI/UX Web Development, SEO, Graphics Design',
+    company: 'Fast Track Repair Service',
+    period: 'January 2025',
+    description:
+      'Developed the business website, implemented SEO strategies, and created social media designs.',
+  },
+  {
+    title: 'Product/Graphics Design',
+    company: 'Aikyam Nepal',
+    period: 'December 2024 — February 2025',
+    description: 'Designed product graphics and visual content for marketing campaigns.',
+  },
+  {
+    title: 'UI/UX Design Intern',
+    company: 'Xdezo Academy',
+    period: 'Internship',
+    description:
+      'Developed an e-learning mobile app using Flutter/Dart with Node.js backend integration.',
+  },
+  {
+    title: 'Website Development',
+    company: 'Lakecity Coffee',
+    period: 'Project',
+    description:
+      'Designed and developed the official Lakecity Coffee website with responsive UI, performance and SEO optimisations.',
+  },
+];
 
-const useScrollAnimation = (): [React.RefObject<HTMLDivElement>, boolean] => {
-  const [isVisible, setIsVisible] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
+const projects: Project[] = [
+  {
+    title: 'AI Image & Face Recognition',
+    description:
+      'Python computer-vision project implementing image detection and facial recognition algorithms.',
+    tech: ['Python', 'OpenCV', 'Machine Learning'],
+    type: 'AI / ML',
+  },
+  {
+    title: 'E-learning Mobile App',
+    description:
+      'Internship project with a full learning management system, built with a Flutter frontend and Node.js backend.',
+    tech: ['Flutter', 'Dart', 'Node.js', 'REST API'],
+    type: 'Full Stack',
+  },
+  {
+    title: 'E-commerce Mobile App',
+    description:
+      'College project built with Flutter/Dart, covering product browsing, cart and checkout flows.',
+    tech: ['Flutter', 'Dart', 'UI/UX'],
+    type: 'Mobile App',
+  },
+  {
+    title: 'E-commerce Clothing App',
+    description:
+      'Java clothing-store application with inventory management and user authentication.',
+    tech: ['Java', 'OOP'],
+    type: 'Desktop App',
+  },
+  {
+    title: 'Fast Track Repair Service Website',
+    description:
+      'Business website with SEO optimisation, responsive design and an integrated booking flow.',
+    tech: ['Web Design', 'SEO'],
+    type: 'Web Development',
+  },
+];
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      { threshold: 0.3 }
-    );
-
-    const currentRef = ref.current;
-    if (currentRef) {
-      observer.observe(currentRef);
-    }
-
-    return () => {
-      if (currentRef) {
-        observer.unobserve(currentRef);
-      }
-    };
-  }, []);
-
-  return [ref, isVisible];
-};
-
-const EducationSection = () => {
-  const { ref: headingRef, weight: headingWeight } = useScrollWeight();
-
-  return (
-    <ParallaxSection>
-    <section id="education" className="min-h-screen flex items-center py-20">
-      <div className="container mx-auto px-6">
-        <h2
-          ref={headingRef}
-          className="text-4xl md:text-5xl font-bold text-center mb-16 text-gradient"
-          style={{ fontVariationSettings: `'wght' ${headingWeight}`, transition: 'font-variation-settings 0.3s ease' }}
-        >
-          About Me
-        </h2>
-        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
-          {/* Left: CRT Terminal (kept centered, wrapped to contain 3D tilt) */}
-          <div className="flex items-center justify-center min-w-0" style={{ perspective: '1200px' }}>
-            <div className="w-full max-w-xl">
-              <RetroTerminal />
-            </div>
-          </div>
-
-          {/* Right: System Diagnostics card */}
-          <div className="min-w-0">
-            <SystemDiagnosticsCard />
-          </div>
-        </div>
-      </div>
-    </section>
-    </ParallaxSection>
-  );
-};
-
-const ExperienceCard = ({ exp, index, isVisible }) => {
-  const [isHovered, setIsHovered] = useState(false);
-  
-  return (
-    <div 
-      className={`relative glass p-6 rounded-xl border transition-all duration-700 transform group cursor-pointer overflow-hidden ${
-        isVisible 
-          ? 'opacity-100 scale-100 translate-y-0 border-cyan-400/50 shadow-lg shadow-cyan-400/20' 
-          : 'opacity-0 scale-90 translate-y-10 border-purple-500/30'
-      } ${isHovered ? 'translate-y-[-8px] shadow-2xl shadow-purple-500/30 border-purple-400/80' : ''}`}
-      style={{ transitionDelay: `${index * 0.2}s` }}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      {/* Gradient overlay on hover */}
-      <div className={`absolute inset-0 bg-gradient-to-br from-purple-600/10 to-cyan-600/10 transition-opacity duration-500 ${
-        isHovered ? 'opacity-100' : 'opacity-0'
-      }`} />
-      
-      {/* Sliding bottom border */}
-      <div className={`absolute bottom-0 left-0 h-1 bg-gradient-to-r from-purple-500 to-cyan-500 transition-all duration-500 ${
-        isHovered ? 'w-full' : 'w-0'
-      }`} />
-      
-      <div className="flex flex-col md:flex-row md:items-center gap-4 relative z-10">
-        <div className="flex-1">
-          <h3 className={`text-xl font-bold mb-1 transition-all duration-700 transform ${
-            isVisible ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'
-          } ${isHovered ? 'text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400' : 'text-purple-300'}`} 
-          style={{ transitionDelay: `${index * 0.2 + 0.1}s` }}>
-            {exp.title}
-          </h3>
-          <p className={`text-lg mb-2 transition-all duration-700 transform ${
-            isVisible ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'
-          } ${isHovered ? 'text-cyan-300' : 'text-cyan-400'}`} 
-          style={{ transitionDelay: `${index * 0.2 + 0.2}s` }}>
-            {exp.company}
-          </p>
-          <p className={`mb-3 transition-all duration-700 transform ${
-            isVisible ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'
-          } ${isHovered ? 'text-gray-200' : 'text-gray-300'}`} 
-          style={{ transitionDelay: `${index * 0.2 + 0.3}s` }}>
-            {exp.description}
-          </p>
-        </div>
-        <div className="text-right">
-          <span className={`px-4 py-2 bg-purple-600/20 rounded-lg text-sm transition-all duration-700 transform ${
-            isVisible ? 'translate-x-0 opacity-100 scale-100' : 'translate-x-4 opacity-0 scale-90'
-          } ${isHovered ? 'bg-purple-500/30 text-purple-200 scale-105' : 'text-purple-300'}`} 
-          style={{ transitionDelay: `${index * 0.2 + 0.4}s` }}>
-            {exp.period}
-          </span>
-        </div>
-      </div>
-      
-      {/* Arrow reveal on hover */}
-      <div className={`absolute top-1/2 right-6 transform -translate-y-1/2 transition-all duration-300 ${
-        isHovered ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'
-      }`}>
-        <ExternalLink className="w-5 h-5 text-cyan-400" />
-      </div>
-    </div>
-  );
-};
-
-const ExperienceSection = () => {
-  const [sectionRef, isSectionVisible] = useScrollAnimation();
-  const { ref: headingRef, weight: headingWeight } = useScrollWeight();
-  
-  const experiences = [
-    {
-      title: "Product/Graphics Design and Video Editor",
-      company: "Jude Fashion Industry Nepal",
-      period: "March 2025 - Present",
-      description: "Creating engaging product designs and social media content including reels and promotional videos."
-    },
-    {
-      title: "UI/UX Web Development, SEO Expert, Graphics Design",
-      company: "Fast Track Repair Service",
-      period: "January 2025",
-      description: "Developed business website using Wix, implemented SEO strategies, and created social media designs."
-    },
-    {
-      title: "Product/Graphics Design",
-      company: "Aikyam Nepal",
-      period: "December 2024 - February 2025",
-      description: "Designed product graphics and visual content for various marketing campaigns."
-    },
-    {
-      title: "UI/UX Design Intern",
-      company: "Xdezo Academy",
-      period: "Internship",
-      description: "Developed an e-learning mobile app using Flutter/Dart with Node.js backend integration."
-    },
-    {
-      title: "Website Development",
-      company: "Lakecity Coffee",
-      period: "Project",
-      description: "Designed and developed the official Lakecity Coffee website with responsive UI, performance, and SEO optimizations."
-    }
-  ];
-
-  return (
-    <ParallaxSection>
-    <section id="experience" className="min-h-screen flex items-center py-20">
-      <div className="container mx-auto px-6">
-        <h2
-          ref={headingRef}
-          className="text-4xl md:text-5xl font-bold text-center mb-16 text-gradient"
-          style={{ fontVariationSettings: `'wght' ${headingWeight}`, transition: 'font-variation-settings 0.3s ease' }}
-        >
-          Experience
-        </h2>
-        <div className="max-w-6xl mx-auto" ref={sectionRef}>
-          <div className="grid gap-8">
-            {experiences.map((exp, index) => (
-              <ExperienceCard 
-                key={index} 
-                exp={exp} 
-                index={index} 
-                isVisible={isSectionVisible} 
-              />
-            ))}
-          </div>
-        </div>
-      </div>
-    </section>
-    </ParallaxSection>
-  );
-};
-
-const SkillsSection = () => {
-  return <SkillWeb3D />;
-};
-
-const ProjectsSection = () => {
-  const projects = [
-    {
-      title: "E-commerce Mobile App",
-      description: "College project developed using Flutter/Dart with modern UI/UX design and full shopping functionality.",
-      tech: ["Flutter", "Dart", "Mobile Development"],
-      type: "Mobile App",
-      color: "#06b6d4",
-    },
-    {
-      title: "E-learning Mobile App",
-      description: "Internship project with comprehensive learning management system, built with Flutter frontend and Node.js backend.",
-      tech: ["Flutter", "Dart", "Node.js", "Backend API"],
-      type: "Full Stack",
-      color: "#8b5cf6",
-    },
-    {
-      title: "E-commerce Clothing App",
-      description: "Java-based clothing store application with inventory management and user authentication.",
-      tech: ["Java", "OOP"],
-      type: "Desktop App",
-      color: "#f59e0b",
-    },
-    {
-      title: "AI Image & Face Recognition",
-      description: "Python-based computer vision project implementing image detection and facial recognition algorithms.",
-      tech: ["Python", "OpenCV", "ML", "AI"],
-      type: "AI/ML",
-      color: "#10b981",
-    },
-    {
-      title: "Fast Track Repair Service Website",
-      description: "Business website with SEO optimization, responsive design, and integrated booking system.",
-      tech: ["Wix", "SEO", "Web Design"],
-      type: "Web Development",
-      color: "#ec4899",
-    },
-  ];
-
-  const { ref: headingRef, weight: headingWeight } = useScrollWeight();
-
-  return (
-    <ParallaxSection>
-    <section id="projects" className="min-h-screen py-20 relative">
-      <div className="container mx-auto px-6">
-        <h2
-          ref={headingRef}
-          className="text-4xl md:text-5xl font-bold text-center mb-4 text-gradient"
-          style={{ fontVariationSettings: `'wght' ${headingWeight}`, transition: 'font-variation-settings 0.3s ease' }}
-        >
-          Server Rack
-        </h2>
-        <p className="text-center text-muted-foreground mb-12 max-w-lg mx-auto">
-          Each project is a blade in the rack — hover to inspect, watch the data streams flow.
-        </p>
-
-        {/* Server Blade Rack — lazy-loaded after hero settles */}
-        <div className="max-w-3xl mx-auto flex flex-col gap-4" style={{ contain: 'paint layout' }}>
-          <React.Suspense fallback={<div className="h-64" />}>
-            {projects.map((project, index) => (
-              <ServerBladeCard key={index} project={project} index={index} />
-            ))}
-          </React.Suspense>
-        </div>
-
-        {/* GitHub CTA */}
-        <div className="flex justify-center mt-12">
-          <MagneticButton
-            href="https://github.com/JungPrajal"
-            target="_blank"
-            rel="noopener noreferrer"
-            strength={0.4}
-            className="glass px-8 py-4 rounded-xl border border-purple-500/30 hover:border-cyan-400/50 transition-all duration-300 flex items-center gap-3 text-muted-foreground hover:text-foreground"
-          >
-            <Github className="w-5 h-5" />
-            <span className="text-sm font-bold">View All on GitHub</span>
-            <ExternalLink className="w-4 h-4" />
-          </MagneticButton>
-        </div>
-      </div>
-    </section>
-    </ParallaxSection>
-  );
-};
-
-const ContactSection = () => {
-  const { ref: headingRef, weight: headingWeight } = useScrollWeight();
-
-  return (
-    <ParallaxSection>
-    <section id="contact" className="min-h-screen flex items-center py-20">
-      <div className="container mx-auto px-6">
-        <h2
-          ref={headingRef}
-          className="text-4xl md:text-5xl font-bold text-center mb-16 text-gradient"
-          style={{ fontVariationSettings: `'wght' ${headingWeight}`, transition: 'font-variation-settings 0.3s ease' }}
-        >
-          Get In Touch
-        </h2>
-        <div className="max-w-4xl mx-auto text-center">
-          <p className="text-xl text-gray-300 mb-12 leading-relaxed">
-            Ready to collaborate on your next project? Whether you need mobile app development, 
-            web design, or AI/ML solutions, I'm here to bring your ideas to life with cutting-edge technology.
-          </p>
-          <div className="grid md:grid-cols-3 gap-8 mb-12">
-            <div className="glass p-6 rounded-xl border border-purple-500/30 hover:border-cyan-400/50 transition-all duration-300">
-              <Phone className="w-8 h-8 text-cyan-400 mx-auto mb-4" />
-              <h3 className="text-lg font-semibold text-purple-300 mb-2">Phone</h3>
-              <p className="text-gray-300">+977 9825102356</p>
-            </div>
-            <div className="glass p-6 rounded-xl border border-purple-500/30 hover:border-cyan-400/50 transition-all duration-300">
-              <Mail className="w-8 h-8 text-cyan-400 mx-auto mb-4" />
-              <h3 className="text-lg font-semibold text-purple-300 mb-2">Email</h3>
-              <p className="text-gray-300">prajal@gmail.com</p>
-            </div>
-            <div className="glass p-6 rounded-xl border border-purple-500/30 hover:border-cyan-400/50 transition-all duration-300">
-              <MapPin className="w-8 h-8 text-cyan-400 mx-auto mb-4" />
-              <h3 className="text-lg font-semibold text-purple-300 mb-2">Location</h3>
-              <p className="text-gray-300">Pokhara, Nepal</p>
-            </div>
-          </div>
-          <div className="flex justify-center gap-6">
-            <MagneticButton
-              href="https://github.com/JungPrajal" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="glass p-4 rounded-xl border border-purple-500/30 hover:border-cyan-400/50 transition-all duration-300 text-purple-300 hover:text-cyan-300"
-            >
-              <Github className="w-8 h-8" />
-            </MagneticButton>
-            <MagneticButton
-              href="mailto:prajal@gmail.com"
-              className="glass p-4 rounded-xl border border-purple-500/30 hover:border-cyan-400/50 transition-all duration-300 text-purple-300 hover:text-cyan-300"
-            >
-              <Mail className="w-8 h-8" />
-            </MagneticButton>
-          </div>
-        </div>
-      </div>
-    </section>
-    </ParallaxSection>
-  );
-};
+const SectionHeading = ({ children, eyebrow }: { children: React.ReactNode; eyebrow: string }) => (
+  <div className="mb-10 max-w-2xl md:mb-14">
+    <p className="text-xs font-medium uppercase tracking-[0.18em] text-primary">{eyebrow}</p>
+    <h2 className="mt-3 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+      {children}
+    </h2>
+  </div>
+);
 
 const Index = () => {
   const [activeSection, setActiveSection] = useState('home');
 
   useEffect(() => {
-    const handleScroll = () => {
-      const sections = ['home', 'education', 'experience', 'skills', 'projects', 'contact'];
-      const scrollPosition = window.scrollY + 100;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (visible) setActiveSection(visible.target.id);
+      },
+      { rootMargin: '-45% 0px -45% 0px', threshold: [0, 0.25, 0.5] }
+    );
 
-      for (const section of sections) {
-        const element = document.getElementById(section);
-        if (element) {
-          const offsetTop = element.offsetTop;
-          const height = element.offsetHeight;
-          
-          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + height) {
-            setActiveSection(section);
-            break;
-          }
-        }
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    SECTIONS.forEach(({ id }) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+    return () => observer.disconnect();
   }, []);
 
-
   return (
-    <SmoothScroll>
-    <GlitchTransition>
-    <div className="relative min-h-screen depth-container">
-      <LiquidCursor />
-      <GrainOverlay />
-      <div className="depth-background fixed inset-0 z-0">
-        <ParticleField3D />
-      </div>
-      <Navigation activeSection={activeSection} setActiveSection={setActiveSection} />
-      
-      <main className="relative z-10">
-        <HomeSection />
-        <ExperienceSection />
-        <SkillsSection />
-        <ProjectsSection />
-        <ContactSection />
+    <div className="relative min-h-screen">
+      <a href="#main" className="skip-link">
+        Skip to content
+      </a>
+      <Navigation activeSection={activeSection} />
+
+      <main id="main">
+        <HeroClean />
+
+        <section id="about" className="scroll-mt-24 border-t border-border/60 py-20 md:py-28">
+          <div className="container mx-auto px-6">
+            <SectionHeading eyebrow="About">Who I am</SectionHeading>
+            <div className="grid gap-6 lg:grid-cols-2">
+              <AboutPanel />
+              <EducationCard />
+            </div>
+          </div>
+        </section>
+
+        <section id="experience" className="scroll-mt-24 border-t border-border/60 py-20 md:py-28">
+          <div className="container mx-auto px-6">
+            <SectionHeading eyebrow="Experience">Where I&rsquo;ve worked</SectionHeading>
+            <ol className="space-y-4">
+              {experiences.map((exp) => (
+                <li key={exp.title} className="panel panel-interactive p-6">
+                  <div className="flex flex-col gap-2 md:flex-row md:items-baseline md:justify-between">
+                    <div>
+                      <h3 className="text-lg font-semibold text-foreground">{exp.title}</h3>
+                      <p className="mt-1 text-sm font-medium text-primary">{exp.company}</p>
+                    </div>
+                    <p className="text-sm text-muted-foreground md:text-right">{exp.period}</p>
+                  </div>
+                  <p className="mt-3 max-w-3xl text-sm leading-relaxed text-muted-foreground">
+                    {exp.description}
+                  </p>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </section>
+
+        <section id="skills" className="scroll-mt-24 border-t border-border/60 py-20 md:py-28">
+          <div className="container mx-auto px-6">
+            <SectionHeading eyebrow="Skills">What I work with</SectionHeading>
+            <SkillsGrid />
+          </div>
+        </section>
+
+        <section id="projects" className="scroll-mt-24 border-t border-border/60 py-20 md:py-28">
+          <div className="container mx-auto px-6">
+            <SectionHeading eyebrow="Selected Work">Projects</SectionHeading>
+            <div className="grid gap-5 md:grid-cols-2">
+              {projects.map((project) => (
+                <ProjectCard key={project.title} project={project} />
+              ))}
+            </div>
+            <div className="mt-10">
+              <a
+                href="https://github.com/JungPrajal"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-ghost"
+              >
+                <Github aria-hidden="true" className="h-5 w-5" />
+                View all on GitHub
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <section id="contact" className="scroll-mt-24 border-t border-border/60 py-20 md:py-28">
+          <div className="container mx-auto px-6">
+            <SectionHeading eyebrow="Contact">Let&rsquo;s connect</SectionHeading>
+            <p className="max-w-2xl text-base leading-relaxed text-muted-foreground">
+              Open to work on AI/ML solutions, mobile applications and product design.
+              The fastest way to reach me is email.
+            </p>
+
+            <div className="mt-10 grid gap-5 sm:grid-cols-3">
+              <a href="tel:+9779825102356" className="panel panel-interactive flex items-center gap-3 p-6">
+                <Phone aria-hidden="true" className="h-5 w-5 text-primary" />
+                <span>
+                  <span className="block text-xs text-muted-foreground">Phone</span>
+                  <span className="text-sm font-medium text-foreground">+977 9825102356</span>
+                </span>
+              </a>
+              <a href="mailto:prajal@gmail.com" className="panel panel-interactive flex items-center gap-3 p-6">
+                <Mail aria-hidden="true" className="h-5 w-5 text-primary" />
+                <span>
+                  <span className="block text-xs text-muted-foreground">Email</span>
+                  <span className="text-sm font-medium text-foreground">prajal@gmail.com</span>
+                </span>
+              </a>
+              <div className="panel flex items-center gap-3 p-6">
+                <MapPin aria-hidden="true" className="h-5 w-5 text-primary" />
+                <span>
+                  <span className="block text-xs text-muted-foreground">Location</span>
+                  <span className="text-sm font-medium text-foreground">Pokhara, Nepal</span>
+                </span>
+              </div>
+            </div>
+
+            <div className="mt-8 flex gap-3">
+              <a
+                href="https://github.com/JungPrajal"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="GitHub profile"
+                className="icon-link"
+              >
+                <Github aria-hidden="true" className="h-5 w-5" />
+              </a>
+              <a
+                href="mailto:prajal@gmail.com"
+                aria-label="Send an email"
+                className="icon-link"
+              >
+                <Mail aria-hidden="true" className="h-5 w-5" />
+              </a>
+            </div>
+          </div>
+        </section>
       </main>
-      
-      <footer className="relative z-10 glass border-t border-purple-500/30 py-8 pb-12">
-        <div className="container mx-auto px-6 text-center">
-          <p className="text-gray-400">
-            © 2025 Prajal Jung Kunwar. Crafted with passion and future tech.
+
+      <footer className="border-t border-border/60 py-10">
+        <div className="container mx-auto px-6">
+          <p className="text-sm text-muted-foreground">
+            © 2026 Prajal Jung Kunwar. AI/ML Developer &amp; Digital Product Designer.
           </p>
         </div>
       </footer>
-
-      <SystemStatusBar />
     </div>
-    </GlitchTransition>
-    </SmoothScroll>
   );
 };
 
